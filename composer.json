@@ -23,7 +23,7 @@
   "support": {
     "issues": "https://github.com/The-oGlow/ya-corapi-examples/issues"
   },
-  "minimum-stability": "dev",
+  "minimum-stability": "stable",
   "prefer-stable": true,
   "repositories": [
     {
@@ -39,8 +39,8 @@
     "php": ">=7.4",
     "ext-curl": "*",
     "ext-json": "*",
-    "ollily/ezlogging": "*",
-    "oglowa/ya-corapi": "*",
+    "ollily/ezlogging": "dev-develop",
+    "oglowa/ya-corapi": "dev-develop",
     "php-ds/php-ds": "^1.0",
     "psr/log": "^1.0||^2.0||^3.0"
   },

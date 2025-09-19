@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "db8288d3580b55e0cd6b1b52bfa1c0aa",
+    "content-hash": "ec428752674c3ae540858388e474d1b5",
     "packages": [
         {
             "name": "monolog/monolog",
@@ -120,7 +120,7 @@
                 "ext-curl": "*",
                 "ext-json": "*",
                 "monolog/monolog": "^2.10",
-                "ollily/ezlogging": "dev-develop",
+                "ollily/ezlogging": "dev-develop||*",
                 "php": ">=7.4",
                 "php-ds/php-ds": "^1.0",
                 "psr/log": "^1.0||^2.0||^3.0"
@@ -6493,8 +6493,11 @@
         }
     ],
     "aliases": [],
-    "minimum-stability": "dev",
-    "stability-flags": {},
+    "minimum-stability": "stable",
+    "stability-flags": {
+        "oglowa/ya-corapi": 20,
+        "ollily/ezlogging": 20
+    },
     "prefer-stable": true,
     "prefer-lowest": false,
     "platform": {
