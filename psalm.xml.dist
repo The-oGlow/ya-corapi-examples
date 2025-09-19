@@ -7,6 +7,9 @@
         xsi:schemaLocation="https://getpsalm.org/schema/config vendor/vimeo/psalm/config.xsd"
         findUnusedBaselineEntry="true"
         findUnusedCode="false"
+        findUnusedPsalmSuppress="true"
+        reportInfo="false"
+        reportMixedIssues="true"
 >
     <projectFiles>
         <directory name="src"/>
@@ -16,6 +19,7 @@
         </ignoreFiles>
     </projectFiles>
     <issueHandlers>
+        <UnusedPsalmSuppress errorLevel="info"/>
         <!-- too strict -->
         <LessSpecificImplementedReturnType errorLevel="suppress"/>
         <MixedArgument errorLevel="info"/>

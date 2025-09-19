@@ -17,6 +17,11 @@ use oglowa\example\Restapi\AbstractRestApiExample;
 
 require_once __DIR__ . '/../../bootstrap.php'; // NOSONAR: php:S4833
 
+/**
+ * FIXME:Remove.
+ *
+ * @SuppressWarnings(PHPMD)
+ */
 class ReadDocumentExample extends AbstractRestApiExample
 {
     public function readDocument(string $spaceKey, string $where): void
@@ -55,6 +60,11 @@ class ReadDocumentExample extends AbstractRestApiExample
     }
 }
 
+/**
+ * FIXME:Remove.
+ *
+ * @SuppressWarnings(PHPMD)
+ */
 function main(): void
 {
     $pageId   = 532951146;

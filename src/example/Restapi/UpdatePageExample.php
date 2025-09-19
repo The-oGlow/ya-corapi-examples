@@ -20,6 +20,11 @@ use oglowa\tools\Yacorapi\IResponse;
 
 require_once __DIR__ . '/../bootstrap.php'; // NOSONAR: php:S4833
 
+/**
+ * FIXME:Remove.
+ *
+ * @SuppressWarnings(PHPMD)
+ */
 class UpdatePageExample extends AbstractRestApiExample
 {
     private function loopThruUpdates(Task $task): void

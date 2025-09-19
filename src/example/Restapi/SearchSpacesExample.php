@@ -18,6 +18,11 @@ require_once __DIR__ . '/../bootstrap.php'; // NOSONAR: php:S4833
 use oglowa\tools\Yacorapi\Impl\ResponseSpaceDataDecorate;
 use oglowa\tools\Yacorapi\RapiClient;
 
+/**
+ * FIXME:Remove.
+ *
+ * @SuppressWarnings(PHPMD)
+ */
 class SearchSpacesExample extends AbstractRestApiExample
 {
     public function spacesGlobal(bool $asCsv = true): void

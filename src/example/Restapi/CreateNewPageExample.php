@@ -17,15 +17,20 @@ use oglowa\tools\Yacorapi\Helper\ContentHelper;
 
 require_once __DIR__ . '/../bootstrap.php'; // NOSONAR: php:S4833
 
+/**
+ * FIXME:Remove.
+ *
+ * @SuppressWarnings(PHPMD)
+ */
 class CreateNewPageExample extends AbstractRestApiExample
 {
     public const        C_PLAYGROUND_ID = 532951146;
 
-    public const        C_SPACE         = 'NMAS';
+    public const        C_SPACE = 'NMAS';
 
-    public const        C_NEW_TITLE     = 'NEW PAGE %s-%s';
+    public const        C_NEW_TITLE = 'NEW PAGE %s-%s';
 
-    public const        C_NEW_BODY      = "<p>This is <br/> a new page</p>\n";
+    public const        C_NEW_BODY = "<p>This is <br/> a new page</p>\n";
 
     /** @var string */
     public static $C_NEW_MACRO_1;

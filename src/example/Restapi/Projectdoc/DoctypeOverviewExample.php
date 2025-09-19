@@ -17,13 +17,18 @@ use oglowa\example\Restapi\AbstractRestApiExample;
 
 require_once __DIR__ . '/../../bootstrap.php'; // NOSONAR: php:S4833
 
+/**
+ * FIXME:Remove.
+ *
+ * @SuppressWarnings(PHPMD)
+ */
 class DoctypeOverviewExample extends AbstractRestApiExample
 {
     public const IDX_STRICT = 'strict';
 
-    public const IDX_LAZY   = 'ids';
+    public const IDX_LAZY = 'ids';
 
-    public const IDX_SIZE   = 'size';
+    public const IDX_SIZE = 'size';
 
     public function getDoctype(int $foundPageId, string $propertyName): string
     {

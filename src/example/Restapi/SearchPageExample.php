@@ -114,6 +114,11 @@ class SearchPageExample extends AbstractRestApiExample
     }
 }
 
+/**
+ * FIXME:Remove.
+ *
+ * @SuppressWarnings(PHPMD)
+ */
 function main(): void
 {
     global $pageId, $searchTerm, $spaceKey;
