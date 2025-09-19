@@ -86,7 +86,14 @@ abstract class AbstractRestApiExample
     protected function outputDatas(IResponse $response): void
     {
         $idx = 0;
-        /** @var mixed[] $singleResult */
+        /**
+         * FIXME: IResponse liefert falschen Wert.
+         *
+         * @var IResponse|mixed[] $singleResult
+         *
+         * @psalm-suppress PossibleRawObjectIteration
+         * @phpstan-ignore foreach.nonIterable
+         */
         foreach ($response->getResults() as $singleResult) {
             $this->outputData($singleResult, $idx++);
         }
@@ -97,7 +104,7 @@ abstract class AbstractRestApiExample
         return ConstData::realScriptName($pathPH, $this->outputFileName);
     }
 
-    protected function prepareTargetFileName(string $suffix = '')
+    protected function prepareTargetFileName(string $suffix = ''): string
     {
         $fileName = basename($this->outputFileName);
         if (!empty($suffix)) {

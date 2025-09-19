@@ -49,6 +49,7 @@ class CountPagesExample extends AbstractRestApiExample
             $this->headerWritten = true;
         }
         foreach ($spaceStatistic->getKeys() as $itemName) {
+            /** @var IStatistic $value */
             $value = $spaceStatistic->getItem($itemName);
             $entry = [$spaceKey, $itemName, $value->flatten(false)];
             $this->storeAsCsv($entry, $fileNameSuffix);

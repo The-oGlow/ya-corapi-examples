@@ -13,6 +13,7 @@ declare(strict_types=1);
 
 namespace oglowa\example\Restapi;
 
+use oglowa\tools\Yacorapi\IResponse;
 use oglowa\tools\Yacorapi\RapiClient;
 
 require_once __DIR__ . '/../bootstrap.php'; // NOSONAR: php:S4833
@@ -73,7 +74,7 @@ class SearchPageExample extends AbstractRestApiExample
             $this->loopThruSearchResults($spaceKey, $searchTerm, $this->nextPos);
             $fallbackIdx++;
             if ($fallbackIdx >= 10) {
-                logFast("+++ searchPagesWithFilter() - fallback exit after 10 iterations +++");
+                $this->output->out("+++ searchPagesWithFilter() - fallback exit after 10 iterations +++");
                 break;
             }
         } while ($this->totalSize > $this->currentPos);
@@ -93,7 +94,14 @@ class SearchPageExample extends AbstractRestApiExample
         $response = $this->apiClient->searchPagesWithFilter($filterTerm, $spaceKey, $searchFromPos);
 
         $idx = 0;
-        /** @var array $singleResult */
+        /**
+         * FIXME: IResponse liefert falschen Wert.
+         *
+         * @var IResponse|mixed[] $singleResult
+         *
+         * @psalm-suppress PossibleRawObjectIteration
+         * @phpstan-ignore foreach.nonIterable
+         */
         foreach ($response->getResults() as $singleResult) {
             $this->outputData($singleResult, $idx++);
         }
