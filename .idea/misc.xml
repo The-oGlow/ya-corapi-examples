@@ -16,9 +16,6 @@
       <PhpUnitSettings load_method="CUSTOM_LOADER" />
     </phpunit_settings>
   </component>
-  <component name="ProjectDictionaryState">
-    <dictionary name="GLO03" />
-  </component>
   <component name="ProjectResources">
     <resource url="http://phpmd.org/xml/ruleset_xml_schema_1.0.0.xsd" location="C:/projekte/php/xsd/ruleset_xml_schema_1.0.0.xsd" />
     <resource url="https://schema.phpunit.de/10.4/phpunit.xsd" location="$PROJECT_DIR$/../../projects_github/ya-corapi-examples" />

@@ -1,0 +1,111 @@
+{
+  "name": "oglowa/ya-corapi-examples",
+  "description": "The examples for ya-corapi",
+  "type": "library",
+  "keywords": [
+    "confluence",
+    "datacenter",
+    "data-center",
+    "restapi",
+    "ya-corapi",
+    "example",
+    "examples"
+  ],
+  "homepage": "https://github.com/The-oGlow/ya-corapi-examples",
+  "license": "Apache-2.0",
+  "authors": [
+    {
+      "name": "oglowa",
+      "email": "36665428+oglowa@users.noreply.github.com",
+      "homepage": "https://github.com/The-oGlow"
+    }
+  ],
+  "support": {
+    "issues": "https://github.com/The-oGlow/ya-corapi-examples/issues"
+  },
+  "minimum-stability": "stable",
+  "prefer-stable": true,
+  "require": {
+    "php": ">=7.4",
+    "ext-curl": "*",
+    "ext-json": "*",
+    "ollily/ezlogging": "dev-develop",
+    "php-ds/php-ds": "^1.0",
+    "psr/log": "^1.0||^2.0||^3.0"
+  },
+  "provide": {
+    "psr/log-implementation": "^1.0||^2.0||^3.0"
+  },
+  "suggest": {
+  },
+  "require-dev": {
+    "phpunit/phpunit": "^9.6",
+    "phpstan/phpstan": "^2.1",
+    "phpstan/phpstan-strict-rules": "^2.0",
+    "vimeo/psalm": "^5.26",
+    "psalm/plugin-phpunit": "^0.19",
+    "friendsofphp/php-cs-fixer": "^3.0",
+    "squizlabs/php_codesniffer": "^3.13",
+    "phpmd/phpmd": "^2.0",
+    "rogervila/php-sonarqube-scanner": "^1.0"
+  },
+  "config": {
+    "platform": {
+      "php": "7.4.0"
+    },
+    "optimize-autoloader": false,
+    "sort-packages": true,
+    "allow-plugins": {
+      "phpstan/extension-installer": true,
+      "php-http/discovery": true,
+      "bamarni/composer-bin-plugin": true
+    }
+  },
+  "autoload": {
+    "psr-4": {
+      "oglowa\\example\\": "src/example"
+    }
+  },
+  "autoload-dev": {
+    "psr-4": {
+      "oglowa\\example\\": "tests/example"
+    }
+  },
+  "scripts": {
+    "c-all": [
+      "composer c-fix",
+      "composer c-phpstan",
+      "composer c-psalm",
+      "composer c-phpcs",
+      "composer c-phpmd",
+      "composer c-test"
+    ],
+    "c-da": "@composer dump-autoload",
+    "c-dry-fix": "@php -d xdebug.mode=off vendor/bin/php-cs-fixer check --allow-unsupported-php-version=yes --allow-risky=yes --format txt",
+    "c-fix": "@php -d xdebug.mode=off vendor/bin/php-cs-fixer fix --allow-unsupported-php-version=yes --allow-risky=yes",
+    "c-package": "@composer archive --format=zip --dir=target/staging",
+    "c-phpcs": "@php -d xdebug.mode=off vendor/bin/phpcs -v",
+    "c-phpbf": "@php -d xdebug.mode=off vendor/bin/phpbf",
+    "c-phpmd": "@php -d xdebug.mode=off vendor/bin/phpmd src,tests text .phpmd.xml.dist --report-file=target/phpmd/phpmd-report.txt",
+    "c-phpstan": "@php -d xdebug.mode=off vendor/bin/phpstan analyse",
+    "c-psalm": "@php -d xdebug.mode=off vendor/bin/psalm --report=target/psalm/psalm-report.txt",
+    "c-dry-psalter": "@php -d xdebug.mode=off vendor/bin/psalter --dry-run --issues=MissingReturnType,MissingClosureReturnType,MissingParamType,MissingPropertyType,PossiblyUndefinedVariable,PossiblyUndefinedGlobalVariable,ParamNameMismatch",
+    "c-psalter": "@php -d xdebug.mode=off vendor/bin/psalter --issues=MissingReturnType,MissingClosureReturnType,MissingParamType,MissingPropertyType,PossiblyUndefinedVariable,PossiblyUndefinedGlobalVariable,ParamNameMismatch",
+    "c-test": "@php -d xdebug.mode=coverage vendor/bin/phpunit"
+  },
+  "scripts-descriptions": {
+    "c-all": "CUSTOM: Run composer with c-fix, c-phpstan, c-psalm, c-phpcs, c-phpmd, c-test",
+    "c-da": "CUSTOM: shortkey for 'dump-autoload'",
+    "c-dry-fix": "CUSTOM: See what PHP CS Fixer will fix (dry run)",
+    "c-fix": "CUSTOM: PHP CS Fixer fixes your code",
+    "c-package": "CUSTOM: Create deployable package",
+    "c-phpcs": "CUSTOM: PHP Code Sniffer verifies your code",
+    "c-phpbf": "CUSTOM: PHP Code Sniffer fixes your code",
+    "c-phpmd": "CUSTOM: PHP Mess Detector verifies your code",
+    "c-phpstan": "CUSTOM: PHPStan verifies your code",
+    "c-psalm": "CUSTOM: Psalm verifies your code",
+    "c-dry-psalter": "CUSTOM: See what Psalter will fix (dry run)",
+    "c-psalter": "CUSTOM: Psalter fixes your code",
+    "c-test": "CUSTOM: PHPUnit executes all unit tests"
+  }
+}
