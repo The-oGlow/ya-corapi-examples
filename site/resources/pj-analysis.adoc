@@ -1,0 +1,82 @@
+:hide-uri-scheme:
+:doctype: book
+
+:site_resource: .
+include::{site_resource}/pj-settings.adoc[opts=optional]
+include::{site_resource}/adoc-cmmn-all.adoc[opts=optional]
+
+:source-highlighter: highlight.js
+
+= {pj_gh_repo} - Analysis
+:toc:
+:toclevels: 2
+
+== Quality Analysis
+
+=== Project Status
+.Project Status
+[%header,frame=ends,valign=top,halign=center,width=200px]
+|===
+^| ^|Branch '{brnch1}' ^|Branch '{brnch2}'
+3+|link:{pj_gh_vcsid_url}[Github]
+|Checks
+^|image:{pj_bs_brnch1_checkruns_url}[]
+^|image:{pj_bs_brnch2_checkruns_url}[]
+|Status
+^|image:{pj_bs_brnch1_status_url}[]
+^|image:{pj_bs_brnch2_status_url}[]
+|===
+
+=== Quality Information
+.Quality Information
+[%header,frame=ends,valign=top,halign=center]
+|===
+^| ^|Branch '{brnch1}' ^|Branch '{brnch2}'
+3+|link:{pj_snr_dash_url}[Sonarcloud]
+|Quality Gate
+2+^|image:{pj_qi_snr_qgate_url}[]
+|Details
+^|image:{pj_qi_snr_brnch1_qgate_url}[]
+^|image:{pj_qi_snr_brnch2_qgate_url}[]
+3+|link:{pj_cdcy_vcsid_url}[Codacy]
+|Code Quality
+2+^|image:{pj_qi_cdcy_badge_grade_url}[]
+3+|link:{pj_opnssf_dash_url}[Open SSF]
+|Status
+2+^|image:{pj_qi_opnssf_status_url}[]
+|===
+
+=== Test Information
+.Test Information
+[%header,frame=ends,valign=top,halign=center]
+|===
+^| ^|Branch '{brnch1}' ^|Branch '{brnch2}'
+3+|link:{pj_snr_dash_url}[Sonarcloud]
+|Tests %
+^|image:{pj_ti_snr_brnch1_tsd_url}[]
+^|image:{pj_ti_snr_brnch2_tsd_url}[]
+|Tests Count
+^|image:{pj_ti_snr_brnch1_tests_url}[]
+^|image:{pj_ti_snr_brnch2_tests_url}[]
+|Coverage
+^|image:{pj_ti_snr_brnch1_coverage_url}[]
+^|image:{pj_ti_snr_brnch2_coverage_url}[]
+|Violations
+^|image:{pj_ti_snr_brnch1_violations_url}[]
+^|image:{pj_ti_snr_brnch2_violations_url}[]
+3+|link:{pj_cdcy_vcsid_url}[Codacy]
+|Coverage
+2+^|image:{pj_ti_cdcy_badge_coverage_url}[]
+|Details
+^|image:{pj_ti_cdcy_brnch1_coverage_url}[]
+^|image:{pj_ti_cdcy_brnch2_coverage_url}[]
+3+|link:{pj_cvrlls_dash_gh_url}[Coveralls]
+|Coverage
+^|image:{pj_ti_cvrlls_brnch1_coverage_url}[]
+^|image:{pj_ti_cvrlls_brnch2_coverage_url}[]
+|Details
+^|image:{pj_ti_cvrlls_brnch1_status_url}[]
+^|image:{pj_ti_cvrlls_brnch2_status_url}[]
+|===
+
+_{pj_cright_author}_

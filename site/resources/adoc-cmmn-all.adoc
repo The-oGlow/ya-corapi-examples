@@ -1,0 +1,20 @@
+// common settings - START
+:site_resource: .
+
+// common settings - START
+:brnch1: master
+:brnch2: develop
+
+// project settings (generated)
+// module data generated
+:pj_cright_author: (c) {pj_year} by {acc_user_url}
+:pj_cright_orga: (c) {pj_year} by {orga_user_url}
+
+include::{site_resource}/adoc-cmmn-shlds.adoc[opts=required]
+include::{site_resource}/adoc-cmmn-gh.adoc[opts=required]
+include::{site_resource}/adoc-cmmn-snr.adoc[opts=optional]
+include::{site_resource}/adoc-cmmn-cdcy.adoc[opts=optional]
+include::{site_resource}/adoc-cmmn-cvrlls.adoc[opts=optional]
+include::{site_resource}/adoc-cmmn-phpcs.adoc[opts=optional]
+include::{site_resource}/adoc-cmmn-opnssf.adoc[opts=optional]
+// common settings - END

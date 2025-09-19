@@ -1,0 +1,49 @@
+// codacy - START
+ifeval::["{pj_cdcy_id}" != "-1"]
+:cm_cdcy_url: https://www.codacy.com
+:cm_cdcy_app: https://app.codacy.com
+:cm_cdcy_badge_grade_url: {cm_cdcy_app}/project/badge/Grade
+:cm_cdcy_badge_coverage_url: {cm_cdcy_app}/project/badge/Coverage
+:cm_cdcy_dash_gh_url: {cm_cdcy_app}/gh
+
+// shields for codacy
+:cm_shlds_cdcy_url: {cm_shlds_url}/codacy
+:cm_shlds_cdcy_logo: logo=codacy
+:cm_shlds_cdcy_style: &{cm_shlds_cdcy_logo}{cm_shlds_img_style}
+:cm_shlds_cdcy_grade_url: {cm_shlds_cdcy_url}/grade
+:cm_shlds_cdcy_coverage_url: {cm_shlds_cdcy_url}/coverage
+:cm_shlds_tool_cdcy_url: {cm_shlds_badge_url}/codacy-oGlow_Rulset{cm_shlds_tool_style}&logo=codacy
+:cm_shlds_tool_cdcy_img: image:{cm_shlds_tool_cdcy_url}[title="Codacy Quality Gateway"]
+
+// project settings (generated)
+// module data generated
+:pj_cdcy_vcsid: {pj_gh_vcsid}
+
+// quality information
+// qi codacy
+:pj_cdcy_vcsid_url: {cm_cdcy_dash_gh_url}/{pj_cdcy_vcsid}/dashboard
+:pj_cdcy_branch1_url: {pj_cdcy_vcsid_url}?branch={brnch1}
+:pj_cdcy_branch2_url: {pj_cdcy_vcsid_url}?branch={brnch2}
+:pj_qi_cdcy_badge_grade_url: {cm_cdcy_badge_grade_url}/{pj_cdcy_id}
+:pj_qi_cdcy_brnch1_grade_url: {cm_shlds_cdcy_grade_url}/{pj_cdcy_id}/{brnch1}?{cm_shlds_cdcy_style}
+:pj_qi_cdcy_brnch2_grade_url: {cm_shlds_cdcy_grade_url}/{pj_cdcy_id}/{brnch2}?{cm_shlds_cdcy_style}
+:pj_ti_cdcy_badge_coverage_url: {cm_cdcy_badge_coverage_url}/{pj_cdcy_id}
+:pj_ti_cdcy_brnch1_coverage_url: {cm_shlds_cdcy_coverage_url}/{pj_cdcy_id}/{brnch1}?{cm_shlds_cdcy_style}
+:pj_ti_cdcy_brnch2_coverage_url: {cm_shlds_cdcy_coverage_url}/{pj_cdcy_id}/{brnch2}?{cm_shlds_cdcy_style}
+endif::[]
+ifeval::["{pj_cdcy_id}" == "-1"]
+// shields for codacy
+:cm_shlds_tool_cdcy_url:
+:cm_shlds_tool_cdcy_img:
+// qi codacy
+:pj_cdcy_vcsid_url: {cm_shlds_notsupp_url}
+:pj_cdcy_branch1_url: {cm_shlds_notsupp_url}
+:pj_cdcy_branch2_url: {cm_shlds_notsupp_url}
+:pj_qi_cdcy_badge_grade_url: {cm_shlds_notsupp_url}
+:pj_qi_cdcy_brnch1_grade_url: {cm_shlds_notsupp_url}
+:pj_qi_cdcy_brnch2_grade_url: {cm_shlds_notsupp_url}
+:pj_ti_cdcy_badge_coverage_url: {cm_shlds_notsupp_url}
+:pj_ti_cdcy_brnch1_coverage_url: {cm_shlds_notsupp_url}
+:pj_ti_cdcy_brnch2_coverage_url: {cm_shlds_notsupp_url}
+endif::[]
+// codacy - END

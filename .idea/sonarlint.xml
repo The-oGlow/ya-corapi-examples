@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="SonarLintProjectSettings">
+    <option name="bindingSuggestionsEnabled" value="false" />
+    <option name="fileExclusions">
+      <list>
+        <option value="DIRECTORY:old" />
+        <option value="FILE:fastexec.php" />
+        <option value="GLOB:old/**" />
+      </list>
+    </option>
+  </component>
+</project>

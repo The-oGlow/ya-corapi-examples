@@ -1,0 +1,72 @@
+:hide-uri-scheme:
+:doctype: book
+
+:site_resource: .
+include::{site_resource}/pj-settings.adoc[opts=optional]
+include::{site_resource}/adoc-cmmn-all.adoc[opts=optional]
+
+:source-highlighter: highlight.js
+
+= {pj_gh_repo} - Configuration
+:toc:
+:toclevels: 2
+
+== Requirements
+
+* link:https://www.php.net[PHP]
+* link:https://getcomposer.org/[Composer]
+* Commandline / Shell (opt.)
+** Linux / Unix Shell or
+** Windows Shell
+
+== Configuration
+
+=== Unix / Linux
+
+* Clone this repository to your local drive
+
+=== Windows
+
+* Clone this repository to your local drive
+
+== Development
+
+Some infos, in case you want to fork and extend this library,
+
+=== Build & Test
+
+Start the whole build (run composer with c-fix, c-phpstan, c-psalm, c-test)
+
+    composer c-all
+
+=== UNIT Tests
+
+Starting the unit tests with PHPUnit
+
+    composer c-test
+
+=== Structure
+
+Relevant files and folders
+
+    <project-root>
+    |--site
+    |  |- *
+    |
+    |--src
+    |  |-- Examples
+    |
+    |--target
+    |  |- *
+    |
+    |--tests
+    |  |-- Examples
+    |
+    |--vendor
+    |  |- *
+    |
+    |-composer.json
+    |-LICENSE
+    |-README.adoc
+
+_{pj_cright_author}_

@@ -1,0 +1,55 @@
+<?xml version="1.0"?>
+<ruleset name="PHPMD Standard Ruleset"
+         xmlns="https://phpmd.org/xml/ruleset/1.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="https://phpmd.org/xml/ruleset/1.0.0 http://phpmd.org/xml/ruleset_xml_schema_1.0.0.xsd"
+         xsi:noNamespaceSchemaLocation="https://phpmd.org/xml/ruleset_xml_schema_1.0.0.xsd">
+
+    <description>PHPMD Standard Ruleset</description>
+
+    <rule ref="rulesets/codesize.xml">
+        <!-- refine -->
+        <exclude name="CyclomaticComplexity"/>
+    </rule>
+    <rule ref="rulesets/cleancode.xml">
+        <!-- too strict -->
+        <exclude name="MissingImport"/>
+        <exclude name="BooleanArgumentFlag"/>
+        <exclude name="ElseExpression"/>
+        <exclude name="StaticAccess"/>
+    </rule>
+    <rule ref="rulesets/controversial.xml"/>
+    <rule ref="rulesets/design.xml"/>
+    <rule ref="rulesets/naming.xml">
+        <!-- refine -->
+        <exclude name="LongClassName"/>
+    </rule>
+    <rule ref="rulesets/unusedcode.xml"/>
+
+    <rule ref="rulesets/codesize.xml/CyclomaticComplexity">
+        <!-- refine -->
+        <priority>1</priority>
+        <properties>
+            <property name="reportLevel" value="20"/>
+        </properties>
+    </rule>
+
+    <rule ref="rulesets/cleancode.xml/MissingImport">
+        <!-- refine -->
+        <priority>1</priority>
+        <properties>
+            <property name="ignore-global" value="true"/>
+        </properties>
+    </rule>
+
+    <rule ref="rulesets/naming.xml/LongClassName">
+        <!-- refine -->
+        <priority>1</priority>
+        <properties>
+            <property name="maximum" value="60"/>
+            <property name="subtract-prefixes" value="Abstract"/>
+            <property name="subtract-suffixes" value="Clazz,Trait,Test"/>
+        </properties>
+    </rule>
+
+</ruleset>

@@ -1,0 +1,20 @@
+// openssf - START
+ifeval::["{pj_opnssf_id}" != "-1"]
+:cm_opnssf_url: https://www.bestpractices.dev
+:cm_opnssf_badge_url: {cm_opnssf_url}/projects
+:cm_opnssf_dash_url: {cm_opnssf_url}/projects
+
+// project settings (generated)
+// module data generated
+:pj_opnssf_vcsid: {pj_opnssf_id}
+
+// quality information
+// qi openssf
+:pj_opnssf_dash_url: {cm_opnssf_dash_url}/{pj_opnssf_vcsid}
+:pj_qi_opnssf_status_url: {cm_opnssf_badge_url}/{pj_opnssf_vcsid}/badge
+endif::[]
+ifeval::["{pj_opnssf_id}" == "-1"]
+:pj_opnssf_dash_url: {cm_shlds_notsupp_url}
+:pj_qi_opnssf_status_url: {cm_shlds_notsupp_url}
+endif::[]
+// openssf - END

@@ -1,0 +1,16 @@
+// Shields - START
+:cm_shlds_url: https://img.shields.io
+:cm_shlds_badge_url: {cm_shlds_url}/badge
+:cm_shlds_img_style: &style=plastic
+:cm_shlds_notsupp_url: {cm_shlds_badge_url}/info-not%20supported-lightgrey?{cm_shlds_img_style}
+:cm_shlds_notneed_url: {cm_shlds_badge_url}/info-not%20needed-lightgrey?{cm_shlds_img_style}
+
+:cm_shlds_tool_style: -violet?{cm_shlds_img_style}
+:cm_shlds_tool_phpcsfixer_url: {cm_shlds_badge_url}/php_cs_fixer-PSR2_&amp;_PSR12{cm_shlds_tool_style}&logo=php
+:cm_shlds_tool_phpunit_url: {cm_shlds_badge_url}/phpunit-UNIT_Tests{cm_shlds_tool_style}&logo=php
+:cm_shlds_tool_phpstan_url: {cm_shlds_badge_url}/phpstan-Level_8_Strict{cm_shlds_tool_style}&logo=php
+:cm_shlds_tool_psalm_url: {cm_shlds_badge_url}/psalm-Level_2{cm_shlds_tool_style}&logo=php
+:cm_shlds_tool_phpmd_url: {cm_shlds_badge_url}/php_mess_detector-codesize_&amp;_cleancode_&amp;_controversial_&amp;_design_&amp;_naming_&amp;_unusedcode{cm_shlds_tool_style}&logo=php
+
+:cm_shlds_tool_phpunit_img: image:{cm_shlds_tool_phpunit_url}[title="PHPUnit Tests"]
+// Shields - END

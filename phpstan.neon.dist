@@ -1,0 +1,16 @@
+parameters:
+    level: 8
+
+    paths:
+        - src/
+        - tests/
+
+    strictRules:
+        # too strict
+        disallowedEmpty: false
+        disallowedLooseComparison: false
+
+    excludePaths:
+
+includes:
+    - vendor/phpstan/phpstan-strict-rules/rules.neon

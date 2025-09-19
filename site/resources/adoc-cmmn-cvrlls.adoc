@@ -1,0 +1,40 @@
+//coveralls - START
+ifeval::["{pj_cvrlls_id}" != "-1"]
+:cm_cvrlls_url: https://coveralls.io
+:cm_cvrlls_dash_gh_url: {cm_cvrlls_url}/github
+:cm_cvrlls_repos_gh_url: {cm_cvrlls_url}/repos/github
+
+// shields for coveralls
+:cm_shlds_cvrlls_url: {cm_shlds_url}/coveralls/github
+:cm_shlds_cvrlls_logo: logo=coveralls
+:cm_shlds_cvrlls_style: &{cm_shlds_cvrlls_logo}{cm_shlds_img_style}
+:cm_shlds_tool_cvrlls_url: {cm_shlds_badge_url}/coveralls-Coverage{cm_shlds_tool_style}&logo=coveralls
+:cm_shlds_tool_cvrlls_img: image:{cm_shlds_tool_cvrlls_url}[title="Coveralls Coverage"]
+// project settings (generated)
+// module data generated
+:pj_cvrlls_vcsid: {pj_cvrlls_id}
+
+// test information
+// ti coveralls
+:pj_cvrlls_dash_gh_url: {cm_cvrlls_dash_gh_url}/{pj_cvrlls_vcsid}
+:pj_cvrlls_brnch1_dash_gh_url: {cm_cvrlls_dash_gh_url}/{pj_cvrlls_vcsid}?branch={brnch1}
+:pj_cvrlls_brnch2_dash_gh_url: {cm_cvrlls_dash_gh_url}/{pj_cvrlls_vcsid}?branch={brnch2}
+:pj_ti_cvrlls_brnch1_coverage_url: {cm_cvrlls_repos_gh_url}/{pj_cvrlls_vcsid}/badge.svg?branch={brnch1}
+:pj_ti_cvrlls_brnch2_coverage_url: {cm_cvrlls_repos_gh_url}/{pj_cvrlls_vcsid}/badge.svg?branch={brnch2}
+:pj_ti_cvrlls_brnch1_status_url: {cm_shlds_cvrlls_url}/{pj_cvrlls_vcsid}/{brnch1}?{cm_shlds_cvrlls_style}
+:pj_ti_cvrlls_brnch2_status_url: {cm_shlds_cvrlls_url}/{pj_cvrlls_vcsid}/{brnch2}?{cm_shlds_cvrlls_style}
+endif::[]
+ifeval::["{pj_cvrlls_id}" == "-1"]
+// shields for coveralls
+:cm_shlds_tool_cvrlls_url:
+:cm_shlds_tool_cvrlls_img:
+// ti coveralls
+:pj_cvrlls_dash_gh_url: {cm_shlds_notsupp_url}
+:pj_cvrlls_brnch1_dash_gh_url: {cm_shlds_notsupp_url}
+:pj_cvrlls_brnch2_dash_gh_url: {cm_shlds_notsupp_url}
+:pj_ti_cvrlls_brnch1_coverage_url: {cm_shlds_notsupp_url}
+:pj_ti_cvrlls_brnch2_coverage_url: {cm_shlds_notsupp_url}
+:pj_ti_cvrlls_brnch1_status_url: {cm_shlds_notsupp_url}
+:pj_ti_cvrlls_brnch2_status_url: {cm_shlds_notsupp_url}
+endif::[]
+//coveralls - END

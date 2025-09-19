@@ -1,0 +1,41 @@
+# Set the default behavior, in case people don't have core.autocrlf set.
+* text=auto
+#
+# for extension
+*.sh  text eol=lf
+*.ksh  text eol=lf
+*.bash  text eol=lf
+*.htm text eol=lf
+*.html text eol=lf
+*.js text eol=lf
+*.css text eol=lf
+*.php text eol=lf
+*.xml  text eol=lf
+*.yml  text eol=lf
+*.yaml  text eol=lf
+*.MD  text eol=lf
+*.md text eol=lf
+*.adoc text eol=lf
+#
+# Windows specific
+*.bat text eol=crlf
+*.cmd text eol=crlf
+#
+# Export Definitions
+/vendor/ export-ignore
+/old/ export-ignore
+/tests/ export-ignore
+/target/ export-ignore
+/.idea/ export-ignore
+/nbproject/ export-ignore
+#
+# Files
+/.* export-ignore
+#
+# Code Quality
+/*.dist export-ignore
+/*.dist.php export-ignore
+/phpstan* export-ignore
+/phpunit.xml.dist export-ignore
+/.editorconfig export-ignore
+sonar-project.properties export-ignore

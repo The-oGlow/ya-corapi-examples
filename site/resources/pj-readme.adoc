@@ -1,0 +1,96 @@
+:hide-uri-scheme:
+:doctype: book
+
+:site_resource: .
+include::{site_resource}/pj-settings.adoc[opts=optional]
+include::{site_resource}/adoc-cmmn-all.adoc[opts=optional]
+
+:source-highlighter: highlight.js
+
+= {pj_gh_repo}
+:toc: preamble
+:toclevels: 2
+
+{pj_ps_license_img}
+{pj_ps_release_img}
+{pj_ps_langtop_img}
+{pj_ps_langcount_img}
+{pj_ps_issues_img}
+
+{cm_shlds_tool_phpunit_img}
+{cm_shlds_tool_sonarcloud_img}
+{cm_shlds_tool_cdcy_img}
+{cm_shlds_tool_cvrlls_img}
+
+image:{cm_shlds_tool_phpcsfixer_url}[title="PHP CS Fixer Ruleset"]
+image:{cm_shlds_tool_phpstan_url}[title="PHPStan Level"]
+image:{cm_shlds_tool_psalm_url}[title="Psalm Level"]
+image:{cm_shlds_tool_phpcs_url}[title="PHP CodeSniffer Ruleset""]
+image:{cm_shlds_tool_phpmd_url}[title="PHP Mess Detector Ruleset"]
+
+== Description
+
+Managing the maintenance of a Confluence instance by REST API
+
+== What is a ya-corapi-examples?
+**Y** - et +
+**a** - nother +
+**-** +
+**co** - nfluence +
+**r** - est +
+**api** +
+**-** +
+**examples**
+
+== Usage
+
+The functions are separated in subfolders under `example`
+
+* link:{site_resource}/example/Restapi[`Restapi`] -> Base folder for all REST-API examples
+* link:{site_resource}/example/Restapi/Projectdoc[`Projectdoc`] -> Examples using the Projectdoc Toolbox
+
+Starting a function is easy from the shell (commandline)
+
+    php -f ./example/<subfolder>/<function>.php
+
+E.g.
+
+    php -f ./example/search/searchpage.php
+
+The results are printed to the console or into a file in the target folder
+
+    ./target/<subfolder>/<yyyymmdd-hhnnss>/<function>.<extension>
+
+The output can be
+
+* Text
+* CSV
+* JSON
+
+=== Switch to production
+By default the requests are sent to the URL of `\#confluence-url_for_testing#`
+
+== Roadmap
+
+=== r0.1 (first release)
+
+* Create examples and describe their purpose
+
+== Additional Information
+
+* link:config.adoc[Configuration] - How to configure
+* link:composer.adoc[Composer Commands] - New commands for composer
+* link:analysis.adoc[Analysis] - Project Status
+
+== Notice
+
+* Examples are working with privat access token (PAT) only!
+* Tested & Working with the Confluence Data Center Edition (DCE)
+
+link:{pj_snr_dash_url}[image:{cm_snr_tool_sonarcloud_url}[title="Sonarcloud Logo"]]
+
+== Reference
+
+* link:https://getcomposer.org/[Composer]
+
+_{pj_cright_author}_

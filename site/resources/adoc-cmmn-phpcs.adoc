@@ -1,0 +1,9 @@
+// phpcodesniffer - START
+:cm_phpcs_url: https://github.com/PHPCSStandards/PHP_CodeSniffer
+
+// shields for phpcodesniffer
+:cm_shlds_phpcs_url: {cm_shlds_url}/phpcodesniffer
+:cm_shlds_cdcy_logo: logo=php
+:cm_shlds_cdcy_style: &{cm_shlds_cdcy_logo}{cm_shlds_img_style}
+:cm_shlds_tool_phpcs_url: {cm_shlds_badge_url}/php_codesniffer-PSR2_&amp;_PSR12{cm_shlds_tool_style}&logo=php
+// phpcodesniffer - END

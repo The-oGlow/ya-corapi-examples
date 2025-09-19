@@ -1,0 +1,60 @@
+<?xml version="1.0"?>
+<ruleset xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" name="The-oGlow_CodeSniffer"
+         xsi:noNamespaceSchemaLocation="vendor/squizlabs/php_codesniffer/phpcs.xsd">
+
+    <description>Standard Configuration for PHP Code Sniffer</description>
+
+    <file>src</file>
+    <file>tests</file>
+    <file>site</file>
+
+    <exclude-pattern>*/data/*</exclude-pattern>
+    <exclude-pattern>*/vendor/*</exclude-pattern>
+
+    <arg name="extensions" value="php,inc"/>
+    <arg name="parallel" value="75"/>
+    <arg value="vsp"/>
+    <!-- Disable Warnings -->
+    <arg value="n"/>
+
+    <arg name="report-width" value="160"/>
+    <arg name="report-summary" value="target\phpcs\phpcsniffer-summary.txt"/>
+    <arg name="report-full" value="target\phpcs\phpcsniffer-report.txt"/>
+
+    <autoload>/vendor/autoload.php</autoload>
+
+    <rule ref="PSR2"/>
+    <rule ref="PSR12"/>
+
+    <!-- Overrides -->
+    <rule ref="PSR2.ControlStructures.SwitchDeclaration">
+        <exclude name="PSR2.ControlStructures.SwitchDeclaration.WrongOpenercase"/>
+        <exclude name="PSR2.ControlStructures.SwitchDeclaration.WrongOpenerdefault"/>
+    </rule>
+    <!-- Default line length in my projects -->
+    <rule ref="Generic.Files.LineLength">
+        <properties>
+            <property name="lineLimit" value="160"/>
+            <property name="absoluteLineLimit" value="170"/>
+            <property name="ignoreComments" value="true"/>
+        </properties>
+    </rule>
+    <!-- Ignore bootstrap file in test classes -->
+    <rule ref="PSR1.Files.SideEffects.FoundWithSymbols">
+        <exclude-pattern>tests/**/*Test\.php</exclude-pattern>
+    </rule>
+
+    <!--
+       There is a special internal error message produced by PHP_CodeSniffer
+       when it is unable to detect code in a file, possible due to
+       the use of short open tags even though php.ini disables them.
+       You can disable this message in the same way as sniff messages.
+
+       Again, the code here will be displayed in the PHP_CodeSniffer
+       output when using the -s command line argument while checking a file.
+    -->
+    <rule ref="Internal.NoCodeFound">
+        <severity>0</severity>
+    </rule>
+
+</ruleset>

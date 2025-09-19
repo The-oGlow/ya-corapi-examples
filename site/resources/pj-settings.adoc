@@ -1,0 +1,60 @@
+// project settings - START
+// user data
+:acc_vcs_url: https://github.com
+:acc_user: ollily
+:acc_user_orga: The-oGlow
+:acc_user_name: Oliver Glowa
+:acc_user_email: coding at glowa-net dot com
+:acc_user_hp: http://coding.glowa-net.com
+:acc_user_url: {acc_vcs_url}/{acc_user}[{acc_user_name}]
+
+// organization
+:orga_vcs_url: {acc_vcs_url}
+:orga_user: The-oGlow
+:orga_user_name: The oGlow
+:orga_user_email: {acc_user_email}
+:orga_user_hp: {acc_user_hp}
+:orga_user_url: {orga_vcs_url}/{orga_user}[{orga_user_name}]
+
+// organization team
+:orga_team_user: oteam
+:orga_team_user_name: The oTeam
+:orga_team_email: {orga_user_email}
+:orga_team_hp: {orga_user_hp}
+:orga_team_url: {orga_vcs_url}/orgs/{orga_user}/teams/{orga_team_user}[{orga_team_user_name}]
+
+// module data
+// Description of this project
+// Name of the author or Github user name (acc_user_name or orga_user_name)
+:pj_author: {acc_user_name}
+// Version or "latest version"
+:pj_version: [latest version]
+// Creation year
+:pj_year: 2024
+// Github description
+:pj_description: Managing the maintenance of a Confluence instance by REST API
+
+// Id of this project
+// Prefix of the Github URL (acc_vcs_url or orga_vcs_url)
+:pj_gh_vcs_url: {orga_vcs_url}
+// Github User or Organisation (acc_user or orga_user)
+:pj_gh_account: {orga_user}
+// Github repo name
+:pj_gh_repo: ya-corapi-examples
+// Github projectid or -1
+:pj_gh_vcsid: {pj_gh_account}/{pj_gh_repo}
+
+// Tools for this project
+// Sonar projectid or -1
+:pj_snr_projid: -1
+//{pj_gh_account}_{pj_gh_repo}
+// Codacy Token or -1
+:pj_cdcy_id: -1
+// Coveralls projectid or -1
+:pj_cvrlls_id: -1
+//{pj_gh_account}/{pj_gh_repo}
+// OpenSSF projectid or -1
+:pj_opnssf_id: -1
+// Coverty projectid or -1
+:pj_cvrty_id: -1
+// project settings - END
