@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "c7bbdf4d5d1f1ba86a5f38aaa1e9dbcb",
+    "content-hash": "db8288d3580b55e0cd6b1b52bfa1c0aa",
     "packages": [
         {
             "name": "monolog/monolog",
@@ -109,18 +109,137 @@
             "time": "2024-11-12T12:43:37+00:00"
         },
         {
+            "name": "oglowa/ya-corapi",
+            "version": "dev-develop",
+            "dist": {
+                "type": "path",
+                "url": "../ya-corapi",
+                "reference": "d64168b43a127d0cd96795f780e818e03527de14"
+            },
+            "require": {
+                "ext-curl": "*",
+                "ext-json": "*",
+                "monolog/monolog": "^2.10",
+                "ollily/ezlogging": "dev-develop",
+                "php": ">=7.4",
+                "php-ds/php-ds": "^1.0",
+                "psr/log": "^1.0||^2.0||^3.0"
+            },
+            "provide": {
+                "psr/log-implementation": "^1.0||^2.0||^3.0"
+            },
+            "require-dev": {
+                "friendsofphp/php-cs-fixer": "^3.0",
+                "phpmd/phpmd": "^2.0",
+                "phpstan/phpstan": "^2.1",
+                "phpstan/phpstan-strict-rules": "^2.0",
+                "phpunit/phpunit": "^9.6",
+                "psalm/plugin-phpunit": "^0.19",
+                "rogervila/php-sonarqube-scanner": "^1.0",
+                "squizlabs/php_codesniffer": "^3.13",
+                "vimeo/psalm": "^5.26"
+            },
+            "suggest": {
+                "bamarni/composer-bin-plugin": "Having compatible versions",
+                "guzzlehttp/guzzle": "Alternative to CURL",
+                "guzzlehttp/psr7": "PSR-7 Definition",
+                "mashape/unirest-php": "Alternative to CURL"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "oglowa\\tools\\common\\": "src/common",
+                    "oglowa\\tools\\Yacorapi\\": "src/Yacorapi",
+                    "oglowa\\example\\Restapi\\": "example/Restapi",
+                    "foo\\": "src/foo"
+                }
+            },
+            "autoload-dev": {
+                "psr-4": {
+                    "oglowa\\tools\\common\\": "tests/common",
+                    "oglowa\\tools\\Yacorapi\\": "tests/Yacorapi",
+                    "foo\\": "tests/foo"
+                }
+            },
+            "scripts": {
+                "c-all": [
+                    "composer c-fix",
+                    "composer c-phpstan",
+                    "composer c-psalm",
+                    "composer c-phpcs",
+                    "composer c-phpmd",
+                    "composer c-test"
+                ],
+                "c-da": [
+                    "@composer dump-autoload"
+                ],
+                "c-dry-fix": [
+                    "@php -d xdebug.mode=off vendor/bin/php-cs-fixer check --allow-unsupported-php-version=yes --allow-risky=yes --format txt"
+                ],
+                "c-fix": [
+                    "@php -d xdebug.mode=off vendor/bin/php-cs-fixer fix --allow-unsupported-php-version=yes --allow-risky=yes"
+                ],
+                "c-package": [
+                    "@composer archive --format=zip --dir=target/staging"
+                ],
+                "c-phpcs": [
+                    "@php -d xdebug.mode=off vendor/bin/phpcs -v"
+                ],
+                "c-phpbf": [
+                    "@php -d xdebug.mode=off vendor/bin/phpbf"
+                ],
+                "c-phpmd": [
+                    "@php -d xdebug.mode=off vendor/bin/phpmd src,tests text .phpmd.xml.dist --report-file=target/phpmd/phpmd-report.txt"
+                ],
+                "c-phpstan": [
+                    "@php -d xdebug.mode=off vendor/bin/phpstan analyse"
+                ],
+                "c-psalm": [
+                    "@php -d xdebug.mode=off vendor/bin/psalm --report=target/psalm/psalm-report.txt"
+                ],
+                "c-dry-psalter": [
+                    "@php -d xdebug.mode=off vendor/bin/psalter --dry-run --issues=MissingReturnType,MissingClosureReturnType,MissingParamType,MissingPropertyType,PossiblyUndefinedVariable,PossiblyUndefinedGlobalVariable,ParamNameMismatch"
+                ],
+                "c-psalter": [
+                    "@php -d xdebug.mode=off vendor/bin/psalter --issues=MissingReturnType,MissingClosureReturnType,MissingParamType,MissingPropertyType,PossiblyUndefinedVariable,PossiblyUndefinedGlobalVariable,ParamNameMismatch"
+                ],
+                "c-test": [
+                    "@php -d xdebug.mode=coverage vendor/bin/phpunit"
+                ]
+            },
+            "license": [
+                "Apache-2.0"
+            ],
+            "authors": [
+                {
+                    "name": "oglowa",
+                    "email": "36665428+oglowa@users.noreply.github.com",
+                    "homepage": "https://github.com/The-oGlow"
+                }
+            ],
+            "description": "Managing the maintenance of a Confluence instance by REST API",
+            "homepage": "https://github.com/The-oGlow/ya-corapi",
+            "keywords": [
+                "confluence",
+                "data-center",
+                "datacenter",
+                "projectdoc-toolbox",
+                "restapi"
+            ],
+            "support": {
+                "issues": "https://github.com/The-oGlow/ya-corapi/issues"
+            },
+            "transport-options": {
+                "relative": true
+            }
+        },
+        {
             "name": "ollily/ezlogging",
             "version": "dev-develop",
-            "source": {
-                "type": "git",
-                "url": "https://github.com/The-oGlow/ezlogging.git",
-                "reference": "b6cc96deb48e98d27675f3ef597f2f747795c077"
-            },
             "dist": {
-                "type": "zip",
-                "url": "https://api.github.com/repos/The-oGlow/ezlogging/zipball/b6cc96deb48e98d27675f3ef597f2f747795c077",
-                "reference": "b6cc96deb48e98d27675f3ef597f2f747795c077",
-                "shasum": ""
+                "type": "path",
+                "url": "../ezlogging",
+                "reference": "b6cc96deb48e98d27675f3ef597f2f747795c077"
             },
             "require": {
                 "monolog/monolog": "^2.10",
@@ -147,12 +266,64 @@
             "type": "library",
             "autoload": {
                 "psr-4": {
+                    "ollily\\Tools\\": "src/Tools",
                     "Monolog\\": "src/Monolog",
-                    "PHPUnit\\": "src/PHPUnit",
-                    "ollily\\Tools\\": "src/Tools"
+                    "PHPUnit\\": "src/PHPUnit"
                 }
             },
-            "notification-url": "https://packagist.org/downloads/",
+            "autoload-dev": {
+                "psr-4": {
+                    "ollily\\Tools\\": "tests/Tools",
+                    "Monolog\\": "tests/Monolog",
+                    "PHPUnit\\": "tests/PHPUnit"
+                }
+            },
+            "scripts": {
+                "c-all": [
+                    "composer c-fix",
+                    "composer c-phpstan",
+                    "composer c-psalm",
+                    "composer c-phpcs",
+                    "composer c-phpmd",
+                    "composer c-test"
+                ],
+                "c-da": [
+                    "@composer dump-autoload"
+                ],
+                "c-dry-fix": [
+                    "@php -d xdebug.mode=off vendor/bin/php-cs-fixer check --allow-unsupported-php-version=yes --allow-risky=yes --format txt"
+                ],
+                "c-fix": [
+                    "@php -d xdebug.mode=off vendor/bin/php-cs-fixer fix --allow-unsupported-php-version=yes --allow-risky=yes"
+                ],
+                "c-package": [
+                    "@composer archive --format=zip --dir=target/staging"
+                ],
+                "c-phpcs": [
+                    "@php -d xdebug.mode=off vendor/bin/phpcs -v"
+                ],
+                "c-phpbf": [
+                    "@php -d xdebug.mode=off vendor/bin/phpbf"
+                ],
+                "c-phpmd": [
+                    "@php -d xdebug.mode=off vendor/bin/phpmd src,tests text .phpmd.xml.dist --report-file=target/phpmd/phpmd-report.txt"
+                ],
+                "c-phpstan": [
+                    "@php -d xdebug.mode=off vendor/bin/phpstan analyse"
+                ],
+                "c-psalm": [
+                    "@php -d xdebug.mode=off vendor/bin/psalm --report=target/psalm/psalm-report.txt"
+                ],
+                "c-dry-psalter": [
+                    "@php -d xdebug.mode=off vendor/bin/psalter --dry-run --issues=MissingReturnType,MissingClosureReturnType,MissingParamType,MissingPropertyType,PossiblyUndefinedVariable,PossiblyUndefinedGlobalVariable,ParamNameMismatch"
+                ],
+                "c-psalter": [
+                    "@php -d xdebug.mode=off vendor/bin/psalter --issues=MissingReturnType,MissingClosureReturnType,MissingParamType,MissingPropertyType,PossiblyUndefinedVariable,PossiblyUndefinedGlobalVariable,ParamNameMismatch"
+                ],
+                "c-test": [
+                    "@php -d xdebug.mode=coverage vendor/bin/phpunit"
+                ]
+            },
             "license": [
                 "Apache-2.0"
             ],
@@ -176,10 +347,11 @@
                 "testcase"
             ],
             "support": {
-                "issues": "https://github.com/ollily/ezlogging/issues",
-                "source": "https://github.com/The-oGlow/ezlogging/tree/develop"
+                "issues": "https://github.com/ollily/ezlogging/issues"
             },
-            "time": "2025-09-19T10:01:30+00:00"
+            "transport-options": {
+                "relative": true
+            }
         },
         {
             "name": "php-ds/php-ds",
@@ -6321,10 +6493,8 @@
         }
     ],
     "aliases": [],
-    "minimum-stability": "stable",
-    "stability-flags": {
-        "ollily/ezlogging": 20
-    },
+    "minimum-stability": "dev",
+    "stability-flags": {},
     "prefer-stable": true,
     "prefer-lowest": false,
     "platform": {

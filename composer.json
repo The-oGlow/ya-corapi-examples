@@ -23,13 +23,24 @@
   "support": {
     "issues": "https://github.com/The-oGlow/ya-corapi-examples/issues"
   },
-  "minimum-stability": "stable",
+  "minimum-stability": "dev",
   "prefer-stable": true,
+  "repositories": [
+    {
+      "type": "path",
+      "url": "../ya-corapi"
+    },
+    {
+      "type": "path",
+      "url": "../ezlogging"
+    }
+  ],
   "require": {
     "php": ">=7.4",
     "ext-curl": "*",
     "ext-json": "*",
-    "ollily/ezlogging": "dev-develop",
+    "ollily/ezlogging": "*",
+    "oglowa/ya-corapi": "*",
     "php-ds/php-ds": "^1.0",
     "psr/log": "^1.0||^2.0||^3.0"
   },

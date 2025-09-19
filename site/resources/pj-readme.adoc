@@ -30,7 +30,7 @@ image:{cm_shlds_tool_phpmd_url}[title="PHP Mess Detector Ruleset"]
 
 == Description
 
-Managing the maintenance of a Confluence instance by REST API
+Examples for YA-CORAPI!
 
 == What is a ya-corapi-examples?
 **Y** - et +
