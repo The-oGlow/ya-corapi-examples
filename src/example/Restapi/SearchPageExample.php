@@ -23,7 +23,7 @@ $spaceKey = 'NMAS';
 /** @var string $searchTerm */
 $searchTerm = 'title=REST-API%2001';
 /** @var int $pageId */
-$pageId = 608567375; // 591855803;521933587;
+$pageId = 657785006;
 
 class SearchPageExample extends AbstractRestApiExample
 {
@@ -32,7 +32,7 @@ class SearchPageExample extends AbstractRestApiExample
         $this->output->out("+++ searchByPageId()");
         $response = $this->apiClient->readPageByPageId($pageId);
         $this->outputData($response);
-        $this->storeAsDump($response, ".txt");
+        $this->storeAsDump($response->__toString(), ".txt");
     }
 
     public function readPagesWithFilter(string $filterTerm): void
@@ -40,6 +40,7 @@ class SearchPageExample extends AbstractRestApiExample
         $this->output->out("+++ searchByPageId()");
         $response = $this->apiClient->readPagesWithFilter($filterTerm);
         $this->outputDatas($response);
+        $this->storeAsDump($response->__toString(), ".txt");
     }
 
     public function readPagesWithFilterAndSpace(string $filterTerm, string $spaceKey): void
@@ -47,6 +48,7 @@ class SearchPageExample extends AbstractRestApiExample
         $this->output->out("+++ searchTermAndSpaceByBrowse()");
         $response = $this->apiClient->readPagesWithFilter($filterTerm, $spaceKey);
         $this->outputDatas($response);
+        $this->storeAsDump($response->__toString(), ".txt");
     }
 
     public function scanPagesWithFilter(string $filterTerm): void
@@ -54,6 +56,7 @@ class SearchPageExample extends AbstractRestApiExample
         $this->output->out("+++ scanPagesWithFilter()");
         $response = $this->apiClient->scanPagesWithFilter($filterTerm);
         $this->outputDatas($response);
+        $this->storeAsDump($response->__toString(), ".txt");
     }
 
     public function scanPagesWithFilterAndSpace(string $filterTerm, string $spaceKey): void
@@ -61,6 +64,7 @@ class SearchPageExample extends AbstractRestApiExample
         $this->output->out("+++ scanPagesWithFilterAndSpace()");
         $response = $this->apiClient->scanPagesWithFilter($filterTerm, $spaceKey);
         $this->outputDatas($response);
+        $this->storeAsDump($response->__toString(), ".txt");
     }
 
     public function searchPagesWithFilter(): void
@@ -132,9 +136,9 @@ function main(): void
     global $pageId, $searchTerm, $spaceKey;
     $thisClazz = new SearchPageExample();
 
-    $thisClazz->readPageByPageId($pageId);
+//    $thisClazz->readPageByPageId($pageId);
 
-    //    $thisClazz->readPagesWithFilter($searchTerm);
+        $thisClazz->readPagesWithFilter($searchTerm);
     //    $thisClazz->readPagesWithFilterAndSpace($searchTerm, $spaceKey);
     //
     //    $thisClazz->scanPagesWithFilter($searchTerm);

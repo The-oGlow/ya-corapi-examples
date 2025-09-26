@@ -73,11 +73,12 @@ function main(): void
 {
     $thisClazz = new CountMacrosExample();
     $spaceData = SpaceData::getI();
-    $spaceKeys = $spaceData->getDataByMode(SpaceData::SPACE_SIMPLE);
+    $spaceKeys = $spaceData->getDataByMode(SpaceData::SPACE_ALL);
+    $mode      = AddonMacroData::MACRO_BLOCKER;
 
     foreach ($spaceKeys as $spaceKey) {
-        $thisClazz->countOneSpaceOneAddon($spaceKey);
-        $thisClazz->countOneSpaceOneAddon($spaceKey, AddonMacroData::MACRO_BLOCKER);
+        $thisClazz->countOneSpaceOneAddon($spaceKey, $mode);
+        sleep(2);
     }
 }
 

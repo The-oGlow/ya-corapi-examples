@@ -1,28 +1,32 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <module type="WEB_MODULE" version="4">
   <component name="NewModuleRootManager">
+    <content url="file://$USER_HOME$/.ya-corapi" />
     <content url="file://$MODULE_DIR$">
-      <sourceFolder url="file://$MODULE_DIR$/src/example" isTestSource="false" />
-      <sourceFolder url="file://$MODULE_DIR$/tests/example" isTestSource="true" />
+      <sourceFolder url="file://$MODULE_DIR$/tests/example" isTestSource="true" packagePrefix="oglowa\example\" />
+      <sourceFolder url="file://$MODULE_DIR$/src/example" isTestSource="false" packagePrefix="oglowa\example\" />
       <excludeFolder url="file://$MODULE_DIR$/target" />
       <excludeFolder url="file://$MODULE_DIR$/vendor/bin" />
       <excludeFolder url="file://$MODULE_DIR$/vendor/composer" />
+      <excludeFolder url="file://$MODULE_DIR$/vendor/oglowa/ya-corapi" />
       <excludeFolder url="file://$MODULE_DIR$/vendor/oglowa/ya-corapi/example" />
+      <excludeFolder url="file://$MODULE_DIR$/vendor/ollily/ezlogging" />
+      <excludeFolder url="file://$MODULE_DIR$/vendor/squizlabs/php_codesniffer" />
     </content>
     <orderEntry type="inheritedJdk" />
     <orderEntry type="sourceFolder" forTests="false" />
     <orderEntry type="module-library">
       <library name="PHARS">
         <CLASSES>
-          <root url="phar://$MODULE_DIR$/vendor/ollily/ezlogging/vendor/bin/phpstan.phar/" />
-          <root url="phar://$MODULE_DIR$/vendor/ollily/ezlogging/vendor/phpstan/phpstan/phpstan.phar/" />
+          <root url="phar://$MODULE_DIR$/vendor/oglowa/ya-corapi/vendor/ollily/ezlogging/vendor/phpstan/phpstan/phpstan.phar/" />
+          <root url="phar://$MODULE_DIR$/vendor/oglowa/ya-corapi/vendor/ollily/ezlogging/vendor/bin/phpstan.phar/" />
           <root url="phar://$MODULE_DIR$/vendor/phpstan/phpstan/phpstan.phar/" />
           <root url="phar://$MODULE_DIR$/vendor/oglowa/ya-corapi/vendor/bin/phpstan.phar/" />
           <root url="phar://$MODULE_DIR$/vendor/oglowa/ya-corapi/vendor/phpstan/phpstan/phpstan.phar/" />
         </CLASSES>
         <SOURCES>
-          <root url="phar://$MODULE_DIR$/vendor/ollily/ezlogging/vendor/bin/phpstan.phar/" />
-          <root url="phar://$MODULE_DIR$/vendor/ollily/ezlogging/vendor/phpstan/phpstan/phpstan.phar/" />
+          <root url="phar://$MODULE_DIR$/vendor/oglowa/ya-corapi/vendor/ollily/ezlogging/vendor/phpstan/phpstan/phpstan.phar/" />
+          <root url="phar://$MODULE_DIR$/vendor/oglowa/ya-corapi/vendor/ollily/ezlogging/vendor/bin/phpstan.phar/" />
           <root url="phar://$MODULE_DIR$/vendor/phpstan/phpstan/phpstan.phar/" />
           <root url="phar://$MODULE_DIR$/vendor/oglowa/ya-corapi/vendor/bin/phpstan.phar/" />
           <root url="phar://$MODULE_DIR$/vendor/oglowa/ya-corapi/vendor/phpstan/phpstan/phpstan.phar/" />
@@ -33,9 +37,15 @@
       <library name="PHP" type="php">
         <CLASSES>
           <root url="file://$MODULE_DIR$/vendor/composer" />
+          <root url="file://$MODULE_DIR$/vendor/oglowa/ya-corapi" />
+          <root url="file://$MODULE_DIR$/vendor/ollily/ezlogging" />
+          <root url="file://$MODULE_DIR$/vendor/squizlabs/php_codesniffer" />
         </CLASSES>
         <SOURCES>
           <root url="file://$MODULE_DIR$/vendor/composer" />
+          <root url="file://$MODULE_DIR$/vendor/oglowa/ya-corapi" />
+          <root url="file://$MODULE_DIR$/vendor/ollily/ezlogging" />
+          <root url="file://$MODULE_DIR$/vendor/squizlabs/php_codesniffer" />
         </SOURCES>
       </library>
     </orderEntry>

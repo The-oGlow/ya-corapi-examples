@@ -1,21 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
-  <component name="PhpTestFrameworkVersionCache">
-    <tools_cache>
-      <tool tool_name="PHPUnit">
-        <cache>
-          <versions>
-            <info id="Local" version="9.5.9" />
-          </versions>
-        </cache>
-      </tool>
-    </tools_cache>
-  </component>
-  <component name="PhpUnit">
-    <phpunit_settings>
-      <PhpUnitSettings load_method="CUSTOM_LOADER" />
-    </phpunit_settings>
-  </component>
   <component name="ProjectResources">
     <resource url="http://phpmd.org/xml/ruleset_xml_schema_1.0.0.xsd" location="C:/projekte/php/xsd/ruleset_xml_schema_1.0.0.xsd" />
     <resource url="https://schema.phpunit.de/10.4/phpunit.xsd" location="$PROJECT_DIR$/../../projects_github/ya-corapi-examples" />
