@@ -107,6 +107,54 @@ abstract class AbstractRestApiExample
     }
 
     /**
+     * @param IResponse $response
+     * @param null|int  $idx
+     */
+    protected function showResults(IResponse $response, ?int $idx = null): void
+    {
+        $line = [];
+
+        if (isset($idx)) {
+            $line[] = $idx;
+        }
+        /** @var mixed */
+        $content = $response->getValue(IResponse::KEY_CONTENT);
+        if (!empty($content) && is_array($content)) {
+            array_push(
+                $line,
+                [
+                    $content[IResponse::KEY_ID] ?? $response->getValue(IResponse::KEY_ID),
+                    $content[IResponse::KEY_SPACE][IResponse::KEY_KEY] ?? $response->getValue(IResponse::KEY_ID)[IResponse::KEY_KEY],
+                    $content[IResponse::KEY_TITLE] ?? $response->getValue(IResponse::KEY_TITLE),
+                    $content[IResponse::KEY_TYPE] ?? $response->getValue(IResponse::KEY_TYPE),
+                    $response->getValue(IResponse::KEY_LINKS)[IResponse::KEY_BASE] ?? ConstData::c(ConstData::C_CONF_BASE_URL),
+                    $content[IResponse::KEY_LINKS][IResponse::KEY_WEBUI] ?? $response->getValue(
+                        IResponse::KEY_URL,
+                        $response->getValue(IResponse::KEY_LINKS)
+                        [IResponse::KEY_WEBUI]
+                    ),
+                ]
+            );
+        } else {
+            $this->logger->warning('content is empty or no array', [gettype($content)]);
+        }
+        $this->logger->info("$idx.", [$line]);
+    }
+
+    /**
+     * @param IResponse $response
+     */
+    protected function showTotals(IResponse $response): void
+    {
+        $start = $response->getValue(IResponse::KEY_START, '-');
+        $size  = $response->getValue(IResponse::KEY_SIZE, '-');
+        $limit = $response->getValue(IResponse::KEY_LIMIT, '-');
+        $total = $response->getValue(IResponse::KEY_TOTAL, $response->getValue(IResponse::KEY_TOTAL_SIZE, '-'));
+
+        $this->logger->info("Total,Start,Size,Limit", [$total, $start, $size, $limit]);
+    }
+
+    /**
      * @param mixed       $anyData
      * @param null|string $fileExtension
      */
