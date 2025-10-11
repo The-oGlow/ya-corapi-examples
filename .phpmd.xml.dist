@@ -23,6 +23,7 @@
     <rule ref="rulesets/naming.xml">
         <!-- refine -->
         <exclude name="LongClassName"/>
+        <exclude name="LongVariable"/>
     </rule>
     <rule ref="rulesets/unusedcode.xml"/>
 
@@ -49,6 +50,13 @@
             <property name="maximum" value="60"/>
             <property name="subtract-prefixes" value="Abstract"/>
             <property name="subtract-suffixes" value="Clazz,Trait,Test"/>
+        </properties>
+    </rule>
+    <rule ref="rulesets/naming.xml/LongVariable">
+        <!-- refine -->
+        <priority>1</priority>
+        <properties>
+            <property name="maximum" value="40"/>
         </properties>
     </rule>
 

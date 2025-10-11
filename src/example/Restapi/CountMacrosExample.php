@@ -3,9 +3,9 @@
 declare(strict_types=1);
 
 /*
- * This file is part of ya-corapi-examles
+ * This file is part of ya-corapi-examples
  *
- * (c) 2024 Oliver Glowa, coding.glowa.com
+ * (c) 2025 Oliver Glowa, coding.glowa.com
  *
  * This source file is subject to the Apache-2.0 license that is bundled
  * with this source code in the file LICENSE.
@@ -13,13 +13,15 @@ declare(strict_types=1);
 
 namespace oglowa\example\Restapi;
 
-use oglowa\tools\Yacorapi\Impl\AddonMacroData;
-use oglowa\tools\Yacorapi\Impl\ResponseAddonMacroDecorate;
-use oglowa\tools\Yacorapi\Impl\SpaceData;
+use oglowa\tools\Yacorapi\Data\AddonMacroData;
+use oglowa\tools\Yacorapi\Data\SpaceData;
+use oglowa\tools\Yacorapi\IResponse;
+use oglowa\tools\Yacorapi\Response\ResponseAddonMacroDecorate;
 use oglowa\tools\Yacorapi\Statistic\AddonStatistic;
 use oglowa\tools\Yacorapi\Statistic\IStatistic;
 use oglowa\tools\Yacorapi\Statistic\MacroStatistic;
 use oglowa\tools\Yacorapi\Statistic\SpaceStatistic;
+use oglowa\tools\Yacorapi\Statistic\ValueStatistic;
 
 require_once __DIR__ . '/../bootstrap.php'; // NOSONAR: php:S4833
 
@@ -51,17 +53,18 @@ class CountMacrosExample extends AbstractRestApiExample
 
         /** @var SpaceStatistic $space */
         foreach ($anyData as $space) {
-            $spaceKey      = $space->getSpaceKey();
+            $spaceKey      = $space->getStatisticName();
             $fileExtension = "$spaceKey-$mode";
             $this->storeAsCsv(null, $fileExtension, $space->header());
-            foreach ($space->getKeys() as $addonName) {
+            foreach ($space->keys() as $addonName) {
                 /** @var AddonStatistic $addon */
                 $addon = $space->getItem($addonName);
-                foreach ($addon->getKeys() as $macroName) {
+                foreach ($addon->keys() as $macroName) {
                     /** @var MacroStatistic $macro */
                     $macro = $addon->getItem($macroName);
-
-                    $csvLine = [$spaceKey, $addonName, $macroName, $macro->getCount()];
+                    /** @var ValueStatistic $value */
+                    $value   = $macro->getItem(IResponse::KEY_COUNT);
+                    $csvLine = [$spaceKey, $addonName, $macroName, $value->getValue()];
                     $this->storeAsCsv($csvLine, $fileExtension);
                 }
             }
@@ -72,13 +75,13 @@ class CountMacrosExample extends AbstractRestApiExample
 function main(): void
 {
     $thisClazz = new CountMacrosExample();
-    $spaceData = SpaceData::getI();
+    $spaceData = new SpaceData();
     $spaceKeys = $spaceData->getDataByMode(SpaceData::SPACE_ALL);
     $mode      = AddonMacroData::MACRO_BLOCKER;
 
     foreach ($spaceKeys as $spaceKey) {
         $thisClazz->countOneSpaceOneAddon($spaceKey, $mode);
-        sleep(2);
+        sleep(2); // NOSONAR: php:S2964
     }
 }
 

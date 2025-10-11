@@ -10,6 +10,7 @@
         findUnusedPsalmSuppress="true"
         reportInfo="false"
         reportMixedIssues="true"
+        allowStringToStandInForClass="true"
 >
     <projectFiles>
         <directory name="src"/>
@@ -19,7 +20,7 @@
         </ignoreFiles>
     </projectFiles>
     <issueHandlers>
-        <UnusedPsalmSuppress errorLevel="info"/>
+        <UnusedPsalmSuppress errorLevel="error"/>
         <!-- too strict -->
         <LessSpecificImplementedReturnType errorLevel="suppress"/>
         <MixedArgument errorLevel="info"/>

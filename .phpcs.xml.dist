@@ -18,8 +18,8 @@
     <arg value="n"/>
 
     <arg name="report-width" value="160"/>
-    <arg name="report-summary" value="target\phpcs\phpcsniffer-summary.txt"/>
-    <arg name="report-full" value="target\phpcs\phpcsniffer-report.txt"/>
+    <arg name="report-summary" value="target/analysis/phpcs/phpcsniffer-summary.txt"/>
+    <arg name="report-full" value="target/analysis/phpcs/phpcsniffer-report.txt"/>
 
     <autoload>/vendor/autoload.php</autoload>
 

@@ -3,9 +3,9 @@
 declare(strict_types=1);
 
 /*
- * This file is part of ya-corapi-examles
+ * This file is part of ya-corapi-examples
  *
- * (c) 2024 Oliver Glowa, coding.glowa.com
+ * (c) 2025 Oliver Glowa, coding.glowa.com
  *
  * This source file is subject to the Apache-2.0 license that is bundled
  * with this source code in the file LICENSE.
@@ -14,7 +14,6 @@ declare(strict_types=1);
 namespace oglowa\example\Restapi;
 
 use oglowa\tools\Yacorapi\IResponse;
-use oglowa\tools\Yacorapi\RapiClient;
 
 require_once __DIR__ . '/../bootstrap.php'; // NOSONAR: php:S4833
 
@@ -98,21 +97,14 @@ class SearchPageExample extends AbstractRestApiExample
         $response = $this->apiClient->searchPagesWithFilter($filterTerm, $spaceKey, $searchFromPos);
 
         $idx = 0;
-        /**
-         * FIXME: IResponse liefert falschen Wert.
-         *
-         * @var IResponse|mixed[] $singleResult
-         *
-         * @psalm-suppress PossibleRawObjectIteration
-         * @phpstan-ignore foreach.nonIterable
-         */
+        /** @var array<mixed,mixed> $singleResult */
         foreach ($response->getResults() as $singleResult) {
             $this->outputData($singleResult, $idx++);
         }
         $this->resultPosUpdate(
-            (int)$response->getValue(RapiClient::KEY_START),
-            (int)$response->getValue(RapiClient::KEY_SIZE),
-            (int)$response->getValue(RapiClient::KEY_TOTAL_SIZE)
+            (int)$response->getValue(IResponse::KEY_START),
+            (int)$response->getValue(IResponse::KEY_SIZE),
+            (int)$response->getValue(IResponse::KEY_TOTAL_SIZE)
         );
     }
 
@@ -126,25 +118,20 @@ class SearchPageExample extends AbstractRestApiExample
     }
 }
 
-/**
- * FIXME:Remove.
- *
- * @SuppressWarnings(PHPMD)
- */
 function main(): void
 {
     global $pageId, $searchTerm, $spaceKey;
     $thisClazz = new SearchPageExample();
 
-//    $thisClazz->readPageByPageId($pageId);
+    $thisClazz->readPageByPageId($pageId);
 
-        $thisClazz->readPagesWithFilter($searchTerm);
-    //    $thisClazz->readPagesWithFilterAndSpace($searchTerm, $spaceKey);
-    //
-    //    $thisClazz->scanPagesWithFilter($searchTerm);
-    //    $thisClazz->scanPagesWithFilterAndSpace($searchTerm, $spaceKey);
-    //
-    //    $thisClazz->searchPagesWithFilter();
+    $thisClazz->readPagesWithFilter($searchTerm);
+    $thisClazz->readPagesWithFilterAndSpace($searchTerm, $spaceKey);
+
+    $thisClazz->scanPagesWithFilter($searchTerm);
+    $thisClazz->scanPagesWithFilterAndSpace($searchTerm, $spaceKey);
+
+    $thisClazz->searchPagesWithFilter();
 }
 
 main();

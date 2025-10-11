@@ -3,9 +3,9 @@
 declare(strict_types=1);
 
 /*
- * This file is part of ya-corapi-examles
+ * This file is part of ya-corapi-examples
  *
- * (c) 2024 Oliver Glowa, coding.glowa.com
+ * (c) 2025 Oliver Glowa, coding.glowa.com
  *
  * This source file is subject to the Apache-2.0 license that is bundled
  * with this source code in the file LICENSE.
@@ -17,10 +17,10 @@ use Monolog\ConsoleLogger;
 use Monolog\PlainLogger;
 use oglowa\tools\common\IStoreAdapter;
 use oglowa\tools\Yacorapi\ConstData;
-use oglowa\tools\Yacorapi\Impl\CsvFileAdapter;
-use oglowa\tools\Yacorapi\Impl\FileAdapter;
 use oglowa\tools\Yacorapi\IResponse;
 use oglowa\tools\Yacorapi\RapiClient;
+use oglowa\tools\Yacorapi\Store\CsvFileAdapter;
+use oglowa\tools\Yacorapi\Store\FileAdapter;
 use ollily\Tools\String\ImplodeTrait;
 use Psr\Log\LoggerInterface;
 
@@ -45,7 +45,6 @@ abstract class AbstractRestApiExample
 
     public function __construct(string $outputFileName = '')
     {
-        ConstData::instance();
         $this->logger = new ConsoleLogger(get_class($this));
         $this->logger->debug("START");
 
@@ -79,21 +78,14 @@ abstract class AbstractRestApiExample
         if (is_a($anyData, IResponse::class)) {
             $this->output->out($prefix . $anyData);
         } else {
-            $this->output->out($prefix . $this->arrayRecImplode(",", $anyData, false, true));
+            $this->output->out($prefix . $this->implode_recursive(",", $anyData, false, true));
         }
     }
 
     protected function outputDatas(IResponse $response): void
     {
         $idx = 0;
-        /**
-         * FIXME: IResponse liefert falschen Wert.
-         *
-         * @var IResponse|mixed[] $singleResult
-         *
-         * @psalm-suppress PossibleRawObjectIteration
-         * @phpstan-ignore foreach.nonIterable
-         */
+        /** @var mixed[] $singleResult */
         foreach ($response->getResults() as $singleResult) {
             $this->outputData($singleResult, $idx++);
         }
@@ -120,9 +112,9 @@ abstract class AbstractRestApiExample
      */
     protected function storeOrg($anyData, ?string $fileExtension = 'txt'): void
     {
-        // FIXME: Die Angabe von Pfad und Dateiname ist unsauber
+        // REFACTOR: Die Angabe von Pfad und Dateiname ist unsauber
         $targetFile = $this->storeAdapter->prepareTargetFileParam(
-            $this->prepareTargetPathName(\oglowa\tools\Yacorapi\TARGET_ORGDIR),
+            $this->prepareTargetPathName(ConstData::c(ConstData::C_TARGET_ORGDIR_PH)),
             $this->prepareTargetFileName('org'),
             $fileExtension ?? 'txt'
         );
@@ -135,9 +127,9 @@ abstract class AbstractRestApiExample
      */
     protected function storeMod($anyData, ?string $fileExtension = 'txt'): void
     {
-        // FIXME: Die Angabe von Pfad und Dateiname ist unsauber
+        // REFACTOR: Die Angabe von Pfad und Dateiname ist unsauber
         $targetFile = $this->storeAdapter->prepareTargetFileParam(
-            $this->prepareTargetPathName(\oglowa\tools\Yacorapi\TARGET_MODDIR),
+            $this->prepareTargetPathName(ConstData::c(ConstData::C_TARGET_MODDIR_PH)),
             $this->prepareTargetFileName('mod'),
             $fileExtension ?? 'txt'
         );
@@ -152,9 +144,9 @@ abstract class AbstractRestApiExample
     {
         $anyString = print_r($anyData, true);
 
-        // FIXME: Die Angabe von Pfad und Dateiname ist unsauber
+        // REFACTOR: Die Angabe von Pfad und Dateiname ist unsauber
         $targetFile = $this->storeAdapter->prepareTargetFileParam(
-            $this->prepareTargetPathName(\oglowa\tools\Yacorapi\TARGET_DIR),
+            $this->prepareTargetPathName(ConstData::c(ConstData::C_TARGET_DIR_PH)),
             $this->prepareTargetFileName('dump'),
             $fileExtension ?? 'txt'
         );
@@ -171,9 +163,9 @@ abstract class AbstractRestApiExample
         /** @var CsvFileAdapter */
         $csvAdapter = new CsvFileAdapter($this->outputFileName);
 
-        // FIXME: Die Angabe von Pfad und Dateiname ist unsauber
+        // REFACTOR: Die Angabe von Pfad und Dateiname ist unsauber
         $targetFile = $csvAdapter->prepareTargetFileParam(
-            $this->prepareTargetPathName(\oglowa\tools\Yacorapi\TARGET_DIR),
+            $this->prepareTargetPathName(ConstData::c(ConstData::C_TARGET_DIR_PH)),
             $this->prepareTargetFileName(),
             $fileExtension ?? 'csv'
         );

@@ -1,9 +1,10 @@
 <?php
 
 declare(strict_types=1);
-$headerProjName   = 'ya-corapi-examles';
+
+$headerProjName   = 'ya-corapi-examples';
 $headerProjAuthor = 'Oliver Glowa, coding.glowa.com';
-$headerProjYear   = 2024;
+$headerProjYear   = 2025;
 $headerText       = <<<EOF
 This file is part of ${headerProjName}
 
@@ -21,7 +22,7 @@ $projRules = [
     'declare_strict_types'                          => true,
     'no_trailing_comma_in_singleline'               => true,
     'protected_to_private'                          => false,
-    'visibility_required'                           => false,
+    'modifier_keywords'                             => true,
     'return_assignment'                             => true,
     // Blank lines / spacing
     'class_attributes_separation'                   => [

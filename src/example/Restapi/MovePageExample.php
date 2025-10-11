@@ -3,9 +3,9 @@
 declare(strict_types=1);
 
 /*
- * This file is part of ya-corapi-examles
+ * This file is part of ya-corapi-examples
  *
- * (c) 2024 Oliver Glowa, coding.glowa.com
+ * (c) 2025 Oliver Glowa, coding.glowa.com
  *
  * This source file is subject to the Apache-2.0 license that is bundled
  * with this source code in the file LICENSE.
@@ -13,17 +13,19 @@ declare(strict_types=1);
 
 namespace oglowa\example\Restapi;
 
+use oglowa\tools\Yacorapi\ConstData;
+
 require_once __DIR__ . '/../bootstrap.php'; // NOSONAR: php:S4833
 
 class MovePageExample extends AbstractRestApiExample
 {
-    public const        C_PLAYGROUND_ID = 532951146;
+    public const C_SPACE         = 'NMAS';
 
-    public const        C_SPACE         = 'NMAS';
+    public const C_PLAYGROUND_ID = 532951146;
 
-    public const        C_MOVE_TITLE    = 'MOVE PAGE %s-%s';
+    public const C_MOVE_TITLE    = 'MOVE PAGE %s-%s';
 
-    public const        C_MOVE_BODY     = "Move page to playground";
+    public const C_MOVE_BODY     = "Move page to playground";
 
     public function createPage(string $spaceKey, string $pageTitle, string $pageBody = '', ?int $parentId = null): int
     {
@@ -50,7 +52,7 @@ class MovePageExample extends AbstractRestApiExample
     public function movePageInsideSpace(): void
     {
         $thisClazz = new MovePageExample();
-        $title     = sprintf(MovePageExample::C_MOVE_TITLE, \oglowa\tools\Yacorapi\TS_NOW, 0);
+        $title     = sprintf(MovePageExample::C_MOVE_TITLE, ConstData::c(ConstData::C_TS_NOW), 0);
         $pageId    = $thisClazz->createPage(MovePageExample::C_SPACE, $title, MovePageExample::C_MOVE_BODY);
         $thisClazz->movePage($pageId, MovePageExample::C_PLAYGROUND_ID);
     }

@@ -3,9 +3,9 @@
 declare(strict_types=1);
 
 /*
- * This file is part of ya-corapi-examles
+ * This file is part of ya-corapi-examples
  *
- * (c) 2024 Oliver Glowa, coding.glowa.com
+ * (c) 2025 Oliver Glowa, coding.glowa.com
  *
  * This source file is subject to the Apache-2.0 license that is bundled
  * with this source code in the file LICENSE.
@@ -13,8 +13,8 @@ declare(strict_types=1);
 
 namespace oglowa\example\Restapi;
 
-use oglowa\tools\Yacorapi\Impl\SpaceData;
-use oglowa\tools\Yacorapi\RapiClient;
+use oglowa\tools\Yacorapi\Data\RequestParameterData;
+use oglowa\tools\Yacorapi\Data\SpaceData;
 use oglowa\tools\Yacorapi\Statistic\IStatistic;
 use oglowa\tools\Yacorapi\Statistic\SpaceStatistic;
 
@@ -39,19 +39,18 @@ class CountPagesExample extends AbstractRestApiExample
         $fileNameSuffix = $singleFile ? '' : $spaceKey;
         $spaceStatistic = new SpaceStatistic($spaceKey);
 
-        foreach (RapiClient::ITEM_TYPES as $pageType) {
+        foreach (RequestParameterData::ITEM_TYPES as $pageType) {
             $countPages = $this->countPagesInSpace($spaceKey, $pageType);
             $spaceStatistic->addItem($pageType, $countPages);
         }
 
         if (($singleFile && !$this->headerWritten) || !$singleFile) {
-            $this->storeAsCsv(null, $fileNameSuffix, $spaceStatistic->flattenHeader());
+            $this->storeAsCsv(null, $fileNameSuffix, $spaceStatistic->header());
             $this->headerWritten = true;
         }
-        foreach ($spaceStatistic->getKeys() as $itemName) {
-            /** @var IStatistic $value */
+        foreach ($spaceStatistic->keys() as $itemName) {
             $value = $spaceStatistic->getItem($itemName);
-            $entry = [$spaceKey, $itemName, $value->flatten(false)];
+            $entry = [$spaceKey, $itemName, is_null($value) ? '' : $value->flatten(false)];
             $this->storeAsCsv($entry, $fileNameSuffix);
         }
 
@@ -68,12 +67,14 @@ function main(): void
 {
     $thisClazz = new CountPagesExample();
 
-    $spaceData = SpaceData::getI();
-    $spaceKeys = $spaceData->getDataByMode(SpaceData::SPACE_SIMPLE);
-    $singleFile = false;
+    $spaceData = new SpaceData();
+    $spaceKeys = $spaceData->getDataByMode(SpaceData::SPACE_ALL);
+    $singleFile = false
+    ;
 
     foreach ($spaceKeys as $spaceKey) {
         $thisClazz->countOneSpaceVolume($spaceKey, $singleFile);
+        sleep(2); // NOSONAR: php:S2964
     }
 }
 

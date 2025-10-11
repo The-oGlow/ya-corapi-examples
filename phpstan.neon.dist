@@ -1,16 +1,79 @@
 parameters:
     level: 8
 
+    parallel:
+        jobSize: 10
+        maximumNumberOfProcesses: 32
+        minimumNumberOfJobsPerProcess: 4
+
     paths:
         - src/
         - tests/
 
+    checkStrictPrintfPlaceholderTypes: false
+
     strictRules:
-        # too strict
+        # Too strict -> disabled
         disallowedEmpty: false
         disallowedLooseComparison: false
 
-    excludePaths:
+    ignoreErrors:
+        # Too strict -> disabled
+        -
+            identifier: booleanAnd.alwaysFalse
+            paths:
+                - tests/*/*TestTrait.php
+        -
+            identifier: booleanAnd.alwaysTrue
+            paths:
+                - tests/*/*TestTrait.php
+        -
+            identifier: function.alreadyNarrowedType
+            paths:
+                - tests/*/*TestTrait.php
+        -
+            identifier: function.impossibleType
+            paths:
+                - tests/*/*TestTrait.php
+        -
+            identifier: instanceof.alwaysFalse
+            paths:
+                - tests/*/*TestTrait.php
+        -
+            identifier: instanceof.alwaysTrue
+            paths:
+                - tests/*/*TestTrait.php
+        -
+            identifier: isset.property
+            paths:
+                - tests/*/*TestTrait.php
+        -
+            identifier: method.dynamicName
+            paths:
+                - tests/*/*TestTrait.php
+                - tests/*/*Test.php
+        -
+            identifier: method.notFound
+            paths:
+                - tests/*/*TestTrait.php
+        -
+            identifier: method.unused
+            paths:
+                - tests/*/*Test.php
+        -
+            identifier: property.notFound
+            paths:
+                - tests/*/*TestTrait.php
+        -
+            identifier: property.onlyWritten
+            paths:
+                - tests/*/*Test.php
+        -
+            identifier: staticMethod.alreadyNarrowedType
+            paths:
+                - tests/*/*TestTrait.php
+
+        # Custom
 
 includes:
     - vendor/phpstan/phpstan-strict-rules/rules.neon

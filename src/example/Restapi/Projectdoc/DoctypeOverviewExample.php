@@ -3,9 +3,9 @@
 declare(strict_types=1);
 
 /*
- * This file is part of ya-corapi-examles
+ * This file is part of ya-corapi-examples
  *
- * (c) 2024 Oliver Glowa, coding.glowa.com
+ * (c) 2025 Oliver Glowa, coding.glowa.com
  *
  * This source file is subject to the Apache-2.0 license that is bundled
  * with this source code in the file LICENSE.
@@ -13,22 +13,23 @@ declare(strict_types=1);
 
 namespace oglowa\example\Restapi\Projectdoc;
 
+use Ds\Map;
 use oglowa\example\Restapi\AbstractRestApiExample;
+use oglowa\tools\Yacorapi\ConstData;
+use oglowa\tools\Yacorapi\IResponse;
+use oglowa\tools\Yacorapi\Projectdoc\TraitProjectdoc;
 
 require_once __DIR__ . '/../../bootstrap.php'; // NOSONAR: php:S4833
 
-/**
- * FIXME:Remove.
- *
- * @SuppressWarnings(PHPMD)
- */
 class DoctypeOverviewExample extends AbstractRestApiExample
 {
-    public const IDX_STRICT = 'strict';
+    use TraitProjectdoc;
 
-    public const IDX_LAZY = 'ids';
+    public const DOCTYPE_STRICT = 'strict';
 
-    public const IDX_SIZE = 'size';
+    public const DOCTYPE_LAZY = 'ids';
+
+    public const DOCTYPE_TOTALS = 'size';
 
     public function getDoctype(int $foundPageId, string $propertyName): string
     {
@@ -37,7 +38,7 @@ class DoctypeOverviewExample extends AbstractRestApiExample
         $pdtResponse = $this->apiClient->pdtReadProperty($foundPageId, $propertyName);
 
         $foundDoctype = '';
-        // FIXME: That is an response method -> PDTDEcorate
+        // REFACTOR: That is an response method -> PDTDEcorate
         if ($this->apiClient->checkDataPdtProperty($pdtResponse)) {
             $foundDoctype = $pdtResponse->getValue('value');
         } else {
@@ -52,45 +53,50 @@ class DoctypeOverviewExample extends AbstractRestApiExample
     public function loopPdtPages(string $spaceKey, bool $strictCheck = false): array
     {
         $this->logger->debug("START");
-        $start      = 0;
-        $limit      = 50;
-        $maxCount   = 6; // PAGE_MAX_RESULTS * 0.1;
+        $start      = ConstData::PAGE_START;
+        $limit      = ConstData::PAGE_LIMIT;
+        $maxCount   = ConstData::PAGE_MAX_RESULTS * 0.1;
         $filterTerm = "type:page AND macroName:projectdoc-properties-marker";
 
+        $doctypes = [];
         $doctypes[$spaceKey]    = [];
+        $errDoctypes = [];
         $errDoctypes[$spaceKey] = [];
 
         $resultsCount = 0;
         $bLoop        = true;
         while ($bLoop) {
+            /** @var IResponse */
             $response = $this->apiClient->searchPagesWithFilter($filterTerm, $spaceKey, $start, $limit);
 
-            if ($response->isAvailable()) {
-                $propertyName = 'Doctype';
+            if ($response->isResultsAvailable()) {
+                $propertyName =  \oglowa\tools\Yacorapi\Projectdoc\PDT_PROP_DOCTYPE;
+                /** @var Map<mixed,mixed> $results */
+                $results = $response->getResults();
+                if ($results->hasKey(IResponse::KEY_CONTENT)) {
+                    $results = $results->get(IResponse::KEY_CONTENT);
+                }
 
-                foreach ($response->getResults() as $result) {
-                    if (key_exists('content', $result)) {
-                        $result = $result['content'];
-                    }
-                    $foundPageId = (int)$result['key'];
+                foreach ($results as $resultValue) {
+                    $foundPageId = (int)$resultValue[IResponse::KEY_KEY];
 
                     $foundDoctype = $this->getDoctype($foundPageId, $propertyName);
                     if (empty($foundDoctype)) {
                         $errDoctypes[$spaceKey][] = $foundPageId;
                     } else {
                         if (!key_exists($foundDoctype, $doctypes[$spaceKey])) {
-                            $doctypes[$spaceKey][$foundDoctype][self::IDX_SIZE]   = 0;
-                            $doctypes[$spaceKey][$foundDoctype][self::IDX_STRICT] = [];
-                            $doctypes[$spaceKey][$foundDoctype][self::IDX_LAZY]   = [];
+                            $doctypes[$spaceKey][$foundDoctype][self::DOCTYPE_TOTALS] = 0;
+                            $doctypes[$spaceKey][$foundDoctype][self::DOCTYPE_STRICT] = [];
+                            $doctypes[$spaceKey][$foundDoctype][self::DOCTYPE_LAZY]   = [];
                         }
-                        $doctypes[$spaceKey][$foundDoctype][self::IDX_SIZE]++;
+                        $doctypes[$spaceKey][$foundDoctype][self::DOCTYPE_TOTALS]++;
                         if ($strictCheck && !$this->validateDoctypeName($foundDoctype)) {
-                            $doctypes[$spaceKey][$foundDoctype][self::IDX_STRICT][] = $foundPageId;
+                            $doctypes[$spaceKey][$foundDoctype][self::DOCTYPE_STRICT][] = $foundPageId;
                             $resultsCount++;
                         }
 
                         if (!$this->validateDoctypeName($foundDoctype, false)) {
-                            $doctypes[$spaceKey][$foundDoctype][self::IDX_LAZY][] = $foundPageId;
+                            $doctypes[$spaceKey][$foundDoctype][self::DOCTYPE_LAZY][] = $foundPageId;
                             $resultsCount++;
                         }
                     }
@@ -140,8 +146,8 @@ class DoctypeOverviewExample extends AbstractRestApiExample
         $this->storeAsCsv(null, null, ['Space', 'Doctype', 'Size', 'Page ID']);
         foreach ($docTypes as $space => $spaceDoctypes) {
             foreach ($spaceDoctypes as $doctype => $doctypeData) {
-                $allDoctypeData = array_unique(array_merge($doctypeData[self::IDX_STRICT], $doctypeData[self::IDX_LAZY]));
-                $csvLine        = sprintf($format, $space, $doctype, $doctypeData[self::IDX_SIZE], implode(',', $allDoctypeData));
+                $allDoctypeData = array_unique(array_merge($doctypeData[self::DOCTYPE_STRICT], $doctypeData[self::DOCTYPE_LAZY]));
+                $csvLine        = sprintf($format, $space, $doctype, $doctypeData[self::DOCTYPE_TOTALS], implode(',', $allDoctypeData));
                 $this->storeAsCsv($csvLine);
             }
         }
@@ -151,8 +157,10 @@ class DoctypeOverviewExample extends AbstractRestApiExample
 
 function main(): void
 {
+    $spaceKey  = 'NMVS';
+
     $thisClazz = new DoctypeOverviewExample();
-    $doctypes  = $thisClazz->loopPdtPages('NMVS', true);
+    $doctypes  = $thisClazz->loopPdtPages($spaceKey, true);
     $thisClazz->storeDoctypes($doctypes);
 }
 

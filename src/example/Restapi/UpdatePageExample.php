@@ -3,9 +3,9 @@
 declare(strict_types=1);
 
 /*
- * This file is part of ya-corapi-examles
+ * This file is part of ya-corapi-examples
  *
- * (c) 2024 Oliver Glowa, coding.glowa.com
+ * (c) 2025 Oliver Glowa, coding.glowa.com
  *
  * This source file is subject to the Apache-2.0 license that is bundled
  * with this source code in the file LICENSE.
@@ -20,11 +20,6 @@ use oglowa\tools\Yacorapi\IResponse;
 
 require_once __DIR__ . '/../bootstrap.php'; // NOSONAR: php:S4833
 
-/**
- * FIXME:Remove.
- *
- * @SuppressWarnings(PHPMD)
- */
 class UpdatePageExample extends AbstractRestApiExample
 {
     private function loopThruUpdates(Task $task): void
@@ -43,7 +38,7 @@ class UpdatePageExample extends AbstractRestApiExample
 
                 $suffix = $pageIdLoaded . '-' . str_replace(' ', '_', substr($pageTitleLoaded, 0, 15)) . ".xml";
                 $this->storeOrg($pageBodyLoaded, $suffix);
-                $pageBodyModified = ContentHelper::getI()->prepareMacro('info', ['title' => 'Modified Content'], 'I changed this page1');
+                $pageBodyModified = ContentHelper::instance()->prepareMacro('info', ['title' => 'Modified Content'], 'I changed this page1');
                 $this->storeMod($pageBodyModified, $suffix);
                 $this->apiClient->updatePage($pageIdLoaded, $pageBodyModified, $pageVersionLoaded, $pageTitleLoaded);
             } else {
@@ -54,10 +49,13 @@ class UpdatePageExample extends AbstractRestApiExample
         }
     }
 
+    /**
+     * @SuppressWarnings("PHPMD.ExitExpression")
+     */
     public function mainUpdate(): void
     {
         $key      = "tasks-pageid";
-        $tasklist = BatchTaskHelper::getI()->readResultFile($key);
+        $tasklist = BatchTaskHelper::instance()->readResultFile($key);
 
         $fallbackIdx = 0;
         foreach ($tasklist as $task) {

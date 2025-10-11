@@ -19,7 +19,7 @@
     </testsuites>
 
     <logging>
-        <junit outputFile="target/phpunit/junit.xml"/>
+        <junit outputFile="target/analysis/phpunit/junit.xml"/>
     </logging>
 
     <coverage
@@ -28,9 +28,9 @@
             pathCoverage="true"
             disableCodeCoverageIgnore="false">
         <report>
-            <clover outputFile="target/clover/coverage.xml"/>
-            <text outputFile="target/text/coverage.txt" showUncoveredFiles="true" showOnlySummary="false"/>
-            <!--<html outputDirectory="target/html" />-->
+            <clover outputFile="target/analysis/clover/coverage.xml"/>
+            <text outputFile="target/analysis/text/coverage.txt" showUncoveredFiles="true" showOnlySummary="false"/>
+            <!--<html outputDirectory="target/analysis/html" />-->
         </report>
 
         <include>
