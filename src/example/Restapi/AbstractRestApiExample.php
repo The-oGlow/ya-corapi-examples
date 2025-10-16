@@ -40,6 +40,9 @@ abstract class AbstractRestApiExample
     /** @var IStoreAdapter */
     protected $storeAdapter;
 
+    /** @var ConstData */
+    protected $constData;
+
     /** @var string */
     private $outputFileName;
 
@@ -47,7 +50,7 @@ abstract class AbstractRestApiExample
     {
         $this->logger = new ConsoleLogger(get_class($this));
         $this->logger->debug("START");
-
+        $this->constData = new ConstData(get_class($this));
         $this->outputFileName = empty($outputFileName) ? get_class($this) : $outputFileName;
         $this->output         = new PlainLogger(get_class($this));
         $this->storeAdapter   = new FileAdapter($this->outputFileName);
@@ -93,7 +96,7 @@ abstract class AbstractRestApiExample
 
     protected function prepareTargetPathName(string $pathPH): string
     {
-        return ConstData::realScriptName($pathPH, $this->outputFileName);
+        return $this->constData->realScriptName($pathPH, $this->outputFileName);
     }
 
     protected function prepareTargetFileName(string $suffix = ''): string
@@ -127,7 +130,7 @@ abstract class AbstractRestApiExample
                     $content[IResponse::KEY_SPACE][IResponse::KEY_KEY] ?? $response->getValue(IResponse::KEY_ID)[IResponse::KEY_KEY],
                     $content[IResponse::KEY_TITLE] ?? $response->getValue(IResponse::KEY_TITLE),
                     $content[IResponse::KEY_TYPE] ?? $response->getValue(IResponse::KEY_TYPE),
-                    $response->getValue(IResponse::KEY_LINKS)[IResponse::KEY_BASE] ?? ConstData::c(ConstData::C_CONF_BASE_URL),
+                    $response->getValue(IResponse::KEY_LINKS)[IResponse::KEY_BASE] ?? $this->constData->c(ConstData::C_CONF_BASE_URL),
                     $content[IResponse::KEY_LINKS][IResponse::KEY_WEBUI] ?? $response->getValue(
                         IResponse::KEY_URL,
                         $response->getValue(IResponse::KEY_LINKS)
@@ -162,7 +165,7 @@ abstract class AbstractRestApiExample
     {
         // REFACTOR: Die Angabe von Pfad und Dateiname ist unsauber
         $targetFile = $this->storeAdapter->prepareTargetFileParam(
-            $this->prepareTargetPathName(ConstData::c(ConstData::C_TARGET_ORGDIR_PH)),
+            $this->prepareTargetPathName($this->constData->c(ConstData::C_TARGET_ORGDIR)),
             $this->prepareTargetFileName('org'),
             $fileExtension ?? 'txt'
         );
@@ -177,7 +180,7 @@ abstract class AbstractRestApiExample
     {
         // REFACTOR: Die Angabe von Pfad und Dateiname ist unsauber
         $targetFile = $this->storeAdapter->prepareTargetFileParam(
-            $this->prepareTargetPathName(ConstData::c(ConstData::C_TARGET_MODDIR_PH)),
+            $this->prepareTargetPathName($this->constData->c(ConstData::C_TARGET_MODDIR)),
             $this->prepareTargetFileName('mod'),
             $fileExtension ?? 'txt'
         );
@@ -194,7 +197,7 @@ abstract class AbstractRestApiExample
 
         // REFACTOR: Die Angabe von Pfad und Dateiname ist unsauber
         $targetFile = $this->storeAdapter->prepareTargetFileParam(
-            $this->prepareTargetPathName(ConstData::c(ConstData::C_TARGET_DIR_PH)),
+            $this->prepareTargetPathName($this->constData->c(ConstData::C_TARGET_DIR)),
             $this->prepareTargetFileName('dump'),
             $fileExtension ?? 'txt'
         );
@@ -213,7 +216,7 @@ abstract class AbstractRestApiExample
 
         // REFACTOR: Die Angabe von Pfad und Dateiname ist unsauber
         $targetFile = $csvAdapter->prepareTargetFileParam(
-            $this->prepareTargetPathName(ConstData::c(ConstData::C_TARGET_DIR_PH)),
+            $this->prepareTargetPathName($this->constData->c(ConstData::C_TARGET_DIR)),
             $this->prepareTargetFileName(),
             $fileExtension ?? 'csv'
         );

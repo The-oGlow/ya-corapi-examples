@@ -13,6 +13,7 @@ declare(strict_types=1);
 
 namespace oglowa\example\Restapi;
 
+use Ds\Map;
 use oglowa\tools\Yacorapi\Helper\BatchTaskHelper;
 use oglowa\tools\Yacorapi\Helper\ContentHelper;
 use oglowa\tools\Yacorapi\Helper\Task;
@@ -38,7 +39,8 @@ class UpdatePageExample extends AbstractRestApiExample
 
                 $suffix = $pageIdLoaded . '-' . str_replace(' ', '_', substr($pageTitleLoaded, 0, 15)) . ".xml";
                 $this->storeOrg($pageBodyLoaded, $suffix);
-                $pageBodyModified = ContentHelper::instance()->prepareMacro('info', ['title' => 'Modified Content'], 'I changed this page1');
+                $contentHelper = new ContentHelper();
+                $pageBodyModified = $contentHelper->prepareMacro('info', new Map(['title' => 'Modified Content']), 'I changed this page1');
                 $this->storeMod($pageBodyModified, $suffix);
                 $this->apiClient->updatePage($pageIdLoaded, $pageBodyModified, $pageVersionLoaded, $pageTitleLoaded);
             } else {
@@ -55,7 +57,8 @@ class UpdatePageExample extends AbstractRestApiExample
     public function mainUpdate(): void
     {
         $key      = "tasks-pageid";
-        $tasklist = BatchTaskHelper::instance()->readResultFile($key);
+        $batchTaskHelper =new BatchTaskHelper();
+        $tasklist = $batchTaskHelper->readResultFile($key);
 
         $fallbackIdx = 0;
         foreach ($tasklist as $task) {

@@ -13,7 +13,7 @@ declare(strict_types=1);
 
 namespace oglowa\example\Restapi;
 
-use oglowa\tools\Yacorapi\ConstData;
+use Ds\Map;
 use oglowa\tools\Yacorapi\Helper\ContentHelper;
 
 require_once __DIR__ . '/../bootstrap.php'; // NOSONAR: php:S4833
@@ -47,12 +47,16 @@ class CreateNewPageExample extends AbstractRestApiExample
             "<p><ac:structured-macro ac:name=\"status\" ac:schema-version=\"1\">" .
             "<ac:parameter ac:name=\"colour\">Green</ac:parameter>" .
             "<ac:parameter ac:name=\"title\">Low</ac:parameter></ac:structured-macro></p>";
-        self::$newMacroGenerateStatus  = ContentHelper::instance()->prepareMacro('status', ['title' => 'high', 'colour' => 'Red'], null);
-        self::$newMacroGenerateHtml    = ContentHelper::instance()->prepareMacro('html', null, "<style>span{border: 1pt solid darkred !important;}</style>");
-        self::$newMacroGenerateSection = ContentHelper::instance()->prepareMacro(
+
+        /** @var ContentHelper $contentHelper */
+        $contentHelper                            = new ContentHelper();
+
+        self::$newMacroGenerateStatus  = $contentHelper->prepareMacro('status', new Map( ['title' => 'high', 'colour' => 'Red']));
+        self::$newMacroGenerateHtml    = $contentHelper->prepareMacro('html', null, "<style>span{border: 1pt solid darkred !important;}</style>");
+        self::$newMacroGenerateSection = $contentHelper->prepareMacro(
             'section',
             null,
-            ContentHelper::instance()->prepareMacro('column', null, 'left') . ContentHelper::instance()->prepareMacro('column', null, 'right')
+            $contentHelper->prepareMacro('column', null, 'left') . $contentHelper->prepareMacro('column', null, 'right')
         );
     }
 
@@ -72,7 +76,7 @@ function main(): void
 
     $thisClazz = new CreateNewPageExample();
 
-    $title = sprintf(CreateNewPageExample::C_NEW_TITLE, ConstData::c(ConstData::C_TS_NOW), $idx++);
+    $title = sprintf(CreateNewPageExample::C_NEW_TITLE, date('Ymd-His'), $idx++);
     $body  =
         CreateNewPageExample::C_NEW_BODY .
         CreateNewPageExample::$newMacroPlainHtml .

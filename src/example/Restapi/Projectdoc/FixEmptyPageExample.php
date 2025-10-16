@@ -49,7 +49,7 @@ class FixEmptyPageExample extends AbstractRestApiExample
                             $resultValue[IResponse::KEY_TYPE],
                             $resultValue[IResponse::KEY_TITLE],
                             $bodySize,
-                            ConstData::c(ConstData::C_WEB_SHOW_PAGEID) . $resultValue['id']
+                            $this->constData->c(ConstData::C_WEB_SHOW_PAGEID) . $resultValue['id']
                         ];
                         $this->logger->debug("$idxLoop.", [$line]);
                         $this->storeAsCsv($line);

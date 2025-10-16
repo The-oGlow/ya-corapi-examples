@@ -68,7 +68,7 @@ function main(): void
     $thisClazz = new CountPagesExample();
 
     $spaceData = new SpaceData();
-    $spaceKeys = $spaceData->getDataByMode(SpaceData::SPACE_ALL);
+    $spaceKeys = $spaceData->getDataByMode(SpaceData::SPACE_SINGLE);
     $singleFile = false
     ;
 

@@ -13,9 +13,10 @@ declare(strict_types=1);
 
 namespace oglowa\example\Restapi;
 
-use oglowa\tools\Yacorapi\Data\AddonMacroData;
 use oglowa\tools\Yacorapi\Data\SpaceData;
 use oglowa\tools\Yacorapi\IResponse;
+use oglowa\tools\Yacorapi\Macro\BlockerMacro;
+use oglowa\tools\Yacorapi\Macro\SingleMacro;
 use oglowa\tools\Yacorapi\Response\ResponseAddonMacroDecorate;
 use oglowa\tools\Yacorapi\Statistic\AddonStatistic;
 use oglowa\tools\Yacorapi\Statistic\IStatistic;
@@ -27,7 +28,7 @@ require_once __DIR__ . '/../bootstrap.php'; // NOSONAR: php:S4833
 
 class CountMacrosExample extends AbstractRestApiExample
 {
-    public function countOneSpaceOneAddon(string $spaceKey, int $mode = AddonMacroData::MACRO_SINGLE): void
+    public function countOneSpaceOneAddon(string $spaceKey, int $mode = SingleMacro::MACRO_SINGLE): void
     {
         $this->logger->debug("START", [$spaceKey]);
 
@@ -76,8 +77,8 @@ function main(): void
 {
     $thisClazz = new CountMacrosExample();
     $spaceData = new SpaceData();
-    $spaceKeys = $spaceData->getDataByMode(SpaceData::SPACE_ALL);
-    $mode      = AddonMacroData::MACRO_BLOCKER;
+    $spaceKeys = $spaceData->getDataByMode(SpaceData::SPACE_SINGLE);
+    $mode      = BlockerMacro::MACRO_BLOCKER;
 
     foreach ($spaceKeys as $spaceKey) {
         $thisClazz->countOneSpaceOneAddon($spaceKey, $mode);
