@@ -1,0 +1,81 @@
+<?php
+
+declare(strict_types=1);
+
+/*
+ * This file is part of yacorapi-examples
+ *
+ * (c) 2025 Oliver Glowa, coding.glowa.com
+ *
+ * This source file is subject to the Apache-2.0 license that is bundled
+ * with this source code in the file LICENSE.
+ */
+
+namespace oglowa\example\Restapi\Projectdoc;
+
+use Ds\Map;
+use oglowa\example\Restapi\AbstractRestApiExample;
+use oglowa\tools\Yacorapi\ConstData;
+use oglowa\tools\Yacorapi\IResponse;
+
+class FixEmptyPageExample extends AbstractRestApiExample
+{
+    public const BODYSIZE_MIN = 10;
+
+    public function scanPagesInSpace(string $spaceKey): void
+    {
+        $start      = ConstData::PAGE_START;
+        $pageLimit  = ConstData::PAGE_LIMIT;
+        $filterTerm = 'type:page AND -macroName:projectdoc-properties-marker';
+
+        $idxLoop = 0;
+        $bLoop   = true;
+
+        while ($bLoop) {
+            /** @var IResponse */
+            $response = $this->apiClient->searchPagesWithFilter($filterTerm, $spaceKey, $start, $pageLimit);
+            if ($response->isResultsAvailable()) {
+                /** @var Map<mixed,mixed> $results */
+                $results = $response->getResults();
+                if ($results->hasKey(IResponse::KEY_CONTENT)) {
+                    $results = $results->get(IResponse::KEY_CONTENT);
+                }
+                foreach ($results as $resultValue) {
+                    $bodySize = strlen($resultValue[IResponse::KEY_BODY][IResponse::KEY_STORAGE][IResponse::KEY_VALUE]);
+                    if ($bodySize <= self::BODYSIZE_MIN) {
+                        $line = [
+                            $idxLoop,
+                            $resultValue[IResponse::KEY_ID],
+                            $resultValue[IResponse::KEY_TYPE],
+                            $resultValue[IResponse::KEY_TITLE],
+                            $bodySize,
+                            $this->constData->c(ConstData::C_WEB_SHOW_PAGEID) . $resultValue['id']
+                        ];
+                        $this->logger->debug("$idxLoop.", [$line]);
+                        $this->storeAsCsv($line);
+                        $idxLoop++;
+                    }
+                }
+            } else {
+                $this->logger->notice("No results found.");
+                $bLoop = false;
+                break;
+            }
+            if ($idxLoop > ConstData::PAGE_MAX_RESULTS) {
+                $this->logger->notice("After at least results, I stop.", ConstData::PAGE_MAX_RESULTS);
+                $bLoop = false;
+                break;
+            }
+            $start += $pageLimit;
+        }
+    }
+}
+
+function main()
+{
+    $spaceKey  = 'NMVSSUP';
+    $thisClazz = new FixEmptyPageExample();
+    $thisClazz->scanPagesInSpace($spaceKey);
+}
+
+main();
