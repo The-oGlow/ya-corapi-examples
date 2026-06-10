@@ -13,9 +13,9 @@ declare(strict_types=1);
 
 namespace oglow\example\Restapi;
 
-require_once __DIR__ . '/../bootstrap.php'; // NOSONAR: php:S4833
+require_once __DIR__ . '/../../bootstrap.php'; // NOSONAR: php:S4833
 
-/** @var int $pageId */
+/** @var int */
 $pageId = 608567375; // 591855803;521933587;
 
 /**

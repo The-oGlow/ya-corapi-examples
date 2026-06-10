@@ -13,10 +13,12 @@ declare(strict_types=1);
 
 namespace oglow\example\Restapi;
 
-require_once __DIR__ . '/../bootstrap.php'; // NOSONAR: php:S4833
+require_once __DIR__ . '/../../bootstrap.php'; // NOSONAR: php:S4833
 
-use oglow\tools\Yacorapi\Impl\ResponseSpaceDataDecorate;
+use oglow\tools\Yacorapi\Response\ResponseSpaceDataDecorate;
 use oglow\tools\Yacorapi\RapiClient;
+use oglow\tools\Yacorapi\Data\SpaceData;
+use oglow\tools\Yacorapi\Data\RequestParameterData;
 
 /**
  * FIXME:Remove.
@@ -29,10 +31,10 @@ class SearchSpacesExample extends AbstractRestApiExample
     {
         $this->logger->debug("START");
 
-        /** @var ResponseSpaceDataDecorate $response */
-        $response = $this->apiClient->listSpaces(RapiClient::SPACE_TYPE_GLOBAL);
+        /** @var ResponseSpaceDataDecorate */
+        $response = $this->apiClient->listSpaces(RequestParameterData::SPACE_TYPE_GLOBAL);
 
-        $this->storeAsCsv($response->getSpaces(), RapiClient::SPACE_TYPE_GLOBAL);
+        $this->storeAsCsv($response->getSpaces(), RequestParameterData::SPACE_TYPE_GLOBAL);
         $this->prepareMySpaces($response);
 
         $this->logger->debug("END");
@@ -42,10 +44,10 @@ class SearchSpacesExample extends AbstractRestApiExample
     {
         $this->logger->debug("START");
 
-        /** @var ResponseSpaceDataDecorate $response */
-        $response = $this->apiClient->listSpaces(RapiClient::SPACE_TYPE_PERSONAL);
+        /** @var ResponseSpaceDataDecorate */
+        $response = $this->apiClient->listSpaces(RequestParameterData::SPACE_TYPE_PERSONAL);
 
-        $this->storeAsCsv($response->getSpaces(), RapiClient::SPACE_TYPE_PERSONAL);
+        $this->storeAsCsv($response->getSpaces(), RequestParameterData::SPACE_TYPE_PERSONAL);
 
         $this->logger->debug("END");
     }
@@ -54,15 +56,15 @@ class SearchSpacesExample extends AbstractRestApiExample
     {
         $this->logger->debug("START");
 
-        $fileContent = $response->prepareMySpacesContent();
-        $fileName    = $response->prepareMySpacesFileName();
+        $fileContent = SpaceData::prepareMySpacesContent($response->getSpaces());
+        $fileName    = SpaceData::prepareMySpacesFileName();
 
         // FIXME: Die Angabe von Pfad und Dateiname ist unsauber
-        $targetFile = $this->storeAdapter->prepareTargetFileParam(
-            \oglow\tools\Yacorapi\TARGET_DIR,
-            $fileName
-        );
-        $this->storeAdapter->storeData($targetFile, $fileContent);
+//        $targetFile = $this->storeAdapter->prepareTargetFileParam(
+//            \oglow\tools\Yacorapi\TARGET_DIR,
+//            $fileName
+//        );
+        $this->storeAdapter->storeData($fileContent);
 
         $this->logger->debug("END");
     }

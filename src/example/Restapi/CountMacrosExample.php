@@ -13,23 +13,25 @@ declare(strict_types=1);
 
 namespace oglow\example\Restapi;
 
-use oglow\tools\Yacorapi\Impl\AddonMacroData;
-use oglow\tools\Yacorapi\Impl\ResponseAddonMacroDecorate;
-use oglow\tools\Yacorapi\Impl\SpaceData;
+use oglow\tools\Yacorapi\Data\AddonMacroData;
+use oglow\tools\Yacorapi\Response\ResponseAddonMacroDecorate;
+use oglow\tools\Yacorapi\Data\SpaceData;
+use oglow\tools\Yacorapi\Macro\SingleAddon;
 use oglow\tools\Yacorapi\Statistic\AddonStatistic;
 use oglow\tools\Yacorapi\Statistic\IStatistic;
 use oglow\tools\Yacorapi\Statistic\MacroStatistic;
 use oglow\tools\Yacorapi\Statistic\SpaceStatistic;
+use oglow\tools\Yacorapi\Macro\BlockerAddon;
 
-require_once __DIR__ . '/../bootstrap.php'; // NOSONAR: php:S4833
+require_once __DIR__ . '/../../bootstrap.php'; // NOSONAR: php:S4833
 
 class CountMacrosExample extends AbstractRestApiExample
 {
-    public function countOneSpaceOneAddon(string $spaceKey, int $mode = AddonMacroData::MACRO_SINGLE): void
+    public function countOneSpaceOneAddon(string $spaceKey, int $mode = SingleAddon::ADDON_SINGLE): void
     {
         $this->logger->debug("START", [$spaceKey]);
 
-        /** @var ResponseAddonMacroDecorate $addonSet */
+        /** @var ResponseAddonMacroDecorate */
         $addonSet     = $this->apiClient->prepareAddonSet($mode);
         $outputMatrix = new SpaceStatistic($spaceKey);// [];
         $anyData      = $this->apiClient->countMacrosInSpace($spaceKey, $addonSet, $outputMatrix);
@@ -51,17 +53,17 @@ class CountMacrosExample extends AbstractRestApiExample
 
         /** @var SpaceStatistic $space */
         foreach ($anyData as $space) {
-            $spaceKey      = $space->getSpaceKey();
+            $spaceKey      = $space->getStatisticName();
             $fileExtension = "$spaceKey-$mode";
             $this->storeAsCsv(null, $fileExtension, $space->header());
-            foreach ($space->getKeys() as $addonName) {
-                /** @var AddonStatistic $addon */
+            foreach ($space->keys() as $addonName) {
+                /** @var AddonStatistic */
                 $addon = $space->getItem($addonName);
-                foreach ($addon->getKeys() as $macroName) {
-                    /** @var MacroStatistic $macro */
+                foreach ($addon->keys() as $macroName) {
+                    /** @var MacroStatistic */
                     $macro = $addon->getItem($macroName);
 
-                    $csvLine = [$spaceKey, $addonName, $macroName, $macro->getCount()];
+                    $csvLine = [$spaceKey, $addonName, $macroName, $macro->keys()->count()];
                     $this->storeAsCsv($csvLine, $fileExtension);
                 }
             }
@@ -72,12 +74,12 @@ class CountMacrosExample extends AbstractRestApiExample
 function main(): void
 {
     $thisClazz = new CountMacrosExample();
-    $spaceData = SpaceData::getI();
+    $spaceData = new SpaceData();
     $spaceKeys = $spaceData->getDataByMode(SpaceData::SPACE_SIMPLE);
 
     foreach ($spaceKeys as $spaceKey) {
         $thisClazz->countOneSpaceOneAddon($spaceKey);
-        $thisClazz->countOneSpaceOneAddon($spaceKey, AddonMacroData::MACRO_BLOCKER);
+        $thisClazz->countOneSpaceOneAddon($spaceKey, BlockerAddon::ADDON_BLOCKER);
     }
 }
 

@@ -16,13 +16,13 @@ namespace oglow\example\Restapi;
 use oglow\tools\Yacorapi\IResponse;
 use oglow\tools\Yacorapi\RapiClient;
 
-require_once __DIR__ . '/../bootstrap.php'; // NOSONAR: php:S4833
+require_once __DIR__ . '/../../bootstrap.php'; // NOSONAR: php:S4833
 
-/** @var string $spaceKey */
+/** @var string */
 $spaceKey = 'NMAS';
-/** @var string $searchTerm */
+/** @var string */
 $searchTerm = 'title=REST-API%2001';
-/** @var int $pageId */
+/** @var int */
 $pageId = 608567375; // 591855803;521933587;
 
 class SearchPageExample extends AbstractRestApiExample
@@ -80,13 +80,10 @@ class SearchPageExample extends AbstractRestApiExample
         } while ($this->totalSize > $this->currentPos);
     }
 
-    /** @var int */
     private int $totalSize = 0;
 
-    /** @var int */
     private int $currentPos = 0;
 
-    /** @var int */
     private int $nextPos = 0;
 
     public function loopThruSearchResults(string $spaceKey, string $filterTerm, int $searchFromPos): void
@@ -98,17 +95,14 @@ class SearchPageExample extends AbstractRestApiExample
          * FIXME: IResponse liefert falschen Wert.
          *
          * @var IResponse|mixed[] $singleResult
-         *
-         * @psalm-suppress PossibleRawObjectIteration
-         * @phpstan-ignore foreach.nonIterable
          */
         foreach ($response->getResults() as $singleResult) {
             $this->outputData($singleResult, $idx++);
         }
         $this->resultPosUpdate(
-            (int)$response->getValue(RapiClient::KEY_START),
-            (int)$response->getValue(RapiClient::KEY_SIZE),
-            (int)$response->getValue(RapiClient::KEY_TOTAL_SIZE)
+            (int)$response->getValue(IResponse::KEY_START),
+            (int)$response->getValue(IResponse::KEY_SIZE),
+            (int)$response->getValue(IResponse::KEY_TOTAL_SIZE)
         );
     }
 

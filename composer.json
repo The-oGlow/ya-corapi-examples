@@ -37,7 +37,7 @@
     "ext-curl": "*",
     "ext-json": "*",
     "php-ds/php-ds": "^1.0",
-    "ollily/ezlogging": "^8.4",
+    "ollily/ezlogging": "dev-develop",
     "oglow/yacorapi": "dev-develop"
   },
   "provide": {

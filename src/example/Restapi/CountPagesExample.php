@@ -13,16 +13,16 @@ declare(strict_types=1);
 
 namespace oglow\example\Restapi;
 
-use oglow\tools\Yacorapi\Impl\SpaceData;
+use oglow\tools\Yacorapi\Data\SpaceData;
 use oglow\tools\Yacorapi\RapiClient;
 use oglow\tools\Yacorapi\Statistic\IStatistic;
 use oglow\tools\Yacorapi\Statistic\SpaceStatistic;
+use oglow\tools\Yacorapi\Data\RequestParameterData;
 
-require_once __DIR__ . '/../bootstrap.php'; // NOSONAR: php:S4833
+require_once __DIR__ . '/../../bootstrap.php'; // NOSONAR: php:S4833
 
 class CountPagesExample extends AbstractRestApiExample
 {
-    /** @var bool */
     private bool $headerWritten = false;
 
     public function countOneSpaceVolume(string $spaceKey, bool $singleFile = false): void
@@ -39,7 +39,7 @@ class CountPagesExample extends AbstractRestApiExample
         $fileNameSuffix = $singleFile ? '' : $spaceKey;
         $spaceStatistic = new SpaceStatistic($spaceKey);
 
-        foreach (RapiClient::ITEM_TYPES as $pageType) {
+        foreach (RequestParameterData::ITEM_TYPES as $pageType) {
             $countPages = $this->countPagesInSpace($spaceKey, $pageType);
             $spaceStatistic->addItem($pageType, $countPages);
         }
@@ -48,8 +48,8 @@ class CountPagesExample extends AbstractRestApiExample
             $this->storeAsCsv(null, $fileNameSuffix, $spaceStatistic->flattenHeader());
             $this->headerWritten = true;
         }
-        foreach ($spaceStatistic->getKeys() as $itemName) {
-            /** @var IStatistic $value */
+        foreach ($spaceStatistic->keys() as $itemName) {
+            /** @var IStatistic */
             $value = $spaceStatistic->getItem($itemName);
             $entry = [$spaceKey, $itemName, $value->flatten(false)];
             $this->storeAsCsv($entry, $fileNameSuffix);
@@ -68,7 +68,7 @@ function main(): void
 {
     $thisClazz = new CountPagesExample();
 
-    $spaceData = SpaceData::getI();
+    $spaceData = new SpaceData();
     $spaceKeys = $spaceData->getDataByMode(SpaceData::SPACE_SIMPLE);
     $singleFile = false;
 

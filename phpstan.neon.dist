@@ -19,24 +19,12 @@ parameters:
 
     ignoreErrors:
         # Too strict -> disabled
-        -
-            identifier: method.unused
-            paths:
-                - tests/*/*DummyClazz.php
-        -
-            identifier: property.onlyWritten
-            paths:
-                - tests/*/*Clazz.php
-        -
-            identifier: staticMethod.alreadyNarrowedType
-            paths:
-                - tests/*/*Test.php
-        -
-            identifier: classConstant.unused
-            paths:
-                - tests/*/*DummyClazz.php
 
         # Custom
+
+    excludePaths:
+        - src\example\Restapi\Projectdoc\ReadDocumentExample.php
+        - src\example\Restapi\Projectdoc\DoctypeOverviewExample.php
 
 includes:
     - vendor/phpstan/phpstan-strict-rules/rules.neon

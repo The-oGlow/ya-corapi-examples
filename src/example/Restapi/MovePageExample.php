@@ -13,17 +13,17 @@ declare(strict_types=1);
 
 namespace oglow\example\Restapi;
 
-require_once __DIR__ . '/../bootstrap.php'; // NOSONAR: php:S4833
+require_once __DIR__ . '/../../bootstrap.php'; // NOSONAR: php:S4833
 
 class MovePageExample extends AbstractRestApiExample
 {
-    public const        C_PLAYGROUND_ID = 532951146;
+    public const  int      C_PLAYGROUND_ID = 532951146;
 
-    public const        C_SPACE         = 'NMAS';
+    public const string C_SPACE         = 'NMAS';
 
-    public const        C_MOVE_TITLE    = 'MOVE PAGE %s-%s';
+    public const string C_MOVE_TITLE    = 'MOVE PAGE %s-%s';
 
-    public const        C_MOVE_BODY     = "Move page to playground";
+    public const string C_MOVE_BODY     = "Move page to playground";
 
     public function createPage(string $spaceKey, string $pageTitle, string $pageBody = '', ?int $parentId = null): int
     {
@@ -50,7 +50,7 @@ class MovePageExample extends AbstractRestApiExample
     public function movePageInsideSpace(): void
     {
         $thisClazz = new MovePageExample();
-        $title     = sprintf(MovePageExample::C_MOVE_TITLE, \oglow\tools\Yacorapi\TS_NOW, 0);
+        $title     = sprintf(MovePageExample::C_MOVE_TITLE, \oglow\tools\Yacorapi\ConstData::getTsNow(), 0);
         $pageId    = $thisClazz->createPage(MovePageExample::C_SPACE, $title, MovePageExample::C_MOVE_BODY);
         $thisClazz->movePage($pageId, MovePageExample::C_PLAYGROUND_ID);
     }

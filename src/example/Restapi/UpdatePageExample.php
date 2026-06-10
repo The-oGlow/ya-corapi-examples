@@ -13,12 +13,14 @@ declare(strict_types=1);
 
 namespace oglow\example\Restapi;
 
-use oglow\tools\Yacorapi\Helper\BatchTaskHelper;
+use ollily\Tools\Batch\BatchTaskHelper;
 use oglow\tools\Yacorapi\Helper\ContentHelper;
-use oglow\tools\Yacorapi\Helper\Task;
+use ollily\Tools\Batch\ITaskItem;
+use ollily\Tools\Batch\TaskItem;
 use oglow\tools\Yacorapi\IResponse;
+use Ds\Map;
 
-require_once __DIR__ . '/../bootstrap.php'; // NOSONAR: php:S4833
+require_once __DIR__ . '/../../bootstrap.php'; // NOSONAR: php:S4833
 
 /**
  * FIXME:Remove.
@@ -27,14 +29,14 @@ require_once __DIR__ . '/../bootstrap.php'; // NOSONAR: php:S4833
  */
 class UpdatePageExample extends AbstractRestApiExample
 {
-    private function loopThruUpdates(Task $task): void
+    private function loopThruUpdates(ITaskItem $task): void
     {
-        /** @var int $pageId */
+        /** @var int */
         $pageId = intval($task->getData()[0]);
-        /** @var IResponse $response */
+        /** @var IResponse */
         $response = $this->apiClient->readPageByPageId($pageId);
 
-        if ($response->isAvailable()) {
+        if ($response->isResultsAvailable()) {
             $pageIdLoaded = $response->getValue('key');
             if ($pageId == $pageIdLoaded) {
                 $pageTitleLoaded   = $response->getValue('title');
@@ -43,7 +45,7 @@ class UpdatePageExample extends AbstractRestApiExample
 
                 $suffix = $pageIdLoaded . '-' . str_replace(' ', '_', substr($pageTitleLoaded, 0, 15)) . ".xml";
                 $this->storeOrg($pageBodyLoaded, $suffix);
-                $pageBodyModified = ContentHelper::getI()->prepareMacro('info', ['title' => 'Modified Content'], 'I changed this page1');
+                $pageBodyModified = ContentHelper::prepareMacro('info', new Map( ['title' => 'Modified Content']), 'I changed this page1');
                 $this->storeMod($pageBodyModified, $suffix);
                 $this->apiClient->updatePage($pageIdLoaded, $pageBodyModified, $pageVersionLoaded, $pageTitleLoaded);
             } else {
@@ -57,17 +59,21 @@ class UpdatePageExample extends AbstractRestApiExample
     public function mainUpdate(): void
     {
         $key      = "tasks-pageid";
-        $tasklist = BatchTaskHelper::getI()->readResultFile($key);
+        $fileName = "";
+        $tasklist = BatchTaskHelper::readTaskList($fileName, $key);
 
         $fallbackIdx = 0;
-        foreach ($tasklist as $task) {
+        while(!$tasklist->isEmpty()) {
+            $task = $tasklist->nextTask();
             $this->logger->debug("task:", [$fallbackIdx, $task]);
-            $this->loopThruUpdates($task);
-            $fallbackIdx++;
-            if ($fallbackIdx >= 10) {
-                $this->logger->warning("+++ fallback exit after iterations +++", [$fallbackIdx]);
+            if (!is_null($task)) {
+                $this->loopThruUpdates($task);
+                $fallbackIdx++;
+                if ($fallbackIdx >= 10) {
+                    $this->logger->warning("+++ fallback exit after iterations +++", [$fallbackIdx]);
 
-                exit(10);
+                    exit(10);
+                }
             }
         }
     }

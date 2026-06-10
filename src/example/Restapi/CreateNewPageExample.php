@@ -14,8 +14,9 @@ declare(strict_types=1);
 namespace oglow\example\Restapi;
 
 use oglow\tools\Yacorapi\Helper\ContentHelper;
+use Ds\Map;
 
-require_once __DIR__ . '/../bootstrap.php'; // NOSONAR: php:S4833
+require_once __DIR__ . '/../../bootstrap.php'; // NOSONAR: php:S4833
 
 /**
  * FIXME:Remove.
@@ -24,24 +25,20 @@ require_once __DIR__ . '/../bootstrap.php'; // NOSONAR: php:S4833
  */
 class CreateNewPageExample extends AbstractRestApiExample
 {
-    public const        C_PLAYGROUND_ID = 532951146;
+    public const       int C_PLAYGROUND_ID = 532951146;
 
-    public const        C_SPACE = 'NMAS';
+    public const string C_SPACE = 'NMAS';
 
-    public const        C_NEW_TITLE = 'NEW PAGE %s-%s';
+    public const string C_NEW_TITLE = 'NEW PAGE %s-%s';
 
-    public const        C_NEW_BODY = "<p>This is <br/> a new page</p>\n";
+    public const string C_NEW_BODY = "<p>This is <br/> a new page</p>\n";
 
-    /** @var string */
     public static string $C_NEW_MACRO_1;
 
-    /** @var string */
     public static string $C_NEW_MACRO_2;
 
-    /** @var string */
     public static string $C_NEW_MACRO_3;
 
-    /** @var string */
     public static string $C_NEW_MACRO_4;
 
     public function __construct()
@@ -51,12 +48,12 @@ class CreateNewPageExample extends AbstractRestApiExample
         "<p><ac:structured-macro ac:name=\"status\" ac:schema-version=\"1\">" .
         "<ac:parameter ac:name=\"colour\">Green</ac:parameter>" .
         "<ac:parameter ac:name=\"title\">Low</ac:parameter></ac:structured-macro></p>";
-        self::$C_NEW_MACRO_2 = ContentHelper::getI()->prepareMacro('status', ['title' => 'high', 'colour' => 'Red'], null);
-        self::$C_NEW_MACRO_3 = ContentHelper::getI()->prepareMacro('html', null, "<style>span{border: 1pt solid darkred !important;}</style>");
-        self::$C_NEW_MACRO_4 = ContentHelper::getI()->prepareMacro(
+        self::$C_NEW_MACRO_2 = ContentHelper::prepareMacro('status', new Map( ['title' => 'high', 'colour' => 'Red']), '');
+        self::$C_NEW_MACRO_3 = ContentHelper::prepareMacro('html', null, "<style>span{border: 1pt solid darkred !important;}</style>");
+        self::$C_NEW_MACRO_4 = ContentHelper::prepareMacro(
             'section',
             null,
-            ContentHelper::getI()->prepareMacro('column', null, 'left') . ContentHelper::getI()->prepareMacro('column', null, 'right')
+            ContentHelper::prepareMacro('column', null, 'left') . ContentHelper::prepareMacro('column', null, 'right')
         );
     }
 
@@ -76,7 +73,7 @@ function main(): void
 
     $thisClazz = new CreateNewPageExample();
 
-    $title = sprintf(CreateNewPageExample::C_NEW_TITLE, \oglow\tools\Yacorapi\TS_NOW, $idx++);
+    $title = sprintf(CreateNewPageExample::C_NEW_TITLE, \oglow\tools\Yacorapi\ConstData::getTsNow(), $idx++);
     $body  =
     CreateNewPageExample::C_NEW_BODY .
     CreateNewPageExample::$C_NEW_MACRO_1 .
