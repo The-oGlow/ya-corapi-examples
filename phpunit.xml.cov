@@ -32,4 +32,15 @@
         <junit outputFile="target/analysis/phpunit/junit.xml"/>
     </logging>
 
+    <coverage
+        includeUncoveredFiles="true"
+        ignoreDeprecatedCodeUnits="false"
+        pathCoverage="true"
+        disableCodeCoverageIgnore="false">
+        <report>
+            <text outputFile="target/analysis/text/coverage.txt" showUncoveredFiles="true" showOnlySummary="false"/>
+            <clover outputFile="target/analysis/clover/coverage.xml"/>
+            <!--<html outputDirectory="target/analysis/html" />-->
+        </report>
+    </coverage>
 </phpunit>

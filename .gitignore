@@ -75,7 +75,7 @@ cmake-build-*/
 *.iws
 
 # IntelliJ
-out/
+output/
 
 # mpeltonen/sbt-idea plugin
 .idea_modules/
@@ -172,10 +172,14 @@ vendor/
 .php-cs-fixer.cache
 
 ### PHPUnit template
-# Generated files
 .phpunit.result.cache
-.phpunit.cache
+.phpunit.cache/
 
+### PHP Mess Detector
+.phpmd.result-cache.php
+
+### PHP Documentor
+.phpdoc/
 
 ### Custom
 target/

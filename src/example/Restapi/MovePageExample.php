@@ -3,7 +3,7 @@
 declare(strict_types=1);
 
 /*
- * This file is part of ya-corapi-examles
+ * This file is part of yacorapi-examles
  *
  * (c) 2024 Oliver Glowa, coding.glowa.com
  *
@@ -11,7 +11,7 @@ declare(strict_types=1);
  * with this source code in the file LICENSE.
  */
 
-namespace oglowa\example\Restapi;
+namespace oglow\example\Restapi;
 
 require_once __DIR__ . '/../bootstrap.php'; // NOSONAR: php:S4833
 
@@ -50,7 +50,7 @@ class MovePageExample extends AbstractRestApiExample
     public function movePageInsideSpace(): void
     {
         $thisClazz = new MovePageExample();
-        $title     = sprintf(MovePageExample::C_MOVE_TITLE, \oglowa\tools\Yacorapi\TS_NOW, 0);
+        $title     = sprintf(MovePageExample::C_MOVE_TITLE, \oglow\tools\Yacorapi\TS_NOW, 0);
         $pageId    = $thisClazz->createPage(MovePageExample::C_SPACE, $title, MovePageExample::C_MOVE_BODY);
         $thisClazz->movePage($pageId, MovePageExample::C_PLAYGROUND_ID);
     }

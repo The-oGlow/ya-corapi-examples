@@ -3,7 +3,7 @@
 declare(strict_types=1);
 
 /*
- * This file is part of ya-corapi-examles
+ * This file is part of yacorapi-examles
  *
  * (c) 2024 Oliver Glowa, coding.glowa.com
  *
@@ -11,19 +11,19 @@ declare(strict_types=1);
  * with this source code in the file LICENSE.
  */
 
-namespace oglowa\example\Restapi;
+namespace oglow\example\Restapi;
 
-use oglowa\tools\Yacorapi\Impl\SpaceData;
-use oglowa\tools\Yacorapi\RapiClient;
-use oglowa\tools\Yacorapi\Statistic\IStatistic;
-use oglowa\tools\Yacorapi\Statistic\SpaceStatistic;
+use oglow\tools\Yacorapi\Impl\SpaceData;
+use oglow\tools\Yacorapi\RapiClient;
+use oglow\tools\Yacorapi\Statistic\IStatistic;
+use oglow\tools\Yacorapi\Statistic\SpaceStatistic;
 
 require_once __DIR__ . '/../bootstrap.php'; // NOSONAR: php:S4833
 
 class CountPagesExample extends AbstractRestApiExample
 {
     /** @var bool */
-    private $headerWritten = false;
+    private bool $headerWritten = false;
 
     public function countOneSpaceVolume(string $spaceKey, bool $singleFile = false): void
     {

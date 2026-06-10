@@ -1,122 +1,145 @@
 {
-  "name": "oglowa/ya-corapi-examples",
-  "description": "The examples for ya-corapi",
+  "name": "oglow/yacorapi-examples",
+  "description": "The examples for yacorapi",
   "type": "library",
   "keywords": [
     "confluence",
     "datacenter",
     "data-center",
     "restapi",
-    "ya-corapi",
+    "yacorapi",
     "example",
     "examples"
   ],
-  "homepage": "https://github.com/The-oGlow/ya-corapi-examples",
+  "homepage": "https://github.com/The-oGlow/yacorapi-examples",
   "license": "Apache-2.0",
   "authors": [
     {
-      "name": "oglowa",
-      "email": "36665428+oglowa@users.noreply.github.com",
-      "homepage": "https://github.com/The-oGlow"
+            "name": "ollily",
+            "email": "426229+ollily@users.noreply.github.com",
+            "homepage": "https://github.com/ollily",
+            "role": "Project Owner, Developer"
     }
   ],
   "support": {
-    "issues": "https://github.com/The-oGlow/ya-corapi-examples/issues"
+    "issues": "https://github.com/The-oGlow/yacorapi-examples/issues"
   },
   "minimum-stability": "stable",
   "prefer-stable": true,
   "repositories": [
     {
       "type": "path",
-      "url": "../ya-corapi"
-    },
-    {
-      "type": "path",
-      "url": "../ezlogging"
+      "url": "../yacorapi"
     }
   ],
   "require": {
-    "php": ">=7.4",
+    "php": ">=8.4",
     "ext-curl": "*",
     "ext-json": "*",
-    "ollily/ezlogging": "dev-develop",
-    "oglowa/ya-corapi": "dev-develop",
     "php-ds/php-ds": "^1.0",
-    "psr/log": "^1.0||^2.0||^3.0"
+    "ollily/ezlogging": "^8.4",
+    "oglow/yacorapi": "dev-develop"
   },
   "provide": {
-    "psr/log-implementation": "^1.0||^2.0||^3.0"
   },
   "suggest": {
   },
   "require-dev": {
-    "phpunit/phpunit": "^9.6",
-    "phpstan/phpstan": "^2.1",
-    "phpstan/phpstan-strict-rules": "^2.0",
-    "vimeo/psalm": "^5.26",
-    "psalm/plugin-phpunit": "^0.19",
-    "friendsofphp/php-cs-fixer": "^3.0",
-    "squizlabs/php_codesniffer": "^3.13",
-    "phpmd/phpmd": "^2.0",
-    "rogervila/php-sonarqube-scanner": "^1.0"
+        "phpunit/phpunit": "^13.1",
+        "phpstan/phpstan": "^2.1",
+        "phpstan/phpstan-strict-rules": "^2.0",
+        "vimeo/psalm": "^6.0",
+        "psalm/plugin-phpunit": "^0.19",
+        "friendsofphp/php-cs-fixer": "^3.0",
+        "squizlabs/php_codesniffer": "^4.0",
+        "phpmd/phpmd": "^2.0"
   },
   "config": {
-    "platform": {
-      "php": "7.4.0"
-    },
     "optimize-autoloader": false,
     "sort-packages": true,
     "allow-plugins": {
       "phpstan/extension-installer": true,
-      "php-http/discovery": true,
-      "bamarni/composer-bin-plugin": true
+      "php-http/discovery": true
     }
   },
   "autoload": {
     "psr-4": {
-      "oglowa\\example\\": "src/example"
+      "oglow\\example\\": "src/example"
     }
   },
   "autoload-dev": {
     "psr-4": {
-      "oglowa\\example\\": "tests/example"
+      "oglow\\example\\": "tests/example"
     }
   },
-  "scripts": {
-    "c-all": [
-      "composer c-fix",
-      "composer c-phpstan",
-      "composer c-psalm",
-      "composer c-phpcs",
-      "composer c-phpmd",
-      "composer c-test"
-    ],
-    "c-da": "@composer dump-autoload",
-    "c-dry-fix": "@php -d xdebug.mode=off vendor/bin/php-cs-fixer check --allow-unsupported-php-version=yes --allow-risky=yes --format txt",
-    "c-fix": "@php -d xdebug.mode=off vendor/bin/php-cs-fixer fix --allow-unsupported-php-version=yes --allow-risky=yes",
-    "c-package": "@composer archive --format=zip --dir=target/staging",
-    "c-phpcs": "@php -d xdebug.mode=off vendor/bin/phpcs -v",
-    "c-phpbf": "@php -d xdebug.mode=off vendor/bin/phpbf",
-    "c-phpmd": "@php -d xdebug.mode=off vendor/bin/phpmd src,tests text .phpmd.xml.dist --report-file=target/phpmd/phpmd-report.txt",
-    "c-phpstan": "@php -d xdebug.mode=off vendor/bin/phpstan analyse",
-    "c-psalm": "@php -d xdebug.mode=off vendor/bin/psalm --report=target/psalm/psalm-report.txt",
-    "c-dry-psalter": "@php -d xdebug.mode=off vendor/bin/psalter --dry-run --issues=MissingReturnType,MissingClosureReturnType,MissingParamType,MissingPropertyType,PossiblyUndefinedVariable,PossiblyUndefinedGlobalVariable,ParamNameMismatch",
-    "c-psalter": "@php -d xdebug.mode=off vendor/bin/psalter --issues=MissingReturnType,MissingClosureReturnType,MissingParamType,MissingPropertyType,PossiblyUndefinedVariable,PossiblyUndefinedGlobalVariable,ParamNameMismatch",
-    "c-test": "@php -d xdebug.mode=coverage vendor/bin/phpunit"
-  },
-  "scripts-descriptions": {
-    "c-all": "CUSTOM: Run composer with c-fix, c-phpstan, c-psalm, c-phpcs, c-phpmd, c-test",
-    "c-da": "CUSTOM: shortkey for 'dump-autoload'",
-    "c-dry-fix": "CUSTOM: See what PHP CS Fixer will fix (dry run)",
-    "c-fix": "CUSTOM: PHP CS Fixer fixes your code",
-    "c-package": "CUSTOM: Create deployable package",
-    "c-phpcs": "CUSTOM: PHP Code Sniffer verifies your code",
-    "c-phpbf": "CUSTOM: PHP Code Sniffer fixes your code",
-    "c-phpmd": "CUSTOM: PHP Mess Detector verifies your code",
-    "c-phpstan": "CUSTOM: PHPStan verifies your code",
-    "c-psalm": "CUSTOM: Psalm verifies your code",
-    "c-dry-psalter": "CUSTOM: See what Psalter will fix (dry run)",
-    "c-psalter": "CUSTOM: Psalter fixes your code",
-    "c-test": "CUSTOM: PHPUnit executes all unit tests"
-  }
+    "scripts": {
+        "c-all": [
+            "composer c-check",
+            "composer c-test",
+            "composer c-format"
+        ],
+        "c-check": [
+            "composer c-phpstan",
+            "composer c-psalm",
+            "composer c-phpmd"
+        ],
+        "c-da": "@composer dump-autoload",
+        "c-dry-fix": "@php -d xdebug.mode=off vendor/bin/php-cs-fixer check --allow-unsupported-php-version=yes --allow-risky=yes --format txt",
+        "c-fix": "@php -d xdebug.mode=off vendor/bin/php-cs-fixer fix --allow-unsupported-php-version=yes --allow-risky=yes",
+        "c-format": [
+            "composer c-fix",
+            "composer c-phpcbf",
+            "composer c-phpcs"
+        ],
+        "c-package": "@composer archive --format=zip --dir=target/staging",
+        "c-phpcs": [
+            "bash -c 'echo PHP Code Sniffer checking ...'",
+            "bash -c 'mkdir --p target/analysis/phpcs'",
+            "bash -c 'rm -f target/analysis/phpcs/phpcsniffer-report.txt'",
+            "@php -d xdebug.mode=off vendor/bin/phpcs --colors || true",
+            "bash -c 'if [ -s target/analysis/phpcs/phpcsniffer-report.txt ]; then cat target/analysis/phpcs/phpcsniffer-report.txt; exit 0; else exit 0; fi'"
+        ],
+        "c-phpcbf": [
+            "bash -c 'echo PHP Code Sniffer FIXING ...'",
+            "bash -c 'mkdir --p target/analysis/phpcs'",
+            "bash -c 'rm -f target/analysis/phpcs/phpcsniffer-report.txt'",
+            "@php -d xdebug.mode=off vendor/bin/phpcbf || true",
+            "bash -c 'if [ -s target/analysis/phpcs/phpcsniffer-report.txt ]; then cat target/analysis/phpcs/phpcsniffer-report.txt; exit 0; else exit 0; fi'"
+        ],
+        "c-phpdoc": "phpDocumentor run",
+        "c-phpmd": [
+            "bash -c 'echo PHP Mess Dectector running ...'",
+            "bash -c 'rm -f target/analysis/phpmd/phpmd-report.txt'",
+            "@php -d xdebug.mode=off vendor/bin/phpmd src,tests text .phpmd.xml.dist --report-file=target/analysis/phpmd/phpmd-report.txt --error-file=target/analysis/phpmd/zzz-phpmd-error.txt --color --cache --ignore-errors-on-exit --ignore-violations-on-exit",
+            "bash -c 'if [ -s target/analysis/phpmd/phpmd-report.txt ]; then cat target/analysis/phpmd/phpmd-report.txt; exit 1; else exit 0; fi'"
+        ],
+        "c-phpstan": "@php -d xdebug.mode=off vendor/bin/phpstan analyse",
+        "c-psalm": "@php -d xdebug.mode=off vendor/bin/psalm --report=target/analysis/psalm/psalm-report.txt",
+        "c-dry-psalter": "@php -d xdebug.mode=off vendor/bin/psalter --dry-run --issues=MissingReturnType,MissingClosureReturnType,MissingParamType,MissingPropertyType,PossiblyUndefinedVariable,PossiblyUndefinedGlobalVariable,ParamNameMismatch",
+        "c-psalter": "@php -d xdebug.mode=off vendor/bin/psalter --issues=MissingReturnType,MissingClosureReturnType,MissingParamType,MissingPropertyType,PossiblyUndefinedVariable,PossiblyUndefinedGlobalVariable,ParamNameMismatch",
+        "c-sonar": [
+            "composer c-test",
+            "@php -d xdebug.mode=off -Dproject.settings=sonar-project.properties vendor/bin/sonar-scanner"
+        ],
+        "c-test": "@php -d xdebug.mode=coverage vendor/bin/phpunit -c phpunit.xml.cov"
+    },
+    "scripts-descriptions": {
+        "c-all": "CUSTOM: Run composer with c-check, c-test, c-format",
+        "c-check": "CUSTOM: Run composer with c-phpstan, c-psalm, c-phpmd",
+        "c-da": "CUSTOM: shortkey for 'dump-autoload'",
+        "c-dry-fix": "CUSTOM: See what PHP CS Fixer will fix (dry run)",
+        "c-format": "CUSTOM: Format the code with c-fix, c-phpcbf",
+        "c-fix": "CUSTOM: PHP CS Fixer fixes your code",
+        "c-package": "CUSTOM: Create deployable package",
+        "c-phpcs": "CUSTOM: See what PHP Code Sniffer will fix (dry-run)",
+        "c-phpcbf": "CUSTOM: PHP Code Sniffer fixes your code",
+        "c-phpdoc": "CUSTOM: phpDocumentor generates the API documentation",
+        "c-phpmd": "CUSTOM: PHP Mess Detector verifies your code",
+        "c-phpstan": "CUSTOM: PHPStan verifies your code",
+        "c-psalm": "CUSTOM: Psalm verifies your code",
+        "c-dry-psalter": "CUSTOM: See what Psalter will fix (dry run)",
+        "c-psalter": "CUSTOM: Psalter fixes your code",
+        "c-sonar": "CUSTOM: Sonarcloud verifies your code",
+        "c-test": "CUSTOM: PHPUnit executes all unit tests"
+    }
 }

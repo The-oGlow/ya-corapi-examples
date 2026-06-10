@@ -3,7 +3,7 @@
 declare(strict_types=1);
 
 /*
- * This file is part of ya-corapi-examles
+ * This file is part of yacorapi-examles
  *
  * (c) 2024 Oliver Glowa, coding.glowa.com
  *
@@ -11,12 +11,12 @@ declare(strict_types=1);
  * with this source code in the file LICENSE.
  */
 
-namespace oglowa\example\Restapi;
+namespace oglow\example\Restapi;
 
-use oglowa\tools\Yacorapi\Helper\BatchTaskHelper;
-use oglowa\tools\Yacorapi\Helper\ContentHelper;
-use oglowa\tools\Yacorapi\Helper\Task;
-use oglowa\tools\Yacorapi\IResponse;
+use oglow\tools\Yacorapi\Helper\BatchTaskHelper;
+use oglow\tools\Yacorapi\Helper\ContentHelper;
+use oglow\tools\Yacorapi\Helper\Task;
+use oglow\tools\Yacorapi\IResponse;
 
 require_once __DIR__ . '/../bootstrap.php'; // NOSONAR: php:S4833
 

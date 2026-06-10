@@ -1,16 +1,42 @@
 parameters:
     level: 8
 
+    parallel:
+        jobSize: 10
+        maximumNumberOfProcesses: 32
+        minimumNumberOfJobsPerProcess: 4
+
     paths:
         - src/
         - tests/
 
+    checkStrictPrintfPlaceholderTypes: false
+
     strictRules:
-        # too strict
+        # Too strict -> disabled
         disallowedEmpty: false
         disallowedLooseComparison: false
 
-    excludePaths:
+    ignoreErrors:
+        # Too strict -> disabled
+        -
+            identifier: method.unused
+            paths:
+                - tests/*/*DummyClazz.php
+        -
+            identifier: property.onlyWritten
+            paths:
+                - tests/*/*Clazz.php
+        -
+            identifier: staticMethod.alreadyNarrowedType
+            paths:
+                - tests/*/*Test.php
+        -
+            identifier: classConstant.unused
+            paths:
+                - tests/*/*DummyClazz.php
+
+        # Custom
 
 includes:
     - vendor/phpstan/phpstan-strict-rules/rules.neon

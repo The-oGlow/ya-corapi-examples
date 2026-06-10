@@ -3,7 +3,7 @@
 declare(strict_types=1);
 
 /*
- * This file is part of ya-corapi-examles
+ * This file is part of yacorapi-examles
  *
  * (c) 2024 Oliver Glowa, coding.glowa.com
  *
@@ -11,10 +11,10 @@ declare(strict_types=1);
  * with this source code in the file LICENSE.
  */
 
-namespace oglowa\example\Restapi;
+namespace oglow\example\Restapi;
 
-use oglowa\tools\Yacorapi\IResponse;
-use oglowa\tools\Yacorapi\RapiClient;
+use oglow\tools\Yacorapi\IResponse;
+use oglow\tools\Yacorapi\RapiClient;
 
 require_once __DIR__ . '/../bootstrap.php'; // NOSONAR: php:S4833
 
@@ -81,13 +81,13 @@ class SearchPageExample extends AbstractRestApiExample
     }
 
     /** @var int */
-    private $totalSize = 0;
+    private int $totalSize = 0;
 
     /** @var int */
-    private $currentPos = 0;
+    private int $currentPos = 0;
 
     /** @var int */
-    private $nextPos = 0;
+    private int $nextPos = 0;
 
     public function loopThruSearchResults(string $spaceKey, string $filterTerm, int $searchFromPos): void
     {

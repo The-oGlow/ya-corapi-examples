@@ -3,7 +3,7 @@
 declare(strict_types=1);
 
 /*
- * This file is part of ya-corapi-examles
+ * This file is part of yacorapi-examles
  *
  * (c) 2024 Oliver Glowa, coding.glowa.com
  *
@@ -11,15 +11,15 @@ declare(strict_types=1);
  * with this source code in the file LICENSE.
  */
 
-namespace oglowa\example\Restapi;
+namespace oglow\example\Restapi;
 
-use oglowa\tools\Yacorapi\Impl\AddonMacroData;
-use oglowa\tools\Yacorapi\Impl\ResponseAddonMacroDecorate;
-use oglowa\tools\Yacorapi\Impl\SpaceData;
-use oglowa\tools\Yacorapi\Statistic\AddonStatistic;
-use oglowa\tools\Yacorapi\Statistic\IStatistic;
-use oglowa\tools\Yacorapi\Statistic\MacroStatistic;
-use oglowa\tools\Yacorapi\Statistic\SpaceStatistic;
+use oglow\tools\Yacorapi\Impl\AddonMacroData;
+use oglow\tools\Yacorapi\Impl\ResponseAddonMacroDecorate;
+use oglow\tools\Yacorapi\Impl\SpaceData;
+use oglow\tools\Yacorapi\Statistic\AddonStatistic;
+use oglow\tools\Yacorapi\Statistic\IStatistic;
+use oglow\tools\Yacorapi\Statistic\MacroStatistic;
+use oglow\tools\Yacorapi\Statistic\SpaceStatistic;
 
 require_once __DIR__ . '/../bootstrap.php'; // NOSONAR: php:S4833
 
@@ -43,7 +43,7 @@ class CountMacrosExample extends AbstractRestApiExample
      * @param IStatistic|IStatistic[] $anyData
      * @param int                     $mode
      */
-    private function flattenData($anyData, int $mode): void
+    private function flattenData(IStatistic|array $anyData, int $mode): void
     {
         if (!is_array($anyData)) {
             $anyData = [$anyData];

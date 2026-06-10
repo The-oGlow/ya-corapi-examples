@@ -3,7 +3,7 @@
 declare(strict_types=1);
 
 /*
- * This file is part of ya-corapi-examles
+ * This file is part of yacorapi-examles
  *
  * (c) 2024 Oliver Glowa, coding.glowa.com
  *
@@ -11,9 +11,9 @@ declare(strict_types=1);
  * with this source code in the file LICENSE.
  */
 
-namespace oglowa\example\Restapi\Projectdoc;
+namespace oglow\example\Restapi\Projectdoc;
 
-use oglowa\example\Restapi\AbstractRestApiExample;
+use oglow\example\Restapi\AbstractRestApiExample;
 
 require_once __DIR__ . '/../../bootstrap.php'; // NOSONAR: php:S4833
 
@@ -69,7 +69,7 @@ class DoctypeOverviewExample extends AbstractRestApiExample
                 $propertyName = 'Doctype';
 
                 foreach ($response->getResults() as $result) {
-                    if (key_exists('content', $result)) {
+                    if (array_key_exists('content', $result)) {
                         $result = $result['content'];
                     }
                     $foundPageId = (int)$result['key'];
@@ -78,7 +78,7 @@ class DoctypeOverviewExample extends AbstractRestApiExample
                     if (empty($foundDoctype)) {
                         $errDoctypes[$spaceKey][] = $foundPageId;
                     } else {
-                        if (!key_exists($foundDoctype, $doctypes[$spaceKey])) {
+                        if (!array_key_exists($foundDoctype, $doctypes[$spaceKey])) {
                             $doctypes[$spaceKey][$foundDoctype][self::IDX_SIZE]   = 0;
                             $doctypes[$spaceKey][$foundDoctype][self::IDX_STRICT] = [];
                             $doctypes[$spaceKey][$foundDoctype][self::IDX_LAZY]   = [];

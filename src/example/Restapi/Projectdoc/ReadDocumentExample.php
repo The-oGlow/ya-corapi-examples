@@ -3,7 +3,7 @@
 declare(strict_types=1);
 
 /*
- * This file is part of ya-corapi-examles
+ * This file is part of yacorapi-examles
  *
  * (c) 2024 Oliver Glowa, coding.glowa.com
  *
@@ -11,9 +11,9 @@ declare(strict_types=1);
  * with this source code in the file LICENSE.
  */
 
-namespace oglowa\example\Restapi\Projectdoc;
+namespace oglow\example\Restapi\Projectdoc;
 
-use oglowa\example\Restapi\AbstractRestApiExample;
+use oglow\example\Restapi\AbstractRestApiExample;
 
 require_once __DIR__ . '/../../bootstrap.php'; // NOSONAR: php:S4833
 
@@ -26,7 +26,7 @@ class ReadDocumentExample extends AbstractRestApiExample
 {
     public function readDocument(string $spaceKey, string $where): void
     {
-        $response = $this->apiClient->pdtReadDocument(\oglowa\tools\Yacorapi\Projectdoc\PDT_PROP_ALL_DEFAULT, $spaceKey, $where);
+        $response = $this->apiClient->pdtReadDocument(\oglow\tools\Yacorapi\Projectdoc\PDT_PROP_ALL_DEFAULT, $spaceKey, $where);
 
         if ($this->apiClient->checkDataPdtDocument($response)) {
             foreach ($response->getValue('document') as $document) {

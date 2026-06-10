@@ -3,7 +3,7 @@
 declare(strict_types=1);
 
 /*
- * This file is part of ya-corapi-examles
+ * This file is part of yacorapi-examles
  *
  * (c) 2024 Oliver Glowa, coding.glowa.com
  *
@@ -11,12 +11,12 @@ declare(strict_types=1);
  * with this source code in the file LICENSE.
  */
 
-namespace oglowa\example\Restapi;
+namespace oglow\example\Restapi;
 
 require_once __DIR__ . '/../bootstrap.php'; // NOSONAR: php:S4833
 
-use oglowa\tools\Yacorapi\Impl\ResponseSpaceDataDecorate;
-use oglowa\tools\Yacorapi\RapiClient;
+use oglow\tools\Yacorapi\Impl\ResponseSpaceDataDecorate;
+use oglow\tools\Yacorapi\RapiClient;
 
 /**
  * FIXME:Remove.
@@ -59,7 +59,7 @@ class SearchSpacesExample extends AbstractRestApiExample
 
         // FIXME: Die Angabe von Pfad und Dateiname ist unsauber
         $targetFile = $this->storeAdapter->prepareTargetFileParam(
-            \oglowa\tools\Yacorapi\TARGET_DIR,
+            \oglow\tools\Yacorapi\TARGET_DIR,
             $fileName
         );
         $this->storeAdapter->storeData($targetFile, $fileContent);

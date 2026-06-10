@@ -3,7 +3,7 @@
 declare(strict_types=1);
 
 /*
- * This file is part of ya-corapi-examles
+ * This file is part of yacorapi-examles
  *
  * (c) 2024 Oliver Glowa, coding.glowa.com
  *
@@ -11,16 +11,16 @@ declare(strict_types=1);
  * with this source code in the file LICENSE.
  */
 
-namespace oglowa\example\Restapi;
+namespace oglow\example\Restapi;
 
 use Monolog\ConsoleLogger;
 use Monolog\PlainLogger;
-use oglowa\tools\common\IStoreAdapter;
-use oglowa\tools\Yacorapi\ConstData;
-use oglowa\tools\Yacorapi\Impl\CsvFileAdapter;
-use oglowa\tools\Yacorapi\Impl\FileAdapter;
-use oglowa\tools\Yacorapi\IResponse;
-use oglowa\tools\Yacorapi\RapiClient;
+use oglow\tools\common\IStoreAdapter;
+use oglow\tools\Yacorapi\ConstData;
+use oglow\tools\Yacorapi\Impl\CsvFileAdapter;
+use oglow\tools\Yacorapi\Impl\FileAdapter;
+use oglow\tools\Yacorapi\IResponse;
+use oglow\tools\Yacorapi\RapiClient;
 use ollily\Tools\String\ImplodeTrait;
 use Psr\Log\LoggerInterface;
 
@@ -29,19 +29,19 @@ abstract class AbstractRestApiExample
     use ImplodeTrait;
 
     /** @var LoggerInterface */
-    protected $logger;
+    protected LoggerInterface $logger;
 
     /** @var PlainLogger */
-    protected $output;
+    protected PlainLogger $output;
 
     /** @var RapiClient */
-    protected $apiClient;
+    protected RapiClient $apiClient;
 
     /** @var IStoreAdapter */
-    protected $storeAdapter;
+    protected IStoreAdapter $storeAdapter;
 
     /** @var string */
-    private $outputFileName;
+    private string $outputFileName;
 
     public function __construct(string $outputFileName = '')
     {
@@ -70,7 +70,7 @@ abstract class AbstractRestApiExample
      * @param mixed    $anyData
      * @param null|int $idx
      */
-    protected function outputData($anyData, ?int $idx = null): void
+    protected function outputData(mixed $anyData, ?int $idx = null): void
     {
         $prefix = '';
         if (isset($idx)) {
@@ -118,11 +118,11 @@ abstract class AbstractRestApiExample
      * @param mixed       $anyData
      * @param null|string $fileExtension
      */
-    protected function storeOrg($anyData, ?string $fileExtension = 'txt'): void
+    protected function storeOrg(mixed $anyData, ?string $fileExtension = 'txt'): void
     {
         // FIXME: Die Angabe von Pfad und Dateiname ist unsauber
         $targetFile = $this->storeAdapter->prepareTargetFileParam(
-            $this->prepareTargetPathName(\oglowa\tools\Yacorapi\TARGET_ORGDIR),
+            $this->prepareTargetPathName(\oglow\tools\Yacorapi\TARGET_ORGDIR),
             $this->prepareTargetFileName('org'),
             $fileExtension ?? 'txt'
         );
@@ -133,11 +133,11 @@ abstract class AbstractRestApiExample
      * @param mixed       $anyData
      * @param null|string $fileExtension
      */
-    protected function storeMod($anyData, ?string $fileExtension = 'txt'): void
+    protected function storeMod(mixed $anyData, ?string $fileExtension = 'txt'): void
     {
         // FIXME: Die Angabe von Pfad und Dateiname ist unsauber
         $targetFile = $this->storeAdapter->prepareTargetFileParam(
-            $this->prepareTargetPathName(\oglowa\tools\Yacorapi\TARGET_MODDIR),
+            $this->prepareTargetPathName(\oglow\tools\Yacorapi\TARGET_MODDIR),
             $this->prepareTargetFileName('mod'),
             $fileExtension ?? 'txt'
         );
@@ -148,13 +148,13 @@ abstract class AbstractRestApiExample
      * @param mixed       $anyData
      * @param null|string $fileExtension
      */
-    protected function storeAsDump($anyData, ?string $fileExtension = 'txt'): void
+    protected function storeAsDump(mixed $anyData, ?string $fileExtension = 'txt'): void
     {
         $anyString = print_r($anyData, true);
 
         // FIXME: Die Angabe von Pfad und Dateiname ist unsauber
         $targetFile = $this->storeAdapter->prepareTargetFileParam(
-            $this->prepareTargetPathName(\oglowa\tools\Yacorapi\TARGET_DIR),
+            $this->prepareTargetPathName(\oglow\tools\Yacorapi\TARGET_DIR),
             $this->prepareTargetFileName('dump'),
             $fileExtension ?? 'txt'
         );
@@ -166,14 +166,14 @@ abstract class AbstractRestApiExample
      * @param null|string     $fileExtension
      * @param string|string[] $dataHeader
      */
-    protected function storeAsCsv($anyData, ?string $fileExtension = 'csv', $dataHeader = []): void
+    protected function storeAsCsv(mixed $anyData, ?string $fileExtension = 'csv', string|array $dataHeader = []): void
     {
         /** @var CsvFileAdapter */
         $csvAdapter = new CsvFileAdapter($this->outputFileName);
 
         // FIXME: Die Angabe von Pfad und Dateiname ist unsauber
         $targetFile = $csvAdapter->prepareTargetFileParam(
-            $this->prepareTargetPathName(\oglowa\tools\Yacorapi\TARGET_DIR),
+            $this->prepareTargetPathName(\oglow\tools\Yacorapi\TARGET_DIR),
             $this->prepareTargetFileName(),
             $fileExtension ?? 'csv'
         );

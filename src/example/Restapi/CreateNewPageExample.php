@@ -3,7 +3,7 @@
 declare(strict_types=1);
 
 /*
- * This file is part of ya-corapi-examles
+ * This file is part of yacorapi-examles
  *
  * (c) 2024 Oliver Glowa, coding.glowa.com
  *
@@ -11,9 +11,9 @@ declare(strict_types=1);
  * with this source code in the file LICENSE.
  */
 
-namespace oglowa\example\Restapi;
+namespace oglow\example\Restapi;
 
-use oglowa\tools\Yacorapi\Helper\ContentHelper;
+use oglow\tools\Yacorapi\Helper\ContentHelper;
 
 require_once __DIR__ . '/../bootstrap.php'; // NOSONAR: php:S4833
 
@@ -33,24 +33,24 @@ class CreateNewPageExample extends AbstractRestApiExample
     public const        C_NEW_BODY = "<p>This is <br/> a new page</p>\n";
 
     /** @var string */
-    public static $C_NEW_MACRO_1;
+    public static string $C_NEW_MACRO_1;
 
     /** @var string */
-    public static $C_NEW_MACRO_2;
+    public static string $C_NEW_MACRO_2;
 
     /** @var string */
-    public static $C_NEW_MACRO_3;
+    public static string $C_NEW_MACRO_3;
 
     /** @var string */
-    public static $C_NEW_MACRO_4;
+    public static string $C_NEW_MACRO_4;
 
     public function __construct()
     {
         parent::__construct();
         self::$C_NEW_MACRO_1 =
-            "<p><ac:structured-macro ac:name=\"status\" ac:schema-version=\"1\">" .
-            "<ac:parameter ac:name=\"colour\">Green</ac:parameter>" .
-            "<ac:parameter ac:name=\"title\">Low</ac:parameter></ac:structured-macro></p>";
+        "<p><ac:structured-macro ac:name=\"status\" ac:schema-version=\"1\">" .
+        "<ac:parameter ac:name=\"colour\">Green</ac:parameter>" .
+        "<ac:parameter ac:name=\"title\">Low</ac:parameter></ac:structured-macro></p>";
         self::$C_NEW_MACRO_2 = ContentHelper::getI()->prepareMacro('status', ['title' => 'high', 'colour' => 'Red'], null);
         self::$C_NEW_MACRO_3 = ContentHelper::getI()->prepareMacro('html', null, "<style>span{border: 1pt solid darkred !important;}</style>");
         self::$C_NEW_MACRO_4 = ContentHelper::getI()->prepareMacro(
@@ -76,13 +76,13 @@ function main(): void
 
     $thisClazz = new CreateNewPageExample();
 
-    $title = sprintf(CreateNewPageExample::C_NEW_TITLE, \oglowa\tools\Yacorapi\TS_NOW, $idx++);
+    $title = sprintf(CreateNewPageExample::C_NEW_TITLE, \oglow\tools\Yacorapi\TS_NOW, $idx++);
     $body  =
-        CreateNewPageExample::C_NEW_BODY .
-        CreateNewPageExample::$C_NEW_MACRO_1 .
-        CreateNewPageExample::$C_NEW_MACRO_2 .
-        CreateNewPageExample::$C_NEW_MACRO_3 .
-        CreateNewPageExample::$C_NEW_MACRO_4;
+    CreateNewPageExample::C_NEW_BODY .
+    CreateNewPageExample::$C_NEW_MACRO_1 .
+    CreateNewPageExample::$C_NEW_MACRO_2 .
+    CreateNewPageExample::$C_NEW_MACRO_3 .
+    CreateNewPageExample::$C_NEW_MACRO_4;
     $thisClazz->createPage(CreateNewPageExample::C_SPACE, $title, $body, CreateNewPageExample::C_PLAYGROUND_ID);
 }
 

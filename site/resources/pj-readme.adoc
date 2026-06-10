@@ -30,9 +30,9 @@ image:{cm_shlds_tool_phpmd_url}[title="PHP Mess Detector Ruleset"]
 
 == Description
 
-Examples for YA-CORAPI!
+Examples for YACORAPI!
 
-== What is a ya-corapi-examples?
+== What is a yacorapi-examples?
 **Y** - et +
 **a** - nother +
 **-** +
