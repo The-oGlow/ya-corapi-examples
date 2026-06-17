@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "a86174e09918a6d9375067219c755372",
+    "content-hash": "c949d86f67cbffe2d1b8d347281d7345",
     "packages": [
         {
             "name": "composer/ca-bundle",
@@ -331,28 +331,29 @@
         },
         {
             "name": "composer/pcre",
-            "version": "3.3.2",
+            "version": "3.4.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/composer/pcre.git",
-                "reference": "b2bed4734f0cc156ee1fe9c0da2550420d99a21e"
+                "reference": "d5a341b3fb61f3001970940afb1d332968a183ed"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/composer/pcre/zipball/b2bed4734f0cc156ee1fe9c0da2550420d99a21e",
-                "reference": "b2bed4734f0cc156ee1fe9c0da2550420d99a21e",
+                "url": "https://api.github.com/repos/composer/pcre/zipball/d5a341b3fb61f3001970940afb1d332968a183ed",
+                "reference": "d5a341b3fb61f3001970940afb1d332968a183ed",
                 "shasum": ""
             },
             "require": {
                 "php": "^7.4 || ^8.0"
             },
             "conflict": {
-                "phpstan/phpstan": "<1.11.10"
+                "phpstan/phpstan": "<2.2.2"
             },
             "require-dev": {
-                "phpstan/phpstan": "^1.12 || ^2",
-                "phpstan/phpstan-strict-rules": "^1 || ^2",
-                "phpunit/phpunit": "^8 || ^9"
+                "phpstan/phpstan": "^2",
+                "phpstan/phpstan-deprecation-rules": "^2",
+                "phpstan/phpstan-strict-rules": "^2",
+                "phpunit/phpunit": "^9"
             },
             "type": "library",
             "extra": {
@@ -390,7 +391,7 @@
             ],
             "support": {
                 "issues": "https://github.com/composer/pcre/issues",
-                "source": "https://github.com/composer/pcre/tree/3.3.2"
+                "source": "https://github.com/composer/pcre/tree/3.4.0"
             },
             "funding": [
                 {
@@ -400,13 +401,9 @@
                 {
                     "url": "https://github.com/composer",
                     "type": "github"
-                },
-                {
-                    "url": "https://tidelift.com/funding/github/packagist/composer/composer",
-                    "type": "tidelift"
                 }
             ],
-            "time": "2024-11-12T16:29:46+00:00"
+            "time": "2026-06-07T11:47:49+00:00"
         },
         {
             "name": "composer/semver",
@@ -629,16 +626,16 @@
         },
         {
             "name": "justinrainbow/json-schema",
-            "version": "6.9.0",
+            "version": "6.10.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/jsonrainbow/json-schema.git",
-                "reference": "bd1bda2ebfc8bff418565941771ea8f03c557886"
+                "reference": "8b1308a9d7bdbdb20ce87ef920f82b4564bb2d33"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/jsonrainbow/json-schema/zipball/bd1bda2ebfc8bff418565941771ea8f03c557886",
-                "reference": "bd1bda2ebfc8bff418565941771ea8f03c557886",
+                "url": "https://api.github.com/repos/jsonrainbow/json-schema/zipball/8b1308a9d7bdbdb20ce87ef920f82b4564bb2d33",
+                "reference": "8b1308a9d7bdbdb20ce87ef920f82b4564bb2d33",
                 "shasum": ""
             },
             "require": {
@@ -648,7 +645,7 @@
             },
             "require-dev": {
                 "friendsofphp/php-cs-fixer": "3.3.0",
-                "json-schema/json-schema-test-suite": "^23.2",
+                "json-schema/json-schema-test-suite": "dev-main",
                 "marc-mabe/php-enum-phpstan": "^2.0",
                 "phpspec/prophecy": "^1.19",
                 "phpstan/phpstan": "^1.12",
@@ -698,9 +695,9 @@
             ],
             "support": {
                 "issues": "https://github.com/jsonrainbow/json-schema/issues",
-                "source": "https://github.com/jsonrainbow/json-schema/tree/6.9.0"
+                "source": "https://github.com/jsonrainbow/json-schema/tree/6.10.0"
             },
-            "time": "2026-06-05T14:05:24+00:00"
+            "time": "2026-06-16T20:50:26+00:00"
         },
         {
             "name": "marc-mabe/php-enum",
@@ -880,22 +877,19 @@
         },
         {
             "name": "oglow/yacorapi",
-            "version": "dev-develop",
+            "version": "1.0.999",
             "dist": {
                 "type": "path",
                 "url": "../yacorapi",
-                "reference": "729e1fee5bdd5f502cdab9f1215e3f220bb1ff43"
+                "reference": "7ef85967f8eb4ffcc0327b38c2ff3e7372987cf0"
             },
             "require": {
                 "ext-curl": "*",
                 "ext-json": "*",
-                "ollily/ezkoding": "*",
-                "ollily/ezlogging": "*",
+                "ollily/ezkoding": "^8.4",
+                "ollily/ezlogging": "^8.4",
                 "php": ">=8.4.1",
                 "php-ds/php-ds": "^1.0"
-            },
-            "provide": {
-                "psr/log-implementation": "^2.0||^3.0"
             },
             "require-dev": {
                 "friendsofphp/php-cs-fixer": "^3.0",
@@ -1024,27 +1018,23 @@
         },
         {
             "name": "ollily/ezkoding",
-            "version": "8.4.001",
+            "version": "8.4.002",
             "source": {
                 "type": "git",
                 "url": "https://github.com/The-oGlow/ezkoding.git",
-                "reference": "7a2e1fca5d1e48ec15618cb6c7f7d9e20c1d44c4"
+                "reference": "895f476415df6f94ccc1b1dfc751697f52dbb68b"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/The-oGlow/ezkoding/zipball/7a2e1fca5d1e48ec15618cb6c7f7d9e20c1d44c4",
-                "reference": "7a2e1fca5d1e48ec15618cb6c7f7d9e20c1d44c4",
+                "url": "https://api.github.com/repos/The-oGlow/ezkoding/zipball/895f476415df6f94ccc1b1dfc751697f52dbb68b",
+                "reference": "895f476415df6f94ccc1b1dfc751697f52dbb68b",
                 "shasum": ""
             },
             "require": {
                 "composer/composer": "^2.0",
                 "php": ">=8.4.1",
                 "php-ds/php-ds": "^1.0",
-                "psr/log": "^1.0||^2.0||^3.0"
-            },
-            "provide": {
-                "monolog/monolog": "^2.10",
-                "psr/log-implementation": "^1.0||^2.0||^3.0"
+                "psr/log": "^2.0||^3.0"
             },
             "require-dev": {
                 "friendsofphp/php-cs-fixer": "^3.0",
@@ -1053,7 +1043,6 @@
                 "phpstan/phpstan-strict-rules": "^2.0",
                 "phpunit/phpunit": "^13.1",
                 "psalm/plugin-phpunit": "^0.19",
-                "rogervila/php-sonarqube-scanner": "^1.0",
                 "squizlabs/php_codesniffer": "^4.0",
                 "vimeo/psalm": "^6.0"
             },
@@ -1075,12 +1064,6 @@
                     "email": "426229+ollily@users.noreply.github.com",
                     "homepage": "https://github.com/ollily",
                     "role": "Project Owner, Developer"
-                },
-                {
-                    "name": "oglowa",
-                    "email": "36665428+oglowa@users.noreply.github.com",
-                    "homepage": "https://github.com/The-oGlow",
-                    "role": "Developer"
                 }
             ],
             "description": "Simplify the usage of - Testing with PHPUnit - Reflection with PHP - Developer shortkeys for composer",
@@ -1094,22 +1077,22 @@
             ],
             "support": {
                 "issues": "https://github.com/ollily/ezkoding/issues",
-                "source": "https://github.com/The-oGlow/ezkoding/tree/8.4.001"
+                "source": "https://github.com/The-oGlow/ezkoding/tree/8.4.002"
             },
-            "time": "2026-06-04T13:31:53+00:00"
+            "time": "2026-06-14T13:10:35+00:00"
         },
         {
             "name": "ollily/ezlogging",
-            "version": "dev-develop",
+            "version": "8.4.001",
             "source": {
                 "type": "git",
                 "url": "https://github.com/The-oGlow/ezlogging.git",
-                "reference": "5365500d06ab8106ed95d42fde35cd66d4523471"
+                "reference": "8a2b9cbe2c9fec7007f6e46e034e8e2bdd89e5b2"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/The-oGlow/ezlogging/zipball/5365500d06ab8106ed95d42fde35cd66d4523471",
-                "reference": "5365500d06ab8106ed95d42fde35cd66d4523471",
+                "url": "https://api.github.com/repos/The-oGlow/ezlogging/zipball/8a2b9cbe2c9fec7007f6e46e034e8e2bdd89e5b2",
+                "reference": "8a2b9cbe2c9fec7007f6e46e034e8e2bdd89e5b2",
                 "shasum": ""
             },
             "require": {
@@ -1119,9 +1102,6 @@
                 "php-ds/php-ds": "^1.0",
                 "psr/log": "^2.0||^3.0"
             },
-            "provide": {
-                "psr/log-implementation": "^2.0||^3.0"
-            },
             "require-dev": {
                 "friendsofphp/php-cs-fixer": "^3.0",
                 "phpmd/phpmd": "^2.0",
@@ -1129,7 +1109,6 @@
                 "phpstan/phpstan-strict-rules": "^2.0",
                 "phpunit/phpunit": "^13.1",
                 "psalm/plugin-phpunit": "^0.19",
-                "rogervila/php-sonarqube-scanner": "^1.0",
                 "squizlabs/php_codesniffer": "^4.0",
                 "vimeo/psalm": "^6.0"
             },
@@ -1161,9 +1140,9 @@
             ],
             "support": {
                 "issues": "https://github.com/ollily/ezlogging/issues",
-                "source": "https://github.com/The-oGlow/ezlogging/tree/develop"
+                "source": "https://github.com/The-oGlow/ezlogging/tree/8.4.001"
             },
-            "time": "2026-06-05T18:34:09+00:00"
+            "time": "2026-06-14T13:13:14+00:00"
         },
         {
             "name": "php-ds/php-ds",
@@ -1398,16 +1377,16 @@
         },
         {
             "name": "seld/jsonlint",
-            "version": "1.11.0",
+            "version": "1.12.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/Seldaek/jsonlint.git",
-                "reference": "1748aaf847fc731cfad7725aec413ee46f0cc3a2"
+                "reference": "9a90eb5d32d5a500296bf43f946d60246444d5f7"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/Seldaek/jsonlint/zipball/1748aaf847fc731cfad7725aec413ee46f0cc3a2",
-                "reference": "1748aaf847fc731cfad7725aec413ee46f0cc3a2",
+                "url": "https://api.github.com/repos/Seldaek/jsonlint/zipball/9a90eb5d32d5a500296bf43f946d60246444d5f7",
+                "reference": "9a90eb5d32d5a500296bf43f946d60246444d5f7",
                 "shasum": ""
             },
             "require": {
@@ -1446,7 +1425,7 @@
             ],
             "support": {
                 "issues": "https://github.com/Seldaek/jsonlint/issues",
-                "source": "https://github.com/Seldaek/jsonlint/tree/1.11.0"
+                "source": "https://github.com/Seldaek/jsonlint/tree/1.12.1"
             },
             "funding": [
                 {
@@ -1458,7 +1437,7 @@
                     "type": "tidelift"
                 }
             ],
-            "time": "2024-07-11T14:55:45+00:00"
+            "time": "2026-06-12T11:32:29+00:00"
         },
         {
             "name": "seld/phar-utils",
@@ -4068,16 +4047,16 @@
         },
         {
             "name": "friendsofphp/php-cs-fixer",
-            "version": "v3.95.5",
+            "version": "v3.95.8",
             "source": {
                 "type": "git",
                 "url": "https://github.com/PHP-CS-Fixer/PHP-CS-Fixer.git",
-                "reference": "7f86d8763063f5d2e2e2d0e1e45bb2f15895361d"
+                "reference": "4140023f552ff02346df9b1329742532166f677f"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/PHP-CS-Fixer/PHP-CS-Fixer/zipball/7f86d8763063f5d2e2e2d0e1e45bb2f15895361d",
-                "reference": "7f86d8763063f5d2e2e2d0e1e45bb2f15895361d",
+                "url": "https://api.github.com/repos/PHP-CS-Fixer/PHP-CS-Fixer/zipball/4140023f552ff02346df9b1329742532166f677f",
+                "reference": "4140023f552ff02346df9b1329742532166f677f",
                 "shasum": ""
             },
             "require": {
@@ -4111,16 +4090,16 @@
             "require-dev": {
                 "facile-it/paraunit": "^1.3.1 || ^2.11.0",
                 "infection/infection": "^0.32.7",
-                "justinrainbow/json-schema": "^6.8.0",
+                "justinrainbow/json-schema": "^6.9.0",
                 "keradus/cli-executor": "^2.3",
                 "mikey179/vfsstream": "^1.6.12",
                 "php-coveralls/php-coveralls": "^2.9.1",
                 "php-cs-fixer/phpunit-constraint-isidenticalstring": "^1.8",
                 "php-cs-fixer/phpunit-constraint-xmlmatchesxsd": "^1.8",
                 "phpunit/phpunit": "^9.6.34 || ^10.5.63 || ^11.5.55",
-                "symfony/polyfill-php85": "^1.37",
-                "symfony/var-dumper": "^5.4.48 || ^6.4.32 || ^7.4.4 || ^8.0.8",
-                "symfony/yaml": "^5.4.45 || ^6.4.30 || ^7.4.1 || ^8.0.11"
+                "symfony/polyfill-php85": "^1.38",
+                "symfony/var-dumper": "^5.4.48 || ^6.4.36 || ^7.4.8 || ^8.1.0",
+                "symfony/yaml": "^5.4.53 || ^6.4.41 || ^7.4.13 || ^8.1.0"
             },
             "suggest": {
                 "ext-dom": "For handling output formats in XML",
@@ -4161,7 +4140,7 @@
             ],
             "support": {
                 "issues": "https://github.com/PHP-CS-Fixer/PHP-CS-Fixer/issues",
-                "source": "https://github.com/PHP-CS-Fixer/PHP-CS-Fixer/tree/v3.95.5"
+                "source": "https://github.com/PHP-CS-Fixer/PHP-CS-Fixer/tree/v3.95.8"
             },
             "funding": [
                 {
@@ -4169,7 +4148,7 @@
                     "type": "github"
                 }
             ],
-            "time": "2026-06-09T14:55:16+00:00"
+            "time": "2026-06-16T09:52:26+00:00"
         },
         {
             "name": "kelunik/certificate",
@@ -8036,16 +8015,16 @@
         },
         {
             "name": "symfony/polyfill-deepclone",
-            "version": "v1.38.2",
+            "version": "v1.40.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/symfony/polyfill-deepclone.git",
-                "reference": "c1b95c370cb2ee4ee221f0a317f5ae5dfae9a42e"
+                "reference": "dca4ccba5f360070b574414dce4c1e7a559844fa"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/symfony/polyfill-deepclone/zipball/c1b95c370cb2ee4ee221f0a317f5ae5dfae9a42e",
-                "reference": "c1b95c370cb2ee4ee221f0a317f5ae5dfae9a42e",
+                "url": "https://api.github.com/repos/symfony/polyfill-deepclone/zipball/dca4ccba5f360070b574414dce4c1e7a559844fa",
+                "reference": "dca4ccba5f360070b574414dce4c1e7a559844fa",
                 "shasum": ""
             },
             "require": {
@@ -8099,7 +8078,7 @@
                 "shim"
             ],
             "support": {
-                "source": "https://github.com/symfony/polyfill-deepclone/tree/v1.38.2"
+                "source": "https://github.com/symfony/polyfill-deepclone/tree/v1.40.0"
             },
             "funding": [
                 {
@@ -8119,7 +8098,7 @@
                     "type": "tidelift"
                 }
             ],
-            "time": "2026-06-08T20:10:26+00:00"
+            "time": "2026-06-12T07:27:17+00:00"
         },
         {
             "name": "symfony/stopwatch",
@@ -8440,16 +8419,16 @@
         },
         {
             "name": "webmozart/assert",
-            "version": "2.4.0",
+            "version": "2.4.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/webmozarts/assert.git",
-                "reference": "9007ea6f45ecf352a9422b36644e4bfc039b9155"
+                "reference": "2ccb7c2e821038c03a3e6e1700c570c158c55f70"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/webmozarts/assert/zipball/9007ea6f45ecf352a9422b36644e4bfc039b9155",
-                "reference": "9007ea6f45ecf352a9422b36644e4bfc039b9155",
+                "url": "https://api.github.com/repos/webmozarts/assert/zipball/2ccb7c2e821038c03a3e6e1700c570c158c55f70",
+                "reference": "2ccb7c2e821038c03a3e6e1700c570c158c55f70",
                 "shasum": ""
             },
             "require": {
@@ -8500,17 +8479,14 @@
             ],
             "support": {
                 "issues": "https://github.com/webmozarts/assert/issues",
-                "source": "https://github.com/webmozarts/assert/tree/2.4.0"
+                "source": "https://github.com/webmozarts/assert/tree/2.4.1"
             },
-            "time": "2026-05-20T13:07:01+00:00"
+            "time": "2026-06-15T15:31:57+00:00"
         }
     ],
     "aliases": [],
     "minimum-stability": "stable",
-    "stability-flags": {
-        "oglow/yacorapi": 20,
-        "ollily/ezlogging": 20
-    },
+    "stability-flags": {},
     "prefer-stable": true,
     "prefer-lowest": false,
     "platform": {
@@ -8519,5 +8495,5 @@
         "ext-json": "*"
     },
     "platform-dev": {},
-    "plugin-api-version": "2.9.0"
+    "plugin-api-version": "2.6.0"
 }

@@ -23,7 +23,7 @@ $spaceKey = 'NMAS';
 /** @var string */
 $searchTerm = 'title=REST-API%2001';
 /** @var int */
-$pageId = 608567375; // 591855803;521933587;
+$pageId = 521933587;
 
 class SearchPageExample extends AbstractRestApiExample
 {
@@ -116,11 +116,6 @@ class SearchPageExample extends AbstractRestApiExample
     }
 }
 
-/**
- * FIXME:Remove.
- *
- * @SuppressWarnings(PHPMD)
- */
 function main(): void
 {
     global $pageId, $searchTerm, $spaceKey;
@@ -128,13 +123,13 @@ function main(): void
 
     $thisClazz->readPageByPageId($pageId);
 
-    //    $thisClazz->readPagesWithFilter($searchTerm);
-    //    $thisClazz->readPagesWithFilterAndSpace($searchTerm, $spaceKey);
-    //
-    //    $thisClazz->scanPagesWithFilter($searchTerm);
-    //    $thisClazz->scanPagesWithFilterAndSpace($searchTerm, $spaceKey);
-    //
-    //    $thisClazz->searchPagesWithFilter();
+    $thisClazz->readPagesWithFilter($searchTerm);
+    $thisClazz->readPagesWithFilterAndSpace($searchTerm, $spaceKey);
+
+    $thisClazz->scanPagesWithFilter($searchTerm);
+    $thisClazz->scanPagesWithFilterAndSpace($searchTerm, $spaceKey);
+
+    $thisClazz->searchPagesWithFilter();
 }
 
 main();

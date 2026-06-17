@@ -63,7 +63,9 @@ class CountMacrosExample extends AbstractRestApiExample
                     /** @var MacroStatistic */
                     $macro = $addon->getItem($macroName);
 
-                    $csvLine = [$spaceKey, $addonName, $macroName, $macro->keys()->count()];
+                    $csvLine = [$spaceKey, $addonName, $macroName, $macro->getItem($macroName)];
+                    $this->logger->info("",[var_export($macro,true)]);
+                    $this->logger->info("",[var_dump($csvLine)]);
                     $this->storeAsCsv($csvLine, $fileExtension);
                 }
             }
@@ -77,8 +79,13 @@ function main(): void
     $spaceData = new SpaceData();
     $spaceKeys = $spaceData->getDataByMode(SpaceData::SPACE_SIMPLE);
 
+    $cntSpaces = count($spaceKeys);
+    $cntIdx = 0;
     foreach ($spaceKeys as $spaceKey) {
+        echo sprintf("\n\n%s/%s Count in space '%s'\n", ++$cntIdx, $cntSpaces, $spaceKey);
         $thisClazz->countOneSpaceOneAddon($spaceKey);
+        die(1);
+        echo sprintf("\n\n%s/%s Count blocker in space '%s'\n", $cntIdx, $cntSpaces, $spaceKey);
         $thisClazz->countOneSpaceOneAddon($spaceKey, BlockerAddon::ADDON_BLOCKER);
     }
 }

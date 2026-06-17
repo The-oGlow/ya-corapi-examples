@@ -160,7 +160,7 @@ abstract class AbstractRestApiExample
      */
     protected function storeAsCsv(mixed $anyData, ?string $fileExtension = 'csv', string|array $dataHeader = []): void
     {
-        $csvAdapter = new CsvFileAdapter($this->outputFileName);
+        $csvAdapter = new CsvFileAdapter($this->outputFileName, $fileExtension);
 
         // FIXME: Die Angabe von Pfad und Dateiname ist unsauber
         //        $targetFile = $csvAdapter->prepareTargetFileParam(

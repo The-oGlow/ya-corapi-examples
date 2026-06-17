@@ -27,7 +27,7 @@ class CountPagesExample extends AbstractRestApiExample
 
     public function countOneSpaceVolume(string $spaceKey, bool $singleFile = false): void
     {
-        $this->logger->debug("START", [$spaceKey]);
+        $this->logger->info("START", [$spaceKey]);
         $this->loopPageTypes($spaceKey, $singleFile);
         $this->logger->debug("END", [$spaceKey]);
     }
@@ -60,6 +60,7 @@ class CountPagesExample extends AbstractRestApiExample
 
     private function countPagesInSpace(string $spaceKey, string $pageType): IStatistic
     {
+        $this->logger->info("Count for", [$spaceKey, $pageType]);
         return $this->apiClient->countItemsinSpace($spaceKey, $pageType);
     }
 }
@@ -72,7 +73,10 @@ function main(): void
     $spaceKeys = $spaceData->getDataByMode(SpaceData::SPACE_SIMPLE);
     $singleFile = false;
 
+    $cntSpaces = count($spaceKeys);
+    $cntIdx = 0;
     foreach ($spaceKeys as $spaceKey) {
+        echo sprintf("\n\n%s/%s Count in space '%s'\n", ++$cntIdx, $cntSpaces, $spaceKey);
         $thisClazz->countOneSpaceVolume($spaceKey, $singleFile);
     }
 }

@@ -29,16 +29,21 @@
   "repositories": [
     {
       "type": "path",
-      "url": "../yacorapi"
-    }
+      "url": "../yacorapi",
+	  "options": {
+		"versions": {
+			"oglow/yacorapi": "1.0.999"
+        }
+	  }
+	}
   ],
   "require": {
     "php": ">=8.4",
     "ext-curl": "*",
     "ext-json": "*",
     "php-ds/php-ds": "^1.0",
-    "ollily/ezlogging": "dev-develop",
-    "oglow/yacorapi": "dev-develop"
+    "ollily/ezlogging": "^8.4",
+    "oglow/yacorapi": "^1.0"
   },
   "provide": {
   },
