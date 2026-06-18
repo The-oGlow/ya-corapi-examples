@@ -881,7 +881,7 @@
             "dist": {
                 "type": "path",
                 "url": "../yacorapi",
-                "reference": "7ef85967f8eb4ffcc0327b38c2ff3e7372987cf0"
+                "reference": "81ac1aa048057259d07c4fa731f0572e46ccbba8"
             },
             "require": {
                 "ext-curl": "*",

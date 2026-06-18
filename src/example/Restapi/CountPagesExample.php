@@ -28,21 +28,46 @@ class CountPagesExample extends AbstractRestApiExample
     public function countOneSpaceVolume(string $spaceKey, bool $singleFile = false): void
     {
         $this->logger->info("START", [$spaceKey]);
-        $this->loopPageTypes($spaceKey, $singleFile);
+        
+        $spaceStatistic = $this->loopPageTypes($spaceKey, $singleFile);
+        $this->writeFile($spaceKey, $singleFile, $spaceStatistic);
+        
         $this->logger->debug("END", [$spaceKey]);
     }
 
-    private function loopPageTypes(string $spaceKey, bool $singleFile): void
+    private function loopPageTypes(string $spaceKey, bool $singleFile): IStatistic
     {
         $this->logger->debug("START", [$spaceKey]);
 
-        $fileNameSuffix = $singleFile ? '' : $spaceKey;
+//        $fileNameSuffix = $singleFile ? '' : $spaceKey;
         $spaceStatistic = new SpaceStatistic($spaceKey);
 
         foreach (RequestParameterData::ITEM_TYPES as $pageType) {
             $countPages = $this->countPagesInSpace($spaceKey, $pageType);
             $spaceStatistic->addItem($pageType, $countPages);
         }
+
+//        if (($singleFile && !$this->headerWritten) || !$singleFile) {
+//            $this->storeAsCsv(null, $fileNameSuffix, $spaceStatistic->flattenHeader());
+//            $this->headerWritten = true;
+//        }
+//        foreach ($spaceStatistic->keys() as $itemName) {
+//            /** @var IStatistic */
+//            $value = $spaceStatistic->getItem($itemName);
+//            
+//            $entry = [$spaceKey, $itemName, $value->flatten(false)];
+//            $this->storeAsCsv($entry, $fileNameSuffix);
+//        }
+
+        $this->logger->debug("END", [$spaceKey]);
+        
+        return $spaceStatistic;
+    }
+
+    private function writeFile(string $spaceKey, bool $singleFile, IStatistic $spaceStatistic):void {
+        $this->logger->debug("START", [$spaceKey]);
+
+        $fileNameSuffix = $singleFile ? '' : $spaceKey;
 
         if (($singleFile && !$this->headerWritten) || !$singleFile) {
             $this->storeAsCsv(null, $fileNameSuffix, $spaceStatistic->flattenHeader());
@@ -51,7 +76,7 @@ class CountPagesExample extends AbstractRestApiExample
         foreach ($spaceStatistic->keys() as $itemName) {
             /** @var IStatistic */
             $value = $spaceStatistic->getItem($itemName);
-            $entry = [$spaceKey, $itemName, $value->flatten(false)];
+            $entry = [$spaceKey, $itemName, $value->flatten(false), var_export($value,true)];
             $this->storeAsCsv($entry, $fileNameSuffix);
         }
 
@@ -78,7 +103,8 @@ function main(): void
     foreach ($spaceKeys as $spaceKey) {
         echo sprintf("\n\n%s/%s Count in space '%s'\n", ++$cntIdx, $cntSpaces, $spaceKey);
         $thisClazz->countOneSpaceVolume($spaceKey, $singleFile);
-    }
+die(1);
+        }
 }
 
 main();
