@@ -1,20 +1,20 @@
 {
-  "name": "oglow/yacorapi-examples",
-  "description": "The examples for yacorapi",
-  "type": "library",
-  "keywords": [
-    "confluence",
-    "datacenter",
-    "data-center",
-    "restapi",
-    "yacorapi",
-    "example",
-    "examples"
-  ],
-  "homepage": "https://github.com/The-oGlow/yacorapi-examples",
-  "license": "Apache-2.0",
-  "authors": [
-    {
+    "name": "oglow/yacorapi-examples",
+    "description": "The examples for yacorapi",
+    "type": "library",
+    "keywords": [
+        "confluence",
+        "datacenter",
+        "data-center",
+        "restapi",
+        "yacorapi",
+        "example",
+        "examples"
+    ],
+    "homepage": "https://github.com/The-oGlow/yacorapi-examples",
+    "license": "Apache-2.0",
+    "authors": [
+        {
             "name": "ollily",
             "email": "426229+ollily@users.noreply.github.com",
             "homepage": "https://github.com/ollily",
@@ -58,25 +58,25 @@
         "friendsofphp/php-cs-fixer": "^3.0",
         "squizlabs/php_codesniffer": "^4.0",
         "phpmd/phpmd": "^2.0"
-  },
-  "config": {
-    "optimize-autoloader": false,
-    "sort-packages": true,
-    "allow-plugins": {
-      "phpstan/extension-installer": true,
-      "php-http/discovery": true
-    }
-  },
-  "autoload": {
-    "psr-4": {
-      "oglow\\example\\": "src/example"
-    }
-  },
-  "autoload-dev": {
-    "psr-4": {
-      "oglow\\example\\": "tests/example"
-    }
-  },
+    },
+    "config": {
+        "optimize-autoloader": false,
+        "sort-packages": true,
+        "allow-plugins": {
+            "phpstan/extension-installer": true,
+            "php-http/discovery": true
+        }
+    },
+    "autoload": {
+        "psr-4": {
+            "oglow\\example\\": "src/example"
+        }
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "oglow\\example\\": "tests/example"
+        }
+    },
     "scripts": {
         "c-all": [
             "composer c-check",
