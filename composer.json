@@ -69,7 +69,8 @@
     },
     "autoload": {
         "psr-4": {
-            "oglow\\example\\": "src/example"
+            "oglow\\example\\": "src/example",
+            "oglow\\poc\\": "src/poc"
         }
     },
     "autoload-dev": {

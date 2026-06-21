@@ -14,7 +14,6 @@ declare(strict_types=1);
 namespace oglow\example\Restapi;
 
 use oglow\tools\Yacorapi\IResponse;
-use oglow\tools\Yacorapi\RapiClient;
 
 require_once __DIR__ . '/../../bootstrap.php'; // NOSONAR: php:S4833
 

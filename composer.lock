@@ -881,7 +881,7 @@
             "dist": {
                 "type": "path",
                 "url": "../yacorapi",
-                "reference": "81ac1aa048057259d07c4fa731f0572e46ccbba8"
+                "reference": "4a8a65a24ce52f857d73cddb4e4d6d79602b9178"
             },
             "require": {
                 "ext-curl": "*",
@@ -1025,10 +1025,9 @@
                 "reference": "895f476415df6f94ccc1b1dfc751697f52dbb68b"
             },
             "dist": {
-                "type": "zip",
-                "url": "https://api.github.com/repos/The-oGlow/ezkoding/zipball/895f476415df6f94ccc1b1dfc751697f52dbb68b",
-                "reference": "895f476415df6f94ccc1b1dfc751697f52dbb68b",
-                "shasum": ""
+                "type": "path",
+                "url": "../ezkoding",
+                "reference": "052bec444f31e1a8012d84aaa918447e97575ba1"
             },
             "require": {
                 "composer/composer": "^2.0",
@@ -1167,10 +1166,9 @@
                 "reference": "8a2b9cbe2c9fec7007f6e46e034e8e2bdd89e5b2"
             },
             "dist": {
-                "type": "zip",
-                "url": "https://api.github.com/repos/The-oGlow/ezlogging/zipball/8a2b9cbe2c9fec7007f6e46e034e8e2bdd89e5b2",
-                "reference": "8a2b9cbe2c9fec7007f6e46e034e8e2bdd89e5b2",
-                "shasum": ""
+                "type": "path",
+                "url": "../ezlogging",
+                "reference": "b584f890f12c81def16b738bae889319b4b4e387"
             },
             "require": {
                 "monolog/monolog": "^3.0",
@@ -4199,16 +4197,16 @@
         },
         {
             "name": "friendsofphp/php-cs-fixer",
-            "version": "v3.95.8",
+            "version": "v3.95.10",
             "source": {
                 "type": "git",
                 "url": "https://github.com/PHP-CS-Fixer/PHP-CS-Fixer.git",
-                "reference": "4140023f552ff02346df9b1329742532166f677f"
+                "reference": "93e1ab3e1f153024bd3ab23c8a349556063c6f17"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/PHP-CS-Fixer/PHP-CS-Fixer/zipball/4140023f552ff02346df9b1329742532166f677f",
-                "reference": "4140023f552ff02346df9b1329742532166f677f",
+                "url": "https://api.github.com/repos/PHP-CS-Fixer/PHP-CS-Fixer/zipball/93e1ab3e1f153024bd3ab23c8a349556063c6f17",
+                "reference": "93e1ab3e1f153024bd3ab23c8a349556063c6f17",
                 "shasum": ""
             },
             "require": {
@@ -4292,7 +4290,7 @@
             ],
             "support": {
                 "issues": "https://github.com/PHP-CS-Fixer/PHP-CS-Fixer/issues",
-                "source": "https://github.com/PHP-CS-Fixer/PHP-CS-Fixer/tree/v3.95.8"
+                "source": "https://github.com/PHP-CS-Fixer/PHP-CS-Fixer/tree/v3.95.10"
             },
             "funding": [
                 {
@@ -4300,7 +4298,7 @@
                     "type": "github"
                 }
             ],
-            "time": "2026-06-16T09:52:26+00:00"
+            "time": "2026-06-19T14:45:22+00:00"
         },
         {
             "name": "kelunik/certificate",

@@ -13,12 +13,11 @@ declare(strict_types=1);
 
 namespace oglow\example\Restapi;
 
-use ollily\Tools\Batch\BatchTaskHelper;
-use oglow\tools\Yacorapi\Helper\ContentHelper;
-use ollily\Tools\Batch\ITaskItem;
-use ollily\Tools\Batch\TaskItem;
-use oglow\tools\Yacorapi\IResponse;
 use Ds\Map;
+use oglow\tools\Yacorapi\Helper\ContentHelper;
+use oglow\tools\Yacorapi\IResponse;
+use ollily\Tools\Batch\BatchTaskHelper;
+use ollily\Tools\Batch\ITaskItem;
 
 require_once __DIR__ . '/../../bootstrap.php'; // NOSONAR: php:S4833
 
@@ -45,7 +44,7 @@ class UpdatePageExample extends AbstractRestApiExample
 
                 $suffix = $pageIdLoaded . '-' . str_replace(' ', '_', substr($pageTitleLoaded, 0, 15)) . ".xml";
                 $this->storeOrg($pageBodyLoaded, $suffix);
-                $pageBodyModified = ContentHelper::prepareMacro('info', new Map( ['title' => 'Modified Content']), 'I changed this page1');
+                $pageBodyModified = ContentHelper::prepareMacro('info', new Map(['title' => 'Modified Content']), 'I changed this page1');
                 $this->storeMod($pageBodyModified, $suffix);
                 $this->apiClient->updatePage($pageIdLoaded, $pageBodyModified, $pageVersionLoaded, $pageTitleLoaded);
             } else {
@@ -63,7 +62,7 @@ class UpdatePageExample extends AbstractRestApiExample
         $tasklist = BatchTaskHelper::readTaskList($fileName, $key);
 
         $fallbackIdx = 0;
-        while(!$tasklist->isEmpty()) {
+        while (!$tasklist->isEmpty()) {
             $task = $tasklist->nextTask();
             $this->logger->debug("task:", [$fallbackIdx, $task]);
             if (!is_null($task)) {

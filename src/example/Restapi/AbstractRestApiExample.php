@@ -15,16 +15,19 @@ namespace oglow\example\Restapi;
 
 use Monolog\ConsoleLogger;
 use Monolog\PlainLogger;
-use oglow\tools\Yacorapi\Store\IStoreAdapter;
+use oglow\tools\Yacorapi\Client\RapiClient;
 use oglow\tools\Yacorapi\ConstData;
+use oglow\tools\Yacorapi\IRapiClient;
+use oglow\tools\Yacorapi\IResponse;
 use oglow\tools\Yacorapi\Store\CsvFileAdapter;
 use oglow\tools\Yacorapi\Store\FileAdapter;
-use oglow\tools\Yacorapi\IResponse;
-use oglow\tools\Yacorapi\IRapiClient;
-use oglow\tools\Yacorapi\Client\RapiClient;
+use oglow\tools\Yacorapi\Store\IStoreAdapter;
 use ollily\Tools\String\ImplodeTrait;
 use Psr\Log\LoggerInterface;
 
+/**
+ * @SuppressWarnings("PHPMD.UnusedFormalParameter")
+ */
 abstract class AbstractRestApiExample
 {
     use ImplodeTrait;
@@ -91,10 +94,10 @@ abstract class AbstractRestApiExample
         }
     }
 
-//    protected function prepareTargetPathName(string $pathPH): string
-//    {
-//        return ConstData::realScriptName($pathPH, $this->outputFileName);
-//    }
+    //    protected function prepareTargetPathName(string $pathPH): string
+    //    {
+    //        return ConstData::realScriptName($pathPH, $this->outputFileName);
+    //    }
 
     protected function prepareTargetFileName(string $suffix = ''): string
     {

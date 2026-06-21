@@ -13,15 +13,13 @@ declare(strict_types=1);
 
 namespace oglow\example\Restapi;
 
-use oglow\tools\Yacorapi\Data\AddonMacroData;
-use oglow\tools\Yacorapi\Response\ResponseAddonMacroDecorate;
 use oglow\tools\Yacorapi\Data\SpaceData;
-use oglow\tools\Yacorapi\Macro\SingleAddon;
-use oglow\tools\Yacorapi\Statistic\AddonStatistic;
-use oglow\tools\Yacorapi\Statistic\IStatistic;
-use oglow\tools\Yacorapi\Statistic\MacroStatistic;
-use oglow\tools\Yacorapi\Statistic\SpaceStatistic;
 use oglow\tools\Yacorapi\Macro\BlockerAddon;
+use oglow\tools\Yacorapi\Macro\SingleAddon;
+use oglow\tools\Yacorapi\Response\ResponseAddonMacroDecorate;
+use oglow\tools\Yacorapi\Statistic\IStatistic;
+use oglow\tools\Yacorapi\Statistic\StatisticStatistic;
+use oglow\tools\Yacorapi\Statistic\StatisticTypeEnum;
 
 require_once __DIR__ . '/../../bootstrap.php'; // NOSONAR: php:S4833
 
@@ -33,7 +31,7 @@ class CountMacrosExample extends AbstractRestApiExample
 
         /** @var ResponseAddonMacroDecorate */
         $addonSet     = $this->apiClient->prepareAddonSet($mode);
-        $outputMatrix = new SpaceStatistic($spaceKey);// [];
+        $outputMatrix = new StatisticStatistic($spaceKey, StatisticTypeEnum::SPACE);// [];
         $anyData      = $this->apiClient->countMacrosInSpace($spaceKey, $addonSet, $outputMatrix);
 
         $this->flattenData($anyData, $mode);
@@ -51,16 +49,16 @@ class CountMacrosExample extends AbstractRestApiExample
             $anyData = [$anyData];
         }
 
-        /** @var SpaceStatistic $space */
+        /** @var IStatistic $space */
         foreach ($anyData as $space) {
             $spaceKey      = $space->getStatisticName();
             $fileExtension = "$spaceKey-$mode";
             $this->storeAsCsv(null, $fileExtension, $space->header());
             foreach ($space->keys() as $addonName) {
-                /** @var AddonStatistic */
+                /** @var IStatistic */
                 $addon = $space->getItem($addonName);
                 foreach ($addon->keys() as $macroName) {
-                    /** @var MacroStatistic */
+                    /** @var IStatistic */
                     $macro = $addon->getItem($macroName);
 
                     $csvLine = [$spaceKey, $addonName, $macroName, $macro->getItem($macroName)];

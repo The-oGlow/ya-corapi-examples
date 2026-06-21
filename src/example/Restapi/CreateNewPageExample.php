@@ -13,8 +13,8 @@ declare(strict_types=1);
 
 namespace oglow\example\Restapi;
 
-use oglow\tools\Yacorapi\Helper\ContentHelper;
 use Ds\Map;
+use oglow\tools\Yacorapi\Helper\ContentHelper;
 
 require_once __DIR__ . '/../../bootstrap.php'; // NOSONAR: php:S4833
 
@@ -48,7 +48,7 @@ class CreateNewPageExample extends AbstractRestApiExample
         "<p><ac:structured-macro ac:name=\"status\" ac:schema-version=\"1\">" .
         "<ac:parameter ac:name=\"colour\">Green</ac:parameter>" .
         "<ac:parameter ac:name=\"title\">Low</ac:parameter></ac:structured-macro></p>";
-        self::$C_NEW_MACRO_2 = ContentHelper::prepareMacro('status', new Map( ['title' => 'high', 'colour' => 'Red']), '');
+        self::$C_NEW_MACRO_2 = ContentHelper::prepareMacro('status', new Map(['title' => 'high', 'colour' => 'Red']), '');
         self::$C_NEW_MACRO_3 = ContentHelper::prepareMacro('html', null, "<style>span{border: 1pt solid darkred !important;}</style>");
         self::$C_NEW_MACRO_4 = ContentHelper::prepareMacro(
             'section',

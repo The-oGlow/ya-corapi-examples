@@ -15,10 +15,9 @@ namespace oglow\example\Restapi;
 
 require_once __DIR__ . '/../../bootstrap.php'; // NOSONAR: php:S4833
 
-use oglow\tools\Yacorapi\Response\ResponseSpaceDataDecorate;
-use oglow\tools\Yacorapi\RapiClient;
-use oglow\tools\Yacorapi\Data\SpaceData;
 use oglow\tools\Yacorapi\Data\RequestParameterData;
+use oglow\tools\Yacorapi\Data\SpaceData;
+use oglow\tools\Yacorapi\Response\ResponseSpaceDataDecorate;
 
 /**
  * FIXME:Remove.
@@ -60,10 +59,10 @@ class SearchSpacesExample extends AbstractRestApiExample
         $fileName    = SpaceData::prepareMySpacesFileName();
 
         // FIXME: Die Angabe von Pfad und Dateiname ist unsauber
-//        $targetFile = $this->storeAdapter->prepareTargetFileParam(
-//            \oglow\tools\Yacorapi\TARGET_DIR,
-//            $fileName
-//        );
+        //        $targetFile = $this->storeAdapter->prepareTargetFileParam(
+        //            \oglow\tools\Yacorapi\TARGET_DIR,
+        //            $fileName
+        //        );
         $this->storeAdapter->storeData($fileContent);
 
         $this->logger->debug("END");

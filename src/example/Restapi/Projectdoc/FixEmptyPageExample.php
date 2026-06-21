@@ -3,9 +3,9 @@
 declare(strict_types=1);
 
 /*
- * This file is part of yacorapi-examples
+ * This file is part of yacorapi-examles
  *
- * (c) 2025 Oliver Glowa, coding.glowa.com
+ * (c) 2024 Oliver Glowa, coding.glowa.com
  *
  * This source file is subject to the Apache-2.0 license that is bundled
  * with this source code in the file LICENSE.
@@ -14,16 +14,20 @@ declare(strict_types=1);
 namespace oglowa\example\Restapi\Projectdoc;
 
 use Ds\Map;
-use oglowa\example\Restapi\AbstractRestApiExample;
-use oglowa\tools\Yacorapi\ConstData;
-use oglowa\tools\Yacorapi\IResponse;
+use oglow\example\Restapi\AbstractRestApiExample;
+use oglow\tools\Yacorapi\ConstData;
+use oglow\tools\Yacorapi\IResponse;
 
 class FixEmptyPageExample extends AbstractRestApiExample
 {
-    public const BODYSIZE_MIN = 10;
+    public const int BODYSIZE_MIN = 10;
+
+    private ConstData $constData;
 
     public function scanPagesInSpace(string $spaceKey): void
     {
+        $this->constData = new ConstData(get_class($this));
+
         $start      = ConstData::PAGE_START;
         $pageLimit  = ConstData::PAGE_LIMIT;
         $filterTerm = 'type:page AND -macroName:projectdoc-properties-marker';
@@ -31,6 +35,7 @@ class FixEmptyPageExample extends AbstractRestApiExample
         $idxLoop = 0;
         $bLoop   = true;
 
+        /** @psalm-suppress RedundantCondition */
         while ($bLoop) {
             /** @var IResponse */
             $response = $this->apiClient->searchPagesWithFilter($filterTerm, $spaceKey, $start, $pageLimit);
@@ -49,7 +54,7 @@ class FixEmptyPageExample extends AbstractRestApiExample
                             $resultValue[IResponse::KEY_TYPE],
                             $resultValue[IResponse::KEY_TITLE],
                             $bodySize,
-                            $this->constData->c(ConstData::C_WEB_SHOW_PAGEID) . $resultValue['id']
+                            $this->constData->c(ConstData::KEY_WEB_SHOW_PAGEID) . $resultValue['id'],
                         ];
                         $this->logger->debug("$idxLoop.", [$line]);
                         $this->storeAsCsv($line);
@@ -62,7 +67,7 @@ class FixEmptyPageExample extends AbstractRestApiExample
                 break;
             }
             if ($idxLoop > ConstData::PAGE_MAX_RESULTS) {
-                $this->logger->notice("After at least results, I stop.", ConstData::PAGE_MAX_RESULTS);
+                $this->logger->notice("After at least results, I stop.", [ConstData::PAGE_MAX_RESULTS]);
                 $bLoop = false;
                 break;
             }
@@ -71,7 +76,7 @@ class FixEmptyPageExample extends AbstractRestApiExample
     }
 }
 
-function main()
+function main(): void
 {
     $spaceKey  = 'NMVSSUP';
     $thisClazz = new FixEmptyPageExample();

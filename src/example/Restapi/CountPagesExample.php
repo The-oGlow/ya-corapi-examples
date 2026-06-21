@@ -13,11 +13,11 @@ declare(strict_types=1);
 
 namespace oglow\example\Restapi;
 
-use oglow\tools\Yacorapi\Data\SpaceData;
-use oglow\tools\Yacorapi\RapiClient;
-use oglow\tools\Yacorapi\Statistic\IStatistic;
-use oglow\tools\Yacorapi\Statistic\SpaceStatistic;
 use oglow\tools\Yacorapi\Data\RequestParameterData;
+use oglow\tools\Yacorapi\Data\SpaceData;
+use oglow\tools\Yacorapi\Statistic\IStatistic;
+use oglow\tools\Yacorapi\Statistic\StatisticStatistic;
+use oglow\tools\Yacorapi\Statistic\StatisticTypeEnum;
 
 require_once __DIR__ . '/../../bootstrap.php'; // NOSONAR: php:S4833
 
@@ -39,8 +39,8 @@ class CountPagesExample extends AbstractRestApiExample
     {
         $this->logger->debug("START", [$spaceKey]);
 
-//        $fileNameSuffix = $singleFile ? '' : $spaceKey;
-        $spaceStatistic = new SpaceStatistic($spaceKey);
+        $fileNameSuffix = $singleFile ? '' : $spaceKey;
+        $spaceStatistic = new StatisticStatistic($spaceKey, StatisticTypeEnum::SPACE);
 
         foreach (RequestParameterData::ITEM_TYPES as $pageType) {
             $countPages = $this->countPagesInSpace($spaceKey, $pageType);
