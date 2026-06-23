@@ -62,8 +62,8 @@ class CountMacrosExample extends AbstractRestApiExample
                     $macro = $addon->getItem($macroName);
 
                     $csvLine = [$spaceKey, $addonName, $macroName, $macro->getItem($macroName)];
-                    $this->logger->info("",[var_export($macro,true)]);
-                    $this->logger->info("",[var_dump($csvLine)]);
+                    $this->logger->info("", [var_export($macro, true)]);
+                    $this->logger->info("", [var_dump($csvLine)]);
                     $this->storeAsCsv($csvLine, $fileExtension);
                 }
             }
@@ -82,6 +82,7 @@ function main(): void
     foreach ($spaceKeys as $spaceKey) {
         echo sprintf("\n\n%s/%s Count in space '%s'\n", ++$cntIdx, $cntSpaces, $spaceKey);
         $thisClazz->countOneSpaceOneAddon($spaceKey);
+
         die(1);
         echo sprintf("\n\n%s/%s Count blocker in space '%s'\n", $cntIdx, $cntSpaces, $spaceKey);
         $thisClazz->countOneSpaceOneAddon($spaceKey, BlockerAddon::ADDON_BLOCKER);

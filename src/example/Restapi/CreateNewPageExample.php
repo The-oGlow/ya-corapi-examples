@@ -76,11 +76,11 @@ function main(): void
     $title = sprintf(CreateNewPageExample::C_NEW_TITLE, \oglow\tools\Yacorapi\ConstData::getTsNow(), $idx++);
     $body  =
     CreateNewPageExample::C_NEW_BODY;
-//            .
-//    CreateNewPageExample::$C_NEW_MACRO_1 .
-//    CreateNewPageExample::$C_NEW_MACRO_2 .
-//    CreateNewPageExample::$C_NEW_MACRO_3 .
-//    CreateNewPageExample::$C_NEW_MACRO_4;
+    //            .
+    //    CreateNewPageExample::$C_NEW_MACRO_1 .
+    //    CreateNewPageExample::$C_NEW_MACRO_2 .
+    //    CreateNewPageExample::$C_NEW_MACRO_3 .
+    //    CreateNewPageExample::$C_NEW_MACRO_4;
     $thisClazz->createPage(CreateNewPageExample::C_SPACE, $title, $body, CreateNewPageExample::C_PLAYGROUND_ID);
 }
 

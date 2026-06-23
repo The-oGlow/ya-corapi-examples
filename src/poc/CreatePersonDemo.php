@@ -15,16 +15,28 @@ namespace oglow\poc;
 
 require_once __DIR__ . '/../bootstrap.php'; // NOSONAR: php:S4833
 
-use ollily\Tools\Batch\BatchTaskHelper;
+use oglow\example\ExampleErrorCodesEnum;
+use ollily\Tools\Batch\DataKeyEnum;
 use ollily\Tools\Batch\ITaskItem;
 
-class CreatePersonDemo extends AbstractPoc
+class CreatePersonDemo extends AbstractPocProcessTaskItems
 {
+    public const string FILE_NAME = 'person-crossfun.csv';
+
+    public const string LIST_KEY = 'csvperson';
+
     #[\Override]
-    protected function startProcess(ITaskItem $task): void
+    protected function startProcess(mixed $processData = null): void
     {
-        if (!$task->empty()) {
-            $this->logger->notice('Creating person for', [$task->getData()[BatchTaskHelper::COL_INFO]]);
+        if ($processData instanceof ITaskItem) {
+            /** @var ITaskItem */
+            $task = $processData;
+            if (!$task->empty()) {
+                $title = $task->getDataValue(DataKeyEnum::TITLE->value);
+                $this->logger->notice('Creating person for', [$title,$task->__toString()]);
+            }
+        } else {
+            Emergency::breakSystem(ExampleErrorCodesEnum::ERR_PROCESSDATA_WRONG->value, ExampleErrorCodesEnum::ERR_PROCESSDATA_WRONG->text());
         }
     }
 }
@@ -32,7 +44,7 @@ class CreatePersonDemo extends AbstractPoc
 function main(): void
 {
     $obj = new CreatePersonDemo();
-    $obj->startDemo('person-crossfun.csv', 'csvperson');
+    $obj->startDemo(CreatePersonDemo::FILE_NAME, CreatePersonDemo::LIST_KEY);
 }
 
 main();
