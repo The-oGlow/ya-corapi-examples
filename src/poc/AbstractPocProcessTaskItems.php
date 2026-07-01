@@ -17,6 +17,8 @@ use ollily\Tools\Batch\BatchTaskHelper;
 use ollily\Tools\Batch\ITaskItem;
 use ollily\Tools\Batch\TaskList;
 use ollily\Tools\Emergency;
+use ollily\Tools\Batch\ItemConfig;
+use Ds\Map;
 
 abstract class AbstractPocProcessTaskItems extends AbstractPoc
 {
@@ -29,6 +31,8 @@ abstract class AbstractPocProcessTaskItems extends AbstractPoc
     {
         $this->logger->info('Starting Demo');
 
+        $itemConfig = new ItemConfig(new Map());
+        
         if (count($args) >= self::EXPECTED_ARGS) {
             $fileName = self::getProjectRoot() . self::DEMO_PATH . $args[0];
             $listName = $args[1];
@@ -36,7 +40,7 @@ abstract class AbstractPocProcessTaskItems extends AbstractPoc
             $this->logger->info('Filename / ListKey', [$fileName, $listName]);
 
             /** @var TaskList */
-            $tasklist = BatchTaskHelper::readTaskList($fileName, $listName, true);
+            $tasklist = BatchTaskHelper::readTaskList($fileName, $itemConfig, $listName, true);
 
             $this->logger->info('Found tasks', [$tasklist->count()]);
 

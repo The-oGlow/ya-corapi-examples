@@ -32,8 +32,8 @@ class CreatePersonDemo extends AbstractPocProcessTaskItems
             /** @var ITaskItem */
             $task = $processData;
             if (!$task->empty()) {
-                $title = $task->getDataValue(DataKeyEnum::TITLE->value);
-                $this->logger->notice('Creating person for', [$title,$task->__toString()]);
+                $title = $task->getDataValue(DataKeyEnum::NAME->value);
+                $this->logger->notice('Creating person for', [$title]);
             }
         } else {
             Emergency::breakSystem(ExampleErrorCodesEnum::ERR_PROCESSDATA_WRONG->value, ExampleErrorCodesEnum::ERR_PROCESSDATA_WRONG->text());
