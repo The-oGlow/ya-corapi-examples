@@ -21,7 +21,7 @@ use ollily\Tools\Batch\ITaskItem;
 
 class CreatePersonDemo extends AbstractPocProcessTaskItems
 {
-    public const string FILE_NAME = 'person-crossfun.csv';
+    public const string FILE_NAME = 'person-one.csv';
 
     public const string LIST_KEY = 'csvperson';
 

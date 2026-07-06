@@ -49,11 +49,14 @@ class CreateNewPageExample extends AbstractRestApiExample
         "<ac:parameter ac:name=\"colour\">Green</ac:parameter>" .
         "<ac:parameter ac:name=\"title\">Low</ac:parameter></ac:structured-macro></p>";
         self::$C_NEW_MACRO_2 = ContentHelper::prepareMacro('status', new Map(['title' => 'high', 'colour' => 'Red']), '');
-        self::$C_NEW_MACRO_3 = ContentHelper::prepareMacro('html', null, "<style>span{border: 1pt solid darkred !important;}</style>");
+        self::$C_NEW_MACRO_3 = ContentHelper::prepareMacro('panel', new Map(
+                ['borderColor' => 'red', 'bgColor' => '#eeeeee', 'titleColor' => 'white', 'borderWidth' => '2', 'titleBGColor' => 'blue', 'borderStyle' => 'solid', 'title' => 'Panel Title']
+                ),
+                "Panel Text");
         self::$C_NEW_MACRO_4 = ContentHelper::prepareMacro(
             'section',
             null,
-            ContentHelper::prepareMacro('column', null, 'left') . ContentHelper::prepareMacro('column', null, 'right')
+            ContentHelper::prepareMacro('column', null, 'left') . ContentHelper::prepareMacro('column', new Map(['width' =>'33%']), 'right')
         );
     }
 
@@ -75,12 +78,11 @@ function main(): void
 
     $title = sprintf(CreateNewPageExample::C_NEW_TITLE, \oglow\tools\Yacorapi\ConstData::getTsNow(), $idx++);
     $body  =
-    CreateNewPageExample::C_NEW_BODY;
-    //            .
-    //    CreateNewPageExample::$C_NEW_MACRO_1 .
-    //    CreateNewPageExample::$C_NEW_MACRO_2 .
-    //    CreateNewPageExample::$C_NEW_MACRO_3 .
-    //    CreateNewPageExample::$C_NEW_MACRO_4;
+    CreateNewPageExample::C_NEW_BODY .
+        CreateNewPageExample::$C_NEW_MACRO_1 .
+        CreateNewPageExample::$C_NEW_MACRO_2 .
+        CreateNewPageExample::$C_NEW_MACRO_3 .
+        CreateNewPageExample::$C_NEW_MACRO_4;
     $thisClazz->createPage(CreateNewPageExample::C_SPACE, $title, $body, CreateNewPageExample::C_PLAYGROUND_ID);
 }
 

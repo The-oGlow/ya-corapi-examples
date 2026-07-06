@@ -50,7 +50,7 @@ abstract class AbstractRestApiExample
         $this->outputFileName = empty($outputFileName) ? get_class($this) : $outputFileName;
         $this->output         = new PlainLogger(get_class($this));
         $this->storeAdapter   = new FileAdapter($this->outputFileName);
-        $this->apiClient      = RapiClient::newClient();
+        $this->apiClient      = RapiClient::newClient(level:'debug');
 
         $this->logger->debug("END");
     }
