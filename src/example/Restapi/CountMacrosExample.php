@@ -53,17 +53,18 @@ class CountMacrosExample extends AbstractRestApiExample
         foreach ($anyData as $space) {
             $spaceKey      = $space->getStatisticName();
             $fileExtension = "$spaceKey-$mode";
-            $this->storeAsCsv(null, $fileExtension, $space->header());
+            $this->storeAsCsv(null, $fileExtension, $space->flattenHeader());
+
             foreach ($space->keys() as $addonName) {
                 /** @var IStatistic */
                 $addon = $space->getItem($addonName);
                 foreach ($addon->keys() as $macroName) {
                     /** @var IStatistic */
                     $macro = $addon->getItem($macroName);
-
-                    $csvLine = [$spaceKey, $addonName, $macroName, $macro->getItem($macroName)];
-                    $this->logger->info("", [var_export($macro, true)]);
-                    $this->logger->info("", [var_dump($csvLine)]);
+                    // FIXME: ->flatten must be fixed
+                    $count = str_replace(['{', '}', 'count,'], '', $macro->flatten(false));
+                    $count = empty($count) ? '0' : $count;
+                    $csvLine = [$spaceKey, $addonName, $macroName, $count];
                     $this->storeAsCsv($csvLine, $fileExtension);
                 }
             }
@@ -80,10 +81,10 @@ function main(): void
     $cntSpaces = count($spaceKeys);
     $cntIdx = 0;
     foreach ($spaceKeys as $spaceKey) {
-        echo sprintf("\n\n%s/%s Count in space '%s'\n", ++$cntIdx, $cntSpaces, $spaceKey);
-        $thisClazz->countOneSpaceOneAddon($spaceKey);
+        ++$cntIdx;
+//        echo sprintf("\n\n%s/%s Count in space '%s'\n", $cntIdx, $cntSpaces, $spaceKey);
+//        $thisClazz->countOneSpaceOneAddon($spaceKey);
 
-        die(1);
         echo sprintf("\n\n%s/%s Count blocker in space '%s'\n", $cntIdx, $cntSpaces, $spaceKey);
         $thisClazz->countOneSpaceOneAddon($spaceKey, BlockerAddon::ADDON_BLOCKER);
     }

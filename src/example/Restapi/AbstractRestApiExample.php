@@ -24,6 +24,7 @@ use oglow\tools\Yacorapi\Store\FileAdapter;
 use oglow\tools\Yacorapi\Store\IStoreAdapter;
 use ollily\Tools\String\ImplodeTrait;
 use Psr\Log\LoggerInterface;
+use Psr\Log\LogLevel;
 
 /**
  * @SuppressWarnings("PHPMD.UnusedFormalParameter")
@@ -31,6 +32,9 @@ use Psr\Log\LoggerInterface;
 abstract class AbstractRestApiExample
 {
     use ImplodeTrait;
+
+    /** Default output level (INFO) */
+    public const string LEVEL_DEFAULT = LogLevel::DEBUG;
 
     protected LoggerInterface $logger;
 
@@ -50,7 +54,7 @@ abstract class AbstractRestApiExample
         $this->outputFileName = empty($outputFileName) ? get_class($this) : $outputFileName;
         $this->output         = new PlainLogger(get_class($this));
         $this->storeAdapter   = new FileAdapter($this->outputFileName);
-        $this->apiClient      = RapiClient::newClient(level:'debug');
+        $this->apiClient      = RapiClient::newClient(level: self::LEVEL_DEFAULT);
 
         $this->logger->debug("END");
     }
