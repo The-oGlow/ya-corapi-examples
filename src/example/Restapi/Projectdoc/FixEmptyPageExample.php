@@ -13,7 +13,6 @@ declare(strict_types=1);
 
 namespace oglowa\example\Restapi\Projectdoc;
 
-use Ds\Map;
 use oglow\example\Restapi\AbstractRestApiExample;
 use oglow\tools\Yacorapi\ConstData;
 use oglow\tools\Yacorapi\IResponse;

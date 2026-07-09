@@ -18,10 +18,11 @@ require_once __DIR__ . '/../../bootstrap.php'; // NOSONAR: php:S4833
 use oglow\tools\Yacorapi\Data\RequestParameterData;
 use oglow\tools\Yacorapi\Data\SpaceData;
 use oglow\tools\Yacorapi\Response\ResponseSpaceDataDecorate;
+use oglow\tools\Yacorapi\Store\FileAdapter;
 
 class SearchSpacesExample extends AbstractRestApiExample
 {
-    public function spacesGlobal(bool $asCsv = true): void
+    public function spacesGlobal(): void
     {
         $this->logger->debug("START");
 
@@ -34,7 +35,7 @@ class SearchSpacesExample extends AbstractRestApiExample
         $this->logger->debug("END");
     }
 
-    public function spacesPersonal(bool $asCsv = true): void
+    public function spacesPersonal(): void
     {
         $this->logger->debug("START");
 
@@ -52,7 +53,8 @@ class SearchSpacesExample extends AbstractRestApiExample
 
         $fileContent = SpaceData::prepareMySpacesContent($response->getSpaces());
         $fileName    = SpaceData::prepareMySpacesFileName();
-        $this->storeAdapter->storeData($fileContent);
+        $storeAdapter = new FileAdapter($fileName);
+        $storeAdapter->storeData($fileContent);
 
         $this->logger->debug("END");
     }

@@ -16,24 +16,19 @@ namespace oglow\example\Restapi;
 use Monolog\ConsoleLogger;
 use Monolog\PlainLogger;
 use oglow\tools\Yacorapi\Client\RapiClient;
-use oglow\tools\Yacorapi\ConstData;
 use oglow\tools\Yacorapi\IRapiClient;
 use oglow\tools\Yacorapi\IResponse;
 use oglow\tools\Yacorapi\Store\CsvFileAdapter;
 use oglow\tools\Yacorapi\Store\FileAdapter;
-use oglow\tools\Yacorapi\Store\IStoreAdapter;
 use ollily\Tools\String\ImplodeTrait;
 use Psr\Log\LoggerInterface;
 use Psr\Log\LogLevel;
 
-/**
- * @SuppressWarnings("PHPMD.UnusedFormalParameter")
- */
 abstract class AbstractRestApiExample
 {
     use ImplodeTrait;
 
-    /** Default output level (INFO) */
+    /** Default output level (DEBUG) */
     public const string LEVEL_DEFAULT = LogLevel::DEBUG;
 
     protected LoggerInterface $logger;
@@ -41,8 +36,6 @@ abstract class AbstractRestApiExample
     protected PlainLogger $output;
 
     protected IRapiClient $apiClient;
-
-    protected IStoreAdapter $storeAdapter;
 
     private string $outputFileName;
 
@@ -53,7 +46,6 @@ abstract class AbstractRestApiExample
 
         $this->outputFileName = empty($outputFileName) ? get_class($this) : $outputFileName;
         $this->output         = new PlainLogger(get_class($this));
-        $this->storeAdapter   = new FileAdapter($this->outputFileName);
         $this->apiClient      = RapiClient::newClient(level: self::LEVEL_DEFAULT);
 
         $this->logger->debug("END");
@@ -98,11 +90,6 @@ abstract class AbstractRestApiExample
         }
     }
 
-    //    protected function prepareTargetPathName(string $pathPH): string
-    //    {
-    //        return ConstData::realScriptName($pathPH, $this->outputFileName);
-    //    }
-
     protected function prepareTargetFileName(string $suffix = ''): string
     {
         $fileName = basename($this->outputFileName);
@@ -114,68 +101,44 @@ abstract class AbstractRestApiExample
     }
 
     /**
-     * @param mixed       $anyData
-     * @param null|string $fileExtension
+     * @param mixed  $anyData
+     * @param string $fileExtension
      */
-    protected function storeOrg(mixed $anyData, ?string $fileExtension = 'txt'): void
+    protected function storeOrg(mixed $anyData, string $fileExtension = 'txt'): void
     {
-        // FIXME: Die Angabe von Pfad und Dateiname ist unsauber
-        //        $targetFile = $this->storeAdapter->prepareTargetFileParam(
-        //            $this->prepareTargetPathName(\oglow\tools\Yacorapi\TARGET_ORGDIR),
-        //            $this->prepareTargetFileName('org'),
-        //            $fileExtension ?? 'txt'
-        //        );
-        $this->storeAdapter->storeData($anyData);
+        $fileAdapter = new FileAdapter($this->outputFileName, $fileExtension);
+        $fileAdapter->storeData($anyData);
     }
 
     /**
-     * @param mixed       $anyData
-     * @param null|string $fileExtension
+     * @param mixed  $anyData
+     * @param string $fileExtension
      */
-    protected function storeMod(mixed $anyData, ?string $fileExtension = 'txt'): void
+    protected function storeMod(mixed $anyData, string $fileExtension = 'txt'): void
     {
-        // FIXME: Die Angabe von Pfad und Dateiname ist unsauber
-        //        $targetFile = $this->storeAdapter->prepareTargetFileParam(
-        //            $this->prepareTargetPathName(\oglow\tools\Yacorapi\TARGET_MODDIR),
-        //            $this->prepareTargetFileName('mod'),
-        //            $fileExtension ?? 'txt'
-        //        );
-        $this->storeAdapter->storeData($anyData);
+        $fileAdapter = new FileAdapter($this->outputFileName, $fileExtension);
+        $fileAdapter->storeData($anyData);
     }
 
     /**
-     * @param mixed       $anyData
-     * @param null|string $fileExtension
+     * @param mixed  $anyData
+     * @param string $fileExtension
      */
-    protected function storeAsDump(mixed $anyData, ?string $fileExtension = 'txt'): void
+    protected function storeAsDump(mixed $anyData, string $fileExtension = 'txt'): void
     {
+        $fileAdapter = new FileAdapter($this->outputFileName, $fileExtension);
         $anyString = print_r($anyData, true);
-
-        // FIXME: Die Angabe von Pfad und Dateiname ist unsauber
-        //        $targetFile = $this->storeAdapter->prepareTargetFileParam(
-        //            $this->prepareTargetPathName(\oglow\tools\Yacorapi\TARGET_DIR),
-        //            $this->prepareTargetFileName('dump'),
-        //            $fileExtension ?? 'txt'
-        //        );
-        $this->storeAdapter->storeData($anyString);
+        $fileAdapter->storeData($anyString);
     }
 
     /**
      * @param mixed           $anyData
-     * @param null|string     $fileExtension
+     * @param string          $fileExtension
      * @param string|string[] $dataHeader
      */
-    protected function storeAsCsv(mixed $anyData, ?string $fileExtension = 'csv', string|array $dataHeader = []): void
+    protected function storeAsCsv(mixed $anyData, string $fileExtension = 'csv', string|array $dataHeader = []): void
     {
         $csvAdapter = new CsvFileAdapter($this->outputFileName, $fileExtension);
-
-        // FIXME: Die Angabe von Pfad und Dateiname ist unsauber
-        //        $targetFile = $csvAdapter->prepareTargetFileParam(
-        //            $this->prepareTargetPathName(\oglow\tools\Yacorapi\TARGET_DIR),
-        //            $this->prepareTargetFileName(),
-        //            $fileExtension ?? 'csv'
-        //        );
-
         $csvAdapter->storeDataHeader($dataHeader);
         $csvAdapter->storeData($anyData);
     }

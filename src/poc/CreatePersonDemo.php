@@ -18,6 +18,7 @@ require_once __DIR__ . '/../bootstrap.php'; // NOSONAR: php:S4833
 use oglow\example\ExampleErrorCodesEnum;
 use ollily\Tools\Batch\DataKeyEnum;
 use ollily\Tools\Batch\ITaskItem;
+use ollily\Tools\Emergency;
 
 class CreatePersonDemo extends AbstractPocProcessTaskItems
 {
@@ -36,7 +37,7 @@ class CreatePersonDemo extends AbstractPocProcessTaskItems
                 $this->logger->notice('Creating person for', [$title]);
             }
         } else {
-            Emergency::breakSystem(ExampleErrorCodesEnum::ERR_PROCESSDATA_WRONG->value, ExampleErrorCodesEnum::ERR_PROCESSDATA_WRONG->text());
+            Emergency::breakSystem(ExampleErrorCodesEnum::ERR_PROCESSDATA_WRONG->intValue(), ExampleErrorCodesEnum::ERR_PROCESSDATA_WRONG->text());
         }
     }
 }

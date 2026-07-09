@@ -13,12 +13,11 @@ declare(strict_types=1);
 
 namespace oglow\poc;
 
-use ollily\Tools\Batch\BatchTaskHelper;
-use ollily\Tools\Batch\ITaskItem;
-use ollily\Tools\Batch\TaskList;
-use ollily\Tools\Emergency;
-use ollily\Tools\Batch\ItemConfig;
 use Ds\Map;
+use oglow\example\ExampleErrorCodesEnum;
+use ollily\Tools\Batch\BatchTaskHelper;
+use ollily\Tools\Batch\ItemConfig;
+use ollily\Tools\Emergency;
 
 abstract class AbstractPocProcessTaskItems extends AbstractPoc
 {
@@ -32,8 +31,8 @@ abstract class AbstractPocProcessTaskItems extends AbstractPoc
         $this->logger->info('Starting Demo');
 
         $itemConfig = new ItemConfig(new Map());
-        
-        if (count($args) >= self::EXPECTED_ARGS) {
+
+        if (count($args) >= self::EXPECTED_ARGS) { // @phpstan-ignore greaterOrEqual.alwaysTrue
             $fileName = self::getProjectRoot() . self::DEMO_PATH . $args[0];
             $listName = $args[1];
 
@@ -47,7 +46,7 @@ abstract class AbstractPocProcessTaskItems extends AbstractPoc
                 $this->startProcess($task);
             }
         } else {
-            Emergency::breakSystem(ExampleErrorCodesEnum::ERR_ARGS_MISSING->value, ExampleErrorCodesEnum::ERR_ARGS_MISSING->text());
+            Emergency::breakSystem(ExampleErrorCodesEnum::ERR_ARGS_MISSING->intValue(), ExampleErrorCodesEnum::ERR_ARGS_MISSING->text());
         }
 
         $this->logger->info('Ending Demo');

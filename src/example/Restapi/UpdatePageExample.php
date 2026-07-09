@@ -15,9 +15,9 @@ namespace oglow\example\Restapi;
 
 use Ds\Map;
 use oglow\tools\Yacorapi\Helper\ContentHelper;
-use oglow\tools\Yacorapi\IResponse;
 use ollily\Tools\Batch\BatchTaskHelper;
 use ollily\Tools\Batch\ITaskItem;
+use ollily\Tools\Batch\ItemConfig;
 
 require_once __DIR__ . '/../../bootstrap.php'; // NOSONAR: php:S4833
 
@@ -49,11 +49,16 @@ class UpdatePageExample extends AbstractRestApiExample
         }
     }
 
+    /**
+     * @SuppressWarnings("PHPMD.ExitExpression")
+     */
     public function mainUpdate(): void
     {
         $key      = "tasks-pageid";
         $fileName = "";
-        $tasklist = BatchTaskHelper::readTaskList($fileName, $key);
+        $itemConfig = new ItemConfig(new Map());
+
+        $tasklist = BatchTaskHelper::readTaskList($fileName, $itemConfig, $key);
 
         $fallbackIdx = 0;
         while (!$tasklist->isEmpty()) {
@@ -65,7 +70,7 @@ class UpdatePageExample extends AbstractRestApiExample
                 if ($fallbackIdx >= 10) {
                     $this->logger->warning("+++ fallback exit after iterations +++", [$fallbackIdx]);
 
-                    exit(10);
+                    die(10); // NOSONAR:php:S1799
                 }
             }
         }

@@ -31,8 +31,7 @@ enum ExampleErrorCodesEnum: string implements IDoubleBackedEnum
     {
         return match ($this) {
             self::ERR_ARGS_MISSING => 'Not enough arguments given',
-            self::ERR_PROCESSDATA_WRONG => 'Data for processing is invalid',
-            default => 'Unknown error'
+            self::ERR_PROCESSDATA_WRONG => 'Data for processing is invalid'
         };
     }
 }

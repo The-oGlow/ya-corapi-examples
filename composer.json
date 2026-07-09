@@ -90,8 +90,8 @@
             "composer c-phpmd"
         ],
         "c-da": "@composer dump-autoload",
-        "c-dry-fix": "@php -d xdebug.mode=off vendor/bin/php-cs-fixer check --allow-unsupported-php-version=yes --allow-risky=yes --format txt",
-        "c-fix": "@php -d xdebug.mode=off vendor/bin/php-cs-fixer fix --allow-unsupported-php-version=yes --allow-risky=yes",
+        "c-dry-fix": "@php vendor/bin/php-cs-fixer check --allow-unsupported-php-version=yes --allow-risky=yes --format txt",
+        "c-fix": "@php vendor/bin/php-cs-fixer fix --allow-unsupported-php-version=yes --allow-risky=yes",
         "c-format": [
             "composer c-fix",
             "composer c-phpcbf",
@@ -99,33 +99,33 @@
         ],
         "c-package": "@composer archive --format=zip --dir=target/staging",
         "c-phpcs": [
-            "bash -c 'echo PHP Code Sniffer checking ...'",
+            "echo PHP Code Sniffer checking ...",
             "bash -c 'mkdir --p target/analysis/phpcs'",
             "bash -c 'rm -f target/analysis/phpcs/phpcsniffer-report.txt'",
-            "@php -d xdebug.mode=off vendor/bin/phpcs --colors || true",
+            "@php vendor/bin/phpcs --colors || true",
             "bash -c 'if [ -s target/analysis/phpcs/phpcsniffer-report.txt ]; then cat target/analysis/phpcs/phpcsniffer-report.txt; exit 0; else exit 0; fi'"
         ],
         "c-phpcbf": [
-            "bash -c 'echo PHP Code Sniffer FIXING ...'",
+            "echo PHP Code Sniffer FIXING ...",
             "bash -c 'mkdir --p target/analysis/phpcs'",
             "bash -c 'rm -f target/analysis/phpcs/phpcsniffer-report.txt'",
-            "@php -d xdebug.mode=off vendor/bin/phpcbf || true",
+            "@php vendor/bin/phpcbf || true",
             "bash -c 'if [ -s target/analysis/phpcs/phpcsniffer-report.txt ]; then cat target/analysis/phpcs/phpcsniffer-report.txt; exit 0; else exit 0; fi'"
         ],
         "c-phpdoc": "phpDocumentor run",
         "c-phpmd": [
-            "bash -c 'echo PHP Mess Dectector running ...'",
+            "echo PHP Mess Dectector running ...",
             "bash -c 'rm -f target/analysis/phpmd/phpmd-report.txt'",
-            "@php -d xdebug.mode=off vendor/bin/phpmd src,tests text .phpmd.xml.dist --report-file=target/analysis/phpmd/phpmd-report.txt --error-file=target/analysis/phpmd/zzz-phpmd-error.txt --color --cache --ignore-errors-on-exit --ignore-violations-on-exit",
+            "@php vendor/bin/phpmd src,tests text .phpmd.xml.dist --report-file=target/analysis/phpmd/phpmd-report.txt --error-file=target/analysis/phpmd/zzz-phpmd-error.txt --color --cache --ignore-errors-on-exit --ignore-violations-on-exit",
             "bash -c 'if [ -s target/analysis/phpmd/phpmd-report.txt ]; then cat target/analysis/phpmd/phpmd-report.txt; exit 1; else exit 0; fi'"
         ],
-        "c-phpstan": "@php -d xdebug.mode=off vendor/bin/phpstan analyse",
-        "c-psalm": "@php -d xdebug.mode=off vendor/bin/psalm --report=target/analysis/psalm/psalm-report.txt",
-        "c-dry-psalter": "@php -d xdebug.mode=off vendor/bin/psalter --dry-run --issues=MissingReturnType,MissingClosureReturnType,MissingParamType,MissingPropertyType,PossiblyUndefinedVariable,PossiblyUndefinedGlobalVariable,ParamNameMismatch",
-        "c-psalter": "@php -d xdebug.mode=off vendor/bin/psalter --issues=MissingReturnType,MissingClosureReturnType,MissingParamType,MissingPropertyType,PossiblyUndefinedVariable,PossiblyUndefinedGlobalVariable,ParamNameMismatch",
+        "c-phpstan": "@php vendor/bin/phpstan analyse",
+        "c-psalm": "@php vendor/bin/psalm --report=target/analysis/psalm/psalm-report.txt",
+        "c-dry-psalter": "@php vendor/bin/psalter --dry-run --issues=MissingReturnType,MissingClosureReturnType,MissingParamType,MissingPropertyType,PossiblyUndefinedVariable,PossiblyUndefinedGlobalVariable,ParamNameMismatch",
+        "c-psalter": "@php vendor/bin/psalter --issues=MissingReturnType,MissingClosureReturnType,MissingParamType,MissingPropertyType,PossiblyUndefinedVariable,PossiblyUndefinedGlobalVariable,ParamNameMismatch",
         "c-sonar": [
             "composer c-test",
-            "@php -d xdebug.mode=off -Dproject.settings=sonar-project.properties vendor/bin/sonar-scanner"
+            "@php -Dproject.settings=sonar-project.properties vendor/bin/sonar-scanner"
         ],
         "c-test": "@php -d xdebug.mode=coverage vendor/bin/phpunit -c phpunit.xml.cov"
     },

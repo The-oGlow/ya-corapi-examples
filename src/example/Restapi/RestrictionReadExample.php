@@ -15,7 +15,6 @@ namespace oglow\example\Restapi;
 
 require_once __DIR__ . '/../../bootstrap.php'; // NOSONAR: php:S4833
 
-
 class RestrictionReadExample extends AbstractRestApiExample
 {
     public function readRestrictionByPageId(int $pageId): void
@@ -33,7 +32,7 @@ function main(): void
 {
     /** 98-Playground on NMAS (TEST) */
     $pageId = 532951146;
-    
+
     $thisClazz = new RestrictionReadExample();
     $thisClazz->readRestrictionByPageId($pageId);
 }

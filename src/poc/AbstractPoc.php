@@ -31,10 +31,10 @@ abstract class AbstractPoc extends AbstractRestApiExample
     {
         $this->logger->info('Starting Demo');
 
-        if (count($args) >= self::EXPECTED_ARGS) {
+        if (count($args) >= self::EXPECTED_ARGS) { // @phpstan-ignore greaterOrEqual.alwaysTrue
             $this->startProcess();
         } else {
-            Emergency::breakSystem(ExampleErrorCodesEnum::ERR_ARGS_MISSING->value, ExampleErrorCodesEnum::ERR_ARGS_MISSING->text());
+            Emergency::breakSystem(ExampleErrorCodesEnum::ERR_ARGS_MISSING->intValue(), ExampleErrorCodesEnum::ERR_ARGS_MISSING->text());
         }
 
         $this->logger->info('Ending Demo');
