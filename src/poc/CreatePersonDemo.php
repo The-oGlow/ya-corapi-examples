@@ -29,7 +29,7 @@ class CreatePersonDemo extends AbstractPocProcessTaskItems
     protected function startProcess(mixed $processData = null): void
     {
         if ($processData instanceof ITaskItem) {
-            /** @var ITaskItem */
+            /** @var ITaskItem $task */
             $task = $processData;
             if (!$task->empty()) {
                 $title = $task->getDataValue(DataKeyEnum::NAME->value);

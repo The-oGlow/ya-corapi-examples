@@ -29,9 +29,8 @@ class CountMacrosExample extends AbstractRestApiExample
     {
         $this->logger->debug("START", [$spaceKey]);
 
-        /** @var ResponseAddonMacroDecorate */
         $addonSet     = $this->apiClient->prepareAddonSet($mode);
-        $outputMatrix = new StatisticStatistic($spaceKey, StatisticTypeEnum::SPACE);// [];
+        $outputMatrix = new StatisticStatistic($spaceKey, StatisticTypeEnum::SPACE);
         $anyData      = $this->apiClient->countMacrosInSpace($spaceKey, $addonSet, $outputMatrix);
 
         $this->flattenData($anyData, $mode);
@@ -40,7 +39,7 @@ class CountMacrosExample extends AbstractRestApiExample
     }
 
     /**
-     * @param IStatistic|IStatistic[] $anyData
+     * @param array<mixed,IStatistic> $anyData
      * @param int                     $mode
      */
     private function flattenData(IStatistic|array $anyData, int $mode): void
@@ -49,17 +48,16 @@ class CountMacrosExample extends AbstractRestApiExample
             $anyData = [$anyData];
         }
 
-        /** @var IStatistic $space */
         foreach ($anyData as $space) {
             $spaceKey      = $space->getStatisticName();
             $fileExtension = "$spaceKey-$mode";
             $this->storeAsCsv(null, $fileExtension, $space->flattenHeader());
 
             foreach ($space->keys() as $addonName) {
-                /** @var IStatistic */
+                /** @var IStatistic $addon */
                 $addon = $space->getItem($addonName);
                 foreach ($addon->keys() as $macroName) {
-                    /** @var IStatistic */
+                    /** @var IStatistic $macro */
                     $macro = $addon->getItem($macroName);
                     // FIXME: ->flatten must be fixed
                     $count = str_replace(['{', '}', 'count,'], '', $macro->flatten(false));
@@ -82,9 +80,6 @@ function main(): void
     $cntIdx = 0;
     foreach ($spaceKeys as $spaceKey) {
         ++$cntIdx;
-//        echo sprintf("\n\n%s/%s Count in space '%s'\n", $cntIdx, $cntSpaces, $spaceKey);
-//        $thisClazz->countOneSpaceOneAddon($spaceKey);
-
         echo sprintf("\n\n%s/%s Count blocker in space '%s'\n", $cntIdx, $cntSpaces, $spaceKey);
         $thisClazz->countOneSpaceOneAddon($spaceKey, BlockerAddon::ADDON_BLOCKER);
     }

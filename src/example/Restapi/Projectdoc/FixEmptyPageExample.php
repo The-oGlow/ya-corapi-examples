@@ -37,10 +37,8 @@ class FixEmptyPageExample extends AbstractRestApiExample
 
         /** @psalm-suppress RedundantCondition */
         while ($bLoop) {
-            /** @var IResponse */
             $response = $this->apiClient->searchPagesWithFilter($filterTerm, $spaceKey, $start, $pageLimit);
             if ($response->isResultsAvailable()) {
-                /** @var Map<mixed,mixed> $results */
                 $results = $response->getResults();
                 if ($results->hasKey(IResponse::KEY_CONTENT)) {
                     $results = $results->get(IResponse::KEY_CONTENT);

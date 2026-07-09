@@ -63,7 +63,7 @@ class CountPagesExample extends AbstractRestApiExample
             $this->headerWritten = true;
         }
         foreach ($spaceStatistic->keys() as $itemName) {
-            /** @var IStatistic */
+            /** @var IStatistic $itemValue */
             $itemValue = $spaceStatistic->getItem($itemName);
             // FIXME: ->flatten must be fixed
             $count = str_replace(['{', '}','count,'], '', $itemValue->flatten(false));

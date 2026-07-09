@@ -15,33 +15,35 @@ namespace oglow\example\Restapi;
 
 require_once __DIR__ . '/../../bootstrap.php'; // NOSONAR: php:S4833
 
-/** @var int */
-$pageId = 608567375; // 591855803;521933587;
-
 class RestrictionWriteExample extends AbstractRestApiExample
 {
     public function readRestrictionByPageId(int $pageId): void
     {
         $this->logger->debug("START", [$pageId]);
+
         $response = $this->apiClient->readRestrictionsByPageId($pageId);
         $this->outputData($response);
+
         $this->logger->debug("END");
     }
 
     public function writeRestrictionsByPageId(int $pageId): void
     {
         $this->logger->debug("START", [$pageId]);
+
         $writeRestrictions = ['user' => ['admin']];
         $readRestrictions  = ['user' => ['admin']];
         $response          = $this->apiClient->writeRestrictionsByPageId($pageId, $writeRestrictions, $readRestrictions);
         $this->outputData($response);
+
         $this->logger->debug("END");
     }
 }
 
 function main(): void
 {
-    global $pageId;
+    /** 98-Playground on NMAS (TEST) */
+    $pageId = 532951146;
 
     $thisClazz = new RestrictionWriteExample();
     $thisClazz->readRestrictionByPageId($pageId);
@@ -50,7 +52,7 @@ function main(): void
         $thisClazz->writeRestrictionsByPageId($pageId);
         $thisClazz->readRestrictionByPageId($pageId);
     } catch (\BadMethodCallException $ex) {
-        echo "\nCorrect exception was thrown";
+        echo $ex->getMessage();
     }
 }
 

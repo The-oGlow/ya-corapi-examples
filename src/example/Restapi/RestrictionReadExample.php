@@ -15,35 +15,26 @@ namespace oglow\example\Restapi;
 
 require_once __DIR__ . '/../../bootstrap.php'; // NOSONAR: php:S4833
 
-/** @var int */
-$pageId = 608567375; // 591855803;521933587;
 
-/**
- * FIXME:Remove.
- *
- * @SuppressWarnings(PHPMD)
- */
 class RestrictionReadExample extends AbstractRestApiExample
 {
     public function readRestrictionByPageId(int $pageId): void
     {
         $this->logger->debug("START", [$pageId]);
+
         $response = $this->apiClient->readRestrictionsByPageId($pageId);
         $this->outputData($response);
+
         $this->logger->debug("END");
     }
 }
 
-/**
- * FIXME:Remove.
- *
- * @SuppressWarnings(PHPMD)
- */
 function main(): void
 {
-    global $pageId, $searchTerm, $spaceKey;
+    /** 98-Playground on NMAS (TEST) */
+    $pageId = 532951146;
+    
     $thisClazz = new RestrictionReadExample();
-
     $thisClazz->readRestrictionByPageId($pageId);
 }
 

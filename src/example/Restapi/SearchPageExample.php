@@ -17,12 +17,6 @@ use oglow\tools\Yacorapi\IResponse;
 
 require_once __DIR__ . '/../../bootstrap.php'; // NOSONAR: php:S4833
 
-/** @var string */
-$spaceKey = 'NMAS';
-/** @var string */
-$searchTerm = 'title=REST-API%2001';
-/** @var int */
-$pageId = 521933587;
 
 class SearchPageExample extends AbstractRestApiExample
 {
@@ -117,7 +111,13 @@ class SearchPageExample extends AbstractRestApiExample
 
 function main(): void
 {
-    global $pageId, $searchTerm, $spaceKey;
+    /** NMAS space */
+    $spaceKey = 'NMAS';
+    /** Page title */
+    $searchTerm = 'title=REST-API%2001';
+    /** 98-Playground on NMAS (TEST) */
+    $pageId = 532951146;
+
     $thisClazz = new SearchPageExample();
 
     $thisClazz->readPageByPageId($pageId);

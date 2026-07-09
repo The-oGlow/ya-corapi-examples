@@ -39,12 +39,10 @@ abstract class AbstractPocProcessTaskItems extends AbstractPoc
 
             $this->logger->info('Filename / ListKey', [$fileName, $listName]);
 
-            /** @var TaskList */
             $tasklist = BatchTaskHelper::readTaskList($fileName, $itemConfig, $listName, true);
 
             $this->logger->info('Found tasks', [$tasklist->count()]);
 
-            /** @var ITaskItem $task */
             while (($task = $tasklist->nextTask()) !== null) {
                 $this->startProcess($task);
             }

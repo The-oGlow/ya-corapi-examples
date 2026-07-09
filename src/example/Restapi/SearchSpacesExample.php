@@ -19,18 +19,13 @@ use oglow\tools\Yacorapi\Data\RequestParameterData;
 use oglow\tools\Yacorapi\Data\SpaceData;
 use oglow\tools\Yacorapi\Response\ResponseSpaceDataDecorate;
 
-/**
- * FIXME:Remove.
- *
- * @SuppressWarnings(PHPMD)
- */
 class SearchSpacesExample extends AbstractRestApiExample
 {
     public function spacesGlobal(bool $asCsv = true): void
     {
         $this->logger->debug("START");
 
-        /** @var ResponseSpaceDataDecorate */
+        /** @var ResponseSpaceDataDecorate $response */
         $response = $this->apiClient->listSpaces(RequestParameterData::SPACE_TYPE_GLOBAL);
 
         $this->storeAsCsv($response->getSpaces(), RequestParameterData::SPACE_TYPE_GLOBAL);
@@ -43,7 +38,7 @@ class SearchSpacesExample extends AbstractRestApiExample
     {
         $this->logger->debug("START");
 
-        /** @var ResponseSpaceDataDecorate */
+        /** @var ResponseSpaceDataDecorate $response */
         $response = $this->apiClient->listSpaces(RequestParameterData::SPACE_TYPE_PERSONAL);
 
         $this->storeAsCsv($response->getSpaces(), RequestParameterData::SPACE_TYPE_PERSONAL);
@@ -57,12 +52,6 @@ class SearchSpacesExample extends AbstractRestApiExample
 
         $fileContent = SpaceData::prepareMySpacesContent($response->getSpaces());
         $fileName    = SpaceData::prepareMySpacesFileName();
-
-        // FIXME: Die Angabe von Pfad und Dateiname ist unsauber
-        //        $targetFile = $this->storeAdapter->prepareTargetFileParam(
-        //            \oglow\tools\Yacorapi\TARGET_DIR,
-        //            $fileName
-        //        );
         $this->storeAdapter->storeData($fileContent);
 
         $this->logger->debug("END");

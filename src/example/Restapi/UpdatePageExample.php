@@ -21,18 +21,12 @@ use ollily\Tools\Batch\ITaskItem;
 
 require_once __DIR__ . '/../../bootstrap.php'; // NOSONAR: php:S4833
 
-/**
- * FIXME:Remove.
- *
- * @SuppressWarnings(PHPMD)
- */
 class UpdatePageExample extends AbstractRestApiExample
 {
     private function loopThruUpdates(ITaskItem $task): void
     {
-        /** @var int */
+        /** @var int $pageId */
         $pageId = intval($task->getData()[0]);
-        /** @var IResponse */
         $response = $this->apiClient->readPageByPageId($pageId);
 
         if ($response->isResultsAvailable()) {
