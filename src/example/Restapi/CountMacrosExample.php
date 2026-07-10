@@ -19,6 +19,7 @@ use oglow\tools\Yacorapi\Macro\SingleAddon;
 use oglow\tools\Yacorapi\Statistic\IStatistic;
 use oglow\tools\Yacorapi\Statistic\StatisticStatistic;
 use oglow\tools\Yacorapi\Statistic\StatisticTypeEnum;
+use oglow\tools\Yacorapi\Macro\AllAddon;
 
 require_once __DIR__ . '/../../bootstrap.php'; // NOSONAR: php:S4833
 
@@ -79,14 +80,14 @@ function main(): void
 {
     $thisClazz = new CountMacrosExample();
     $spaceData = new SpaceData();
-    $spaceKeys = $spaceData->getDataByMode(SpaceData::SPACE_SIMPLE);
+    $spaceKeys = $spaceData->getDataByMode(SpaceData::SPACE_ALL);
 
     $cntSpaces = count($spaceKeys);
     $cntIdx = 0;
     foreach ($spaceKeys as $spaceKey) {
         ++$cntIdx;
-        echo sprintf("\n\n%s/%s Count blocker in space '%s'\n", $cntIdx, $cntSpaces, $spaceKey);
-        $thisClazz->countMacrosInSpace($spaceKey, BlockerAddon::ADDON_BLOCKER);
+        echo sprintf("\n\n%s/%s Count all in space '%s'\n", $cntIdx, $cntSpaces, $spaceKey);
+        $thisClazz->countMacrosInSpace($spaceKey, AllAddon::ADDON_ALL);
     }
 }
 
