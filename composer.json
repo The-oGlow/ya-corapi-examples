@@ -29,6 +29,12 @@
     },
     "minimum-stability": "stable",
     "prefer-stable": true,
+    "repositories": [
+        {
+            "type": "vcs",
+            "url": "https://github.com/The-oGlow/yacorapi.git"
+        }
+    ],    
     "require": {
         "php": ">=8.4.1",
         "ext-curl": "*",
