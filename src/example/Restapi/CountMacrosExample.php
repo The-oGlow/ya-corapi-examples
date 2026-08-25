@@ -14,18 +14,20 @@ declare(strict_types=1);
 namespace oglow\example\Restapi;
 
 use oglow\tools\Yacorapi\Data\SpaceData;
+use oglow\tools\Yacorapi\Macro\AddonTypeEnum;
+use oglow\tools\Yacorapi\Macro\AllAddon;
 use oglow\tools\Yacorapi\Macro\BlockerAddon;
 use oglow\tools\Yacorapi\Macro\SingleAddon;
 use oglow\tools\Yacorapi\Statistic\IStatistic;
 use oglow\tools\Yacorapi\Statistic\StatisticStatistic;
 use oglow\tools\Yacorapi\Statistic\StatisticTypeEnum;
-use oglow\tools\Yacorapi\Macro\AllAddon;
+
 
 require_once __DIR__ . '/../../bootstrap.php'; // NOSONAR: php:S4833
 
 class CountMacrosExample extends AbstractRestApiExample
 {
-    public function countMacrosInSpace(string $spaceKey, int $mode = SingleAddon::ADDON_SINGLE): void
+    public function countMacrosInSpace(string $spaceKey, AddonTypeEnum $mode = AddonTypeEnum::ADDON_SINGLE): void
     {
         $this->logger->debug("START", [$spaceKey]);
 
@@ -40,9 +42,9 @@ class CountMacrosExample extends AbstractRestApiExample
 
     /**
      * @param array<mixed,IStatistic>|IStatistic $anyData
-     * @param int                                $mode
+     * @param AddonTypeEnum                                $mode
      */
-    private function writeFile(IStatistic|array $anyData, int $mode): void
+    private function writeFile(IStatistic|array $anyData, AddonTypeEnum $mode): void
     {
         $this->logger->debug("START");
 
@@ -52,7 +54,7 @@ class CountMacrosExample extends AbstractRestApiExample
 
         foreach ($anyData as $space) {
             $spaceKey      = $space->getStatisticName();
-            $fileExtension = "$spaceKey-$mode";
+            $fileExtension = "$spaceKey-" . $mode->value;
             $this->logger->notice("Write Data for space to file with extension", [$spaceKey, $fileExtension]);
 
             $this->storeAsCsv(null, $fileExtension, $space->flattenHeader());
@@ -87,7 +89,7 @@ function main(): void
     foreach ($spaceKeys as $spaceKey) {
         ++$cntIdx;
         echo sprintf("\n\n%s/%s Count all in space '%s'\n", $cntIdx, $cntSpaces, $spaceKey);
-        $thisClazz->countMacrosInSpace($spaceKey, AllAddon::ADDON_ALL);
+        $thisClazz->countMacrosInSpace($spaceKey, AddonTypeEnum::ADDON_ALL);
     }
 }
 

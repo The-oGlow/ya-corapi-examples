@@ -29,7 +29,7 @@ abstract class AbstractRestApiExample
     use ImplodeTrait;
 
     /** Default output level (DEBUG) */
-    public const string LEVEL_DEFAULT = LogLevel::DEBUG;
+    public const string LEVEL_DEFAULT = LogLevel::INFO;
 
     protected LoggerInterface $logger;
 
