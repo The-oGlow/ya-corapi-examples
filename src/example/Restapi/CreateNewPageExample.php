@@ -15,6 +15,8 @@ namespace oglow\example\Restapi;
 
 use Ds\Map;
 use oglow\tools\Yacorapi\Helper\ContentHelper;
+use oglow\tools\Yacorapi\Data\RequestParameterData;
+use oglow\tools\Yacorapi\ConstData;
 
 require_once __DIR__ . '/../../bootstrap.php'; // NOSONAR: php:S4833
 
@@ -59,12 +61,18 @@ class CreateNewPageExample extends AbstractRestApiExample
         );
         self::$C_NEW_MACRO_4 = ContentHelper::prepareMacro(
             'section',
-            null,
-            ContentHelper::prepareMacro('column', null, 'left') . ContentHelper::prepareMacro('column', new Map(['width' => '33%']), 'right')
+             new Map(),
+            ContentHelper::prepareMacro('column', new Map(), 'left') . ContentHelper::prepareMacro('column', new Map(['width' => '33%']), 'right')
         );
     }
 
-    public function createPage(string $spaceKey, string $pageTitle, string $pageBody = '', ?int $parentId = null, string $pageType = 'page'): void
+    public function createPage(
+        string $spaceKey, 
+        string $pageTitle, 
+        string $pageBody = '', 
+        int $parentId= RequestParameterData::NO_PARENT, 
+        string $pageType = RequestParameterData::ITEM_TYPE_PAGE
+        ): void
     {
         $this->logger->debug("START spaceKey,pageTitle,parentId,pageType,empty(pageBody)", [$spaceKey, $pageTitle, $parentId, $pageType, empty($pageBody)]);
 
@@ -80,7 +88,7 @@ function main(): void
 
     $thisClazz = new CreateNewPageExample();
 
-    $title = sprintf(CreateNewPageExample::C_NEW_TITLE, \oglow\tools\Yacorapi\ConstData::getTsNow(), $idx++);
+    $title = sprintf(CreateNewPageExample::C_NEW_TITLE, ConstData::getTsNow(), $idx++);
     $body  =
     CreateNewPageExample::C_NEW_BODY .
     CreateNewPageExample::$C_NEW_MACRO_1 .

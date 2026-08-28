@@ -15,7 +15,7 @@ namespace oglow\example;
 
 use ollily\Tools\Arrays\IDoubleBackedEnum;
 
-enum ExampleErrorCodesEnum: string implements IDoubleBackedEnum
+enum ExampleErrorCodesEnum: string implements ollily\Tools\Arrays\IDoubleBackedEnum
 {
     case ERR_ARGS_MISSING = '254';
     case ERR_PROCESSDATA_WRONG = '253';

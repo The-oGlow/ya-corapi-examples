@@ -15,6 +15,8 @@ namespace oglow\example\Restapi;
 
 require_once __DIR__ . '/../../bootstrap.php'; // NOSONAR: php:S4833
 
+use oglow\tools\Yacorapi\Data\RequestParameterData;
+
 class MovePageExample extends AbstractRestApiExample
 {
     public const  int      C_PLAYGROUND_ID = 532951146;
@@ -51,7 +53,7 @@ class MovePageExample extends AbstractRestApiExample
     {
         $thisClazz = new MovePageExample();
         $title     = sprintf(MovePageExample::C_MOVE_TITLE, \oglow\tools\Yacorapi\ConstData::getTsNow(), 0);
-        $pageId    = $thisClazz->createPage(MovePageExample::C_SPACE, $title, MovePageExample::C_MOVE_BODY);
+        $pageId    = $thisClazz->createPage(MovePageExample::C_SPACE, $title, MovePageExample::C_MOVE_BODY, RequestParameterData::NO_PARENT);
         $thisClazz->movePage($pageId, MovePageExample::C_PLAYGROUND_ID);
     }
 }
