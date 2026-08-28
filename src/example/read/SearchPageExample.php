@@ -17,12 +17,17 @@ use Monolog\ConsoleLogger;
 use oglow\example\AbstractRestApiExample;
 use oglow\tools\Yacorapi\IResponse;
 use Psr\Log\LoggerInterface;
+use oglow\tools\Yacorapi\Client\IRapiClientBase;
 
 require_once __DIR__ . '/../../bootstrap.php'; // NOSONAR: php:S4833
 
 class SearchPageExample extends AbstractRestApiExample
 {
     private LoggerInterface $logger;
+
+    private int $totalSize = 0;
+    private int $currentPos = 0;
+    private int $nextPos = 0;
 
     public function __construct(string $outputFileName = '')
     {
@@ -36,49 +41,46 @@ class SearchPageExample extends AbstractRestApiExample
 
     public function readPageByPageId(int $pageId): void
     {
-        $this->output->out("+++ searchByPageId()");
+        $this->output->out("\n+++ readPageByPageId($pageId)");
         $response = $this->apiClient->readPageByPageId($pageId);
         $this->outputData($response);
         $this->storeAsDump($response, ".txt");
     }
 
-    public function readPagesWithFilter(string $filterTerm): void
+    public function readPagesByTitle(string $pageTitle): void
     {
-        $this->output->out("+++ searchByPageId()");
-        $response = $this->apiClient->readPagesWithFilter($filterTerm);
+        $this->output->out("\n+++ readPagesByTitle($pageTitle)");
+        $response = $this->apiClient->readPagesByTitle($pageTitle);
         $this->outputDatas($response);
     }
 
-    public function readPagesWithFilterAndSpace(string $filterTerm, string $spaceKey): void
+    public function readPagesByTitleAndSpace(string $pageTitle, string $spaceKey): void
     {
-        $this->output->out("+++ searchTermAndSpaceByBrowse()");
-        $response = $this->apiClient->readPagesWithFilter($filterTerm, $spaceKey);
+        $this->output->out("\n+++ readPagesByTitleAndSpace($pageTitle,$spaceKey)");
+        $response = $this->apiClient->readPagesByTitle($pageTitle, $spaceKey);
         $this->outputDatas($response);
     }
 
-    public function scanPagesWithFilter(string $filterTerm): void
+    public function scanPages(): void
     {
-        $this->output->out("+++ scanPagesWithFilter()");
-        $response = $this->apiClient->scanPagesWithFilter($filterTerm);
+        $this->output->out("\n+++ scanPages()");
+        $response = $this->apiClient->scanPages();
         $this->outputDatas($response);
     }
 
-    public function scanPagesWithFilterAndSpace(string $filterTerm, string $spaceKey): void
+    public function scanPagesWithSpace(string $spaceKey): void
     {
-        $this->output->out("+++ scanPagesWithFilterAndSpace()");
-        $response = $this->apiClient->scanPagesWithFilter($filterTerm, $spaceKey);
+        $this->output->out("\n+++ scanPagesWithSpace($spaceKey)");
+        $response = $this->apiClient->scanPages($spaceKey);
         $this->outputDatas($response);
     }
 
-    public function searchPagesWithFilter(): void
-    {
-        global $spaceKey;
-        global $searchTerm;
+    public function searchPagesWithFilter(string $filterTerm, string $spaceKey, int $searchLimit = IRapiClientBase::REQ_SEARCH_LIMIT): void {
 
-        $this->output->out("+++ searchPagesWithFilter()");
+        $this->output->out("\n+++ searchPagesWithFilter($filterTerm,$spaceKey,$searchLimit)");
         $fallbackIdx = 0;
         do {
-            $this->loopThruSearchResults($spaceKey, $searchTerm, $this->nextPos);
+            $this->loopThruSearchResults($spaceKey, $filterTerm, $this->nextPos, $searchLimit);
             $fallbackIdx++;
             if ($fallbackIdx >= 10) {
                 $this->output->out("+++ searchPagesWithFilter() - fallback exit after 10 iterations +++");
@@ -87,24 +89,23 @@ class SearchPageExample extends AbstractRestApiExample
         } while ($this->totalSize > $this->currentPos);
     }
 
-    private int $totalSize = 0;
-
-    private int $currentPos = 0;
-
-    private int $nextPos = 0;
-
-    public function loopThruSearchResults(string $spaceKey, string $filterTerm, int $searchFromPos): void
+    public function loopThruSearchResults(string $spaceKey, string $filterTerm, int $searchFromPos, int $searchLimit): void
     {
-        $response = $this->apiClient->searchPagesWithFilter($filterTerm, $spaceKey, $searchFromPos);
+        $response = $this->apiClient->searchPagesWithFilter($filterTerm, $spaceKey, $searchFromPos, $searchLimit);
 
-        $idx = 0;
+        $idx = 1;
         /**
          * FIXME: IResponse liefert falschen Wert.
          *
          * @var IResponse|mixed[] $singleResult
          */
         foreach ($response->getResults() as $singleResult) {
-            $this->outputData($singleResult, $idx++);
+            if ($singleResult instanceof IResponse) {
+                $this->outputData($singleResult->getValue(IResponse::KEY_CONTENT), $idx++);
+            } else {
+                $singleResult=$singleResult[IResponse::KEY_CONTENT];
+                $this->outputData([$singleResult[IResponse::KEY_ID],  $singleResult[IResponse::KEY_SPACE][IResponse::KEY_KEY],$singleResult[IResponse::KEY_TITLE]], $idx++);
+            }
         }
         $this->resultPosUpdate(
             (int)$response->getValue(IResponse::KEY_START),
@@ -116,33 +117,40 @@ class SearchPageExample extends AbstractRestApiExample
     public function resultPosUpdate(int $startNow, int $sizeNow, int $totalsNow): void
     {
         $this->logger->info(sprintf("CURRENT: currentPos: %s / nextPos: %s / totalSize: %s\n", $this->currentPos, $this->nextPos, $this->totalSize));
+
         $this->totalSize  = $totalsNow;
         $this->currentPos = $startNow;
         $this->nextPos    = $startNow + $sizeNow;
+
         $this->logger->info(sprintf("NEW    : currentPos: %s / nextPos: %s / totalSize: %s\n", $this->currentPos, $this->nextPos, $this->totalSize));
     }
 }
 
 function main(): void
 {
-    /** NMAS space */
-    $spaceKey = 'NMAS';
+    /** 98-Playground on CMMN (TEST) */
+    $pageId = 631573347;
+
+    /**space */
+    $spaceKey = 'CMMN';
+    
     /** Page title */
-    $searchTerm = 'title=REST-API%2001';
-    /** 98-Playground on NMAS (TEST) */
-    $pageId = 532951146;
+    $pageTitle = 'REST-External%20Documentation';
+    
+    /** Search/Filter Term*/
+    $searchTerm = 'REST';
 
     $thisClazz = new SearchPageExample();
 
     $thisClazz->readPageByPageId($pageId);
 
-    $thisClazz->readPagesWithFilter($searchTerm);
-    $thisClazz->readPagesWithFilterAndSpace($searchTerm, $spaceKey);
+    $thisClazz->readPagesByTitle($pageTitle);
+    $thisClazz->readPagesByTitleAndSpace($pageTitle, $spaceKey);
 
-    $thisClazz->scanPagesWithFilter($searchTerm);
-    $thisClazz->scanPagesWithFilterAndSpace($searchTerm, $spaceKey);
+    $thisClazz->scanPages();
+    $thisClazz->scanPagesWithSpace($spaceKey);
 
-    $thisClazz->searchPagesWithFilter();
+    $thisClazz->searchPagesWithFilter($searchTerm, $spaceKey);
 }
 
 main();

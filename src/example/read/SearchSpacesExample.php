@@ -44,8 +44,11 @@ class SearchSpacesExample extends AbstractRestApiExample
         /** @var ResponseSpaceDataDecorate $response */
         $response = $this->apiClient->listSpaces(SpaceTypeEnum::SPACE_TYPE_GLOBAL);
 
-        $this->storeAsCsv($response->getSpaces());
-        $this->prepareMySpaces($response);
+        $spaces = $response->getSpaces();
+        $this->logger->info("Found global spaces", [count($spaces)]);
+       
+        $this->storeAsCsv($spaces);
+        $this->prepareMySpaces($spaces);
 
         $this->logger->debug("END");
     }
@@ -57,18 +60,25 @@ class SearchSpacesExample extends AbstractRestApiExample
         /** @var ResponseSpaceDataDecorate $response */
         $response = $this->apiClient->listSpaces(SpaceTypeEnum::SPACE_TYPE_PERSONAL);
 
+        $spaces = $response->getSpaces();
+        $this->logger->info("Found personal spaces", [count($spaces)]);
+     
+
         $this->storeAsCsv($response->getSpaces());
 
         $this->logger->debug("END");
     }
 
-    public function prepareMySpaces(ResponseSpaceDataDecorate $response): void
+    public function prepareMySpaces(array $spaces): void
     {
         $this->logger->debug("START");
 
-        $fileContent = SpaceData::prepareMySpacesContent($response->getSpaces());
+        $fileContent = SpaceData::prepareMySpacesContent($spaces);
         $fileName    = SpaceData::prepareMySpacesFileName();
+
+        
         $storeAdapter = new FileAdapter($fileName);
+        $this->logger->info("Writing file", [$storeAdapter->getStoreItem()]);
         $storeAdapter->storeData($fileContent);
 
         $this->logger->debug("END");

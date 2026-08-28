@@ -41,9 +41,22 @@ class CountPagesExample extends AbstractRestApiExample
         $this->logger->debug("END");
     }
 
+    public function countPages(SpaceTypeEnum $spaceMode):void {
+        $spaceData = new SpaceData();
+        $spaceKeys = $spaceData->getDataByMode($spaceMode->value);
+        $singleFile = false;
+
+        $cntSpaces = count($spaceKeys);
+        $cntIdx = 0;
+        foreach ($spaceKeys as $spaceKey) {
+            echo sprintf("\n\n%s/%s Count in space '%s'\n", ++$cntIdx, $cntSpaces, $spaceKey);
+            $this->countItemsInSpace($spaceKey, $singleFile);
+        }
+    }
+    
     public function countItemsInSpace(string $spaceKey, bool $singleFile = false): void
     {
-        $this->logger->info("START", [$spaceKey]);
+        $this->logger->debug("START", [$spaceKey]);
 
         $spaceStatistic = $this->loopPageTypes($spaceKey);
         $this->writeFile($spaceKey, $singleFile, $spaceStatistic);
@@ -58,8 +71,8 @@ class CountPagesExample extends AbstractRestApiExample
         $spaceStatistic = new StatisticStatistic($spaceKey, StatisticTypeEnum::SPACE);
 
         foreach (ItemTypeEnum::TYPES as $pageType) {
-            $this->logger->info("Count for", [$spaceKey, $pageType]);
             $countPages = $this->apiClient->countItemsinSpace($spaceKey, $pageType);
+            $this->logger->info("Count for", [$spaceKey, $pageType->value, $countPages->flatten(false)]);
             $spaceStatistic->addItem($pageType, $countPages);
         }
 
@@ -96,18 +109,10 @@ class CountPagesExample extends AbstractRestApiExample
 
 function main(): void
 {
+    $spaceMode = SpaceTypeEnum::SPACE_SINGLE;
+    
     $thisClazz = new CountPagesExample();
-
-    $spaceData = new SpaceData();
-    $spaceKeys = $spaceData->getDataByMode(SpaceTypeEnum::SPACE_SIMPLE->value);
-    $singleFile = false;
-
-    $cntSpaces = count($spaceKeys);
-    $cntIdx = 0;
-    foreach ($spaceKeys as $spaceKey) {
-        echo sprintf("\n\n%s/%s Count in space '%s'\n", ++$cntIdx, $cntSpaces, $spaceKey);
-        $thisClazz->countItemsInSpace($spaceKey, $singleFile);
-    }
+    $thisClazz->countPages($spaceMode);
 }
 
 main();

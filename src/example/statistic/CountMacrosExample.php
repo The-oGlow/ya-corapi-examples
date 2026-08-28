@@ -25,12 +25,11 @@ use Psr\Log\LoggerInterface;
 
 require_once __DIR__ . '/../../bootstrap.php'; // NOSONAR: php:S4833
 
-class CountMacrosExample extends AbstractRestApiExample
-{
+class CountMacrosExample extends AbstractRestApiExample {
+
     private LoggerInterface $logger;
 
-    public function __construct(string $outputFileName = '')
-    {
+    public function __construct(string $outputFileName = '') {
         $this->logger = new ConsoleLogger(get_class($this));
 
         $this->logger->debug("START");
@@ -39,15 +38,27 @@ class CountMacrosExample extends AbstractRestApiExample
         $this->logger->debug("END");
     }
 
-    public function countMacrosInSpace(string $spaceKey, AddonTypeEnum $mode = AddonTypeEnum::ADDON_SINGLE): void
-    {
+    public function countMacros(SpaceTypeEnum $spaceMode, AddonTypeEnum $addonMode): void {
+        $spaceData = new SpaceData();
+        $spaceKeys = $spaceData->getDataByMode($spaceMode->value);
+
+        $cntSpaces = count($spaceKeys);
+        $cntIdx = 0;
+        foreach ($spaceKeys as $spaceKey) {
+            ++$cntIdx;
+            echo sprintf("\n\n%s/%s Count all in space '%s'\n", $cntIdx, $cntSpaces, $spaceKey);
+            $this->countMacrosInSpace($spaceKey, $addonMode);
+        }
+    }
+
+    public function countMacrosInSpace(string $spaceKey, AddonTypeEnum $addonMode = AddonTypeEnum::ADDON_SINGLE): void {
         $this->logger->debug("START", [$spaceKey]);
 
-        $addonSet     = $this->apiClient->prepareAddonSet($mode);
+        $addonSet = $this->apiClient->prepareAddonSet($addonMode);
         $outputMatrix = new StatisticStatistic($spaceKey, StatisticTypeEnum::SPACE);
-        $anyData      = $this->apiClient->countMacrosInSpace($spaceKey, $addonSet, $outputMatrix);
+        $anyData = $this->apiClient->countMacrosInSpace($spaceKey, $addonSet, $outputMatrix);
 
-        $this->writeFile($anyData, $mode);
+        $this->writeFile($anyData, $addonMode);
 
         $this->logger->debug("END", [$spaceKey]);
     }
@@ -56,8 +67,7 @@ class CountMacrosExample extends AbstractRestApiExample
      * @param array<mixed,IStatistic>|IStatistic $anyData
      * @param AddonTypeEnum                      $mode
      */
-    private function writeFile(IStatistic|array $anyData, AddonTypeEnum $mode): void
-    {
+    private function writeFile(IStatistic|array $anyData, AddonTypeEnum $mode): void {
         $this->logger->debug("START");
 
         if (!is_array($anyData)) {
@@ -65,7 +75,7 @@ class CountMacrosExample extends AbstractRestApiExample
         }
 
         foreach ($anyData as $space) {
-            $spaceKey      = $space->getStatisticName();
+            $spaceKey = $space->getStatisticName();
             $fileExtension = "$spaceKey-" . $mode->value;
             $this->logger->notice("Write Data for space to file with extension", [$spaceKey, $fileExtension]);
 
@@ -90,19 +100,12 @@ class CountMacrosExample extends AbstractRestApiExample
     }
 }
 
-function main(): void
-{
-    $thisClazz = new CountMacrosExample();
-    $spaceData = new SpaceData();
-    $spaceKeys = $spaceData->getDataByMode(SpaceTypeEnum::SPACE_ALL->value);
+function main(): void {
+    $spaceMode = SpaceTypeEnum::SPACE_SINGLE;
+    $addonMode = AddonTypeEnum::ADDON_SINGLE;
 
-    $cntSpaces = count($spaceKeys);
-    $cntIdx = 0;
-    foreach ($spaceKeys as $spaceKey) {
-        ++$cntIdx;
-        echo sprintf("\n\n%s/%s Count all in space '%s'\n", $cntIdx, $cntSpaces, $spaceKey);
-        $thisClazz->countMacrosInSpace($spaceKey, AddonTypeEnum::ADDON_ALL);
-    }
+    $thisClazz = new CountMacrosExample();
+    $thisClazz->countMacros($spaceMode, $addonMode);
 }
 
 main();

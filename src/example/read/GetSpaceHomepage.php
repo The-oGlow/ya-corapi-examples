@@ -47,9 +47,12 @@ class GetSpaceHomepage extends AbstractRestApiExample
 }
 function main(): void
 {
+    /*     * space */
+    $spaceKey = 'CMMN';
+
     $thisClazz = new GetSpaceHomepage();
 
-    $thisClazz->getHomepage('NMAS');
+    $thisClazz->getHomepage($spaceKey);
 }
 
 main();
