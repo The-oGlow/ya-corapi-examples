@@ -14,14 +14,13 @@ declare(strict_types=1);
 namespace oglow\example\Restapi;
 
 use Monolog\ConsoleLogger;
+use oglow\example\AbstractExample;
 use oglow\tools\Yacorapi\Client\RapiClient;
 use oglow\tools\Yacorapi\IRapiClient;
 use Psr\Log\LoggerInterface;
-use oglow\example\AbstractExample;
 
 abstract class AbstractRestApiExample extends AbstractExample
 {
-
     protected IRapiClient $apiClient;
 
     private LoggerInterface $logger;
@@ -32,10 +31,9 @@ abstract class AbstractRestApiExample extends AbstractExample
 
         $this->logger->debug("START");
         parent::__construct($outputFileName);
-        
+
         $this->apiClient      = RapiClient::newClient(level: self::LEVEL_DEFAULT);
 
         $this->logger->debug("END");
     }
-
 }

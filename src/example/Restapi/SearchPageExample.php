@@ -13,10 +13,9 @@ declare(strict_types=1);
 
 namespace oglow\example\Restapi;
 
-use oglow\tools\Yacorapi\IResponse;
-
-use Psr\Log\LoggerInterface;
 use Monolog\ConsoleLogger;
+use oglow\tools\Yacorapi\IResponse;
+use Psr\Log\LoggerInterface;
 
 require_once __DIR__ . '/../../bootstrap.php'; // NOSONAR: php:S4833
 
@@ -24,7 +23,8 @@ class SearchPageExample extends AbstractRestApiExample
 {
     private LoggerInterface $logger;
 
-    public function __construct(string $outputFileName = '') {
+    public function __construct(string $outputFileName = '')
+    {
         $this->logger = new ConsoleLogger(get_class($this));
 
         $this->logger->debug("START");

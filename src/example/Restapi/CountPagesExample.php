@@ -13,24 +13,25 @@ declare(strict_types=1);
 
 namespace oglow\example\Restapi;
 
-use oglow\tools\Yacorapi\Data\RequestParameterData;
+use Monolog\ConsoleLogger;
+use oglow\tools\Yacorapi\Data\ItemTypeEnum;
 use oglow\tools\Yacorapi\Data\SpaceData;
+use oglow\tools\Yacorapi\Data\SpaceTypeEnum;
 use oglow\tools\Yacorapi\Statistic\IStatistic;
 use oglow\tools\Yacorapi\Statistic\StatisticStatistic;
 use oglow\tools\Yacorapi\Statistic\StatisticTypeEnum;
 use Psr\Log\LoggerInterface;
-use Monolog\ConsoleLogger;
-use oglow\tools\Yacorapi\Data\SpaceTypeEnum;
-use oglow\tools\Yacorapi\Data\ItemTypeEnum;
 
 require_once __DIR__ . '/../../bootstrap.php'; // NOSONAR: php:S4833
 
 class CountPagesExample extends AbstractRestApiExample
 {
     private LoggerInterface $logger;
+
     private bool $headerWritten = false;
 
-    public function __construct(string $outputFileName = '') {
+    public function __construct(string $outputFileName = '')
+    {
         $this->logger = new ConsoleLogger(get_class($this));
 
         $this->logger->debug("START");
@@ -97,7 +98,7 @@ function main(): void
     $thisClazz = new CountPagesExample();
 
     $spaceData = new SpaceData();
-    $spaceKeys = $spaceData->getDataByMode(SpaceTypeEnum::SPACE_SIMPLE);
+    $spaceKeys = $spaceData->getDataByMode(SpaceTypeEnum::SPACE_SIMPLE->value);
     $singleFile = false;
 
     $cntSpaces = count($spaceKeys);

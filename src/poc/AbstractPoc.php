@@ -13,21 +13,23 @@ declare(strict_types=1);
 
 namespace oglow\poc;
 
-use oglow\example\ExampleErrorCodesEnum;
+use Monolog\ConsoleLogger;
 use oglow\example\AbstractExample;
+use oglow\example\ExampleErrorCodesEnum;
 use ollily\Tools\Emergency;
 use ollily\Tools\EnvironmentVariableTrait;
 use Psr\Log\LoggerInterface;
-use Monolog\ConsoleLogger;
 
-abstract class AbstractPoc extends AbstractExample {
+abstract class AbstractPoc extends AbstractExample
+{
     use EnvironmentVariableTrait;
 
     protected const int EXPECTED_ARGS = 0;
 
     private LoggerInterface $logger;
 
-    public function __construct(string $outputFileName = '') {
+    public function __construct(string $outputFileName = '')
+    {
         $this->logger = new ConsoleLogger(get_class($this));
 
         $this->logger->debug("START");

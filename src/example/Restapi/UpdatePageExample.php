@@ -14,23 +14,24 @@ declare(strict_types=1);
 namespace oglow\example\Restapi;
 
 use Ds\Map;
+use Monolog\ConsoleLogger;
+use oglow\example\ExampleErrorCodesEnum;
 use oglow\tools\Yacorapi\Helper\ContentHelper;
+use ollily\Tools\Batch\BatchConfig;
 use ollily\Tools\Batch\BatchTaskHelper;
 use ollily\Tools\Batch\ITaskItem;
-use ollily\Tools\Batch\ItemConfig;
-use oglow\example\ExampleErrorCodesEnum;
 use Psr\Log\LoggerInterface;
-use Monolog\ConsoleLogger;
 
 require_once __DIR__ . '/../../bootstrap.php'; // NOSONAR: php:S4833
 
 class UpdatePageExample extends AbstractRestApiExample
 {
     public const int MAX_ITERATION = 10;
-    
+
     private LoggerInterface $logger;
 
-    public function __construct(string $outputFileName = '') {
+    public function __construct(string $outputFileName = '')
+    {
         $this->logger = new ConsoleLogger(get_class($this));
 
         $this->logger->debug("START");
@@ -72,9 +73,9 @@ class UpdatePageExample extends AbstractRestApiExample
     {
         $key      = "tasks-pageid";
         $fileName = "";
-        $itemConfig = new ItemConfig(new Map());
+        $batchConfig = new BatchConfig(new Map());
 
-        $tasklist = BatchTaskHelper::readTaskList($fileName, $itemConfig, $key);
+        $tasklist = BatchTaskHelper::readTaskList($fileName, $batchConfig, $key);
 
         $fallbackIdx = 0;
         while (!$tasklist->isEmpty()) {
@@ -85,7 +86,8 @@ class UpdatePageExample extends AbstractRestApiExample
                 $fallbackIdx++;
                 if ($fallbackIdx >= self::MAX_ITERATION) {
                     $this->logger->warning("+++ fallback exit after iterations +++", [$fallbackIdx]);
-                    die(ExampleErrorCodesEnum::ERR_MAX_ITERATION); // NOSONAR:php:S1799
+
+                    die(ExampleErrorCodesEnum::ERR_MAX_ITERATION->intValue()); // NOSONAR:php:S1799
                 }
             }
         }

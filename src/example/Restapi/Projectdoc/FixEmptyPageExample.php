@@ -13,11 +13,11 @@ declare(strict_types=1);
 
 namespace oglowa\example\Restapi\Projectdoc;
 
+use Monolog\ConsoleLogger;
 use oglow\example\Restapi\AbstractRestApiExample;
 use oglow\tools\Yacorapi\ConstData;
 use oglow\tools\Yacorapi\IResponse;
 use Psr\Log\LoggerInterface;
-use Monolog\ConsoleLogger;
 
 class FixEmptyPageExample extends AbstractRestApiExample
 {
@@ -27,7 +27,8 @@ class FixEmptyPageExample extends AbstractRestApiExample
 
     private LoggerInterface $logger;
 
-    public function __construct(string $outputFileName = '') {
+    public function __construct(string $outputFileName = '')
+    {
         $this->logger = new ConsoleLogger(get_class($this));
 
         $this->logger->debug("START");

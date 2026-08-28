@@ -13,17 +13,14 @@ declare(strict_types=1);
 
 namespace oglow\example\Restapi;
 
+use Monolog\ConsoleLogger;
 use oglow\tools\Yacorapi\Data\SpaceData;
+use oglow\tools\Yacorapi\Data\SpaceTypeEnum;
 use oglow\tools\Yacorapi\Macro\AddonTypeEnum;
-use oglow\tools\Yacorapi\Macro\AllAddon;
-use oglow\tools\Yacorapi\Macro\BlockerAddon;
-use oglow\tools\Yacorapi\Macro\SingleAddon;
 use oglow\tools\Yacorapi\Statistic\IStatistic;
 use oglow\tools\Yacorapi\Statistic\StatisticStatistic;
 use oglow\tools\Yacorapi\Statistic\StatisticTypeEnum;
 use Psr\Log\LoggerInterface;
-use Monolog\ConsoleLogger;
-use oglow\tools\Yacorapi\Data\SpaceTypeEnum;
 
 require_once __DIR__ . '/../../bootstrap.php'; // NOSONAR: php:S4833
 
@@ -31,7 +28,8 @@ class CountMacrosExample extends AbstractRestApiExample
 {
     private LoggerInterface $logger;
 
-    public function __construct(string $outputFileName = '') {
+    public function __construct(string $outputFileName = '')
+    {
         $this->logger = new ConsoleLogger(get_class($this));
 
         $this->logger->debug("START");
@@ -55,7 +53,7 @@ class CountMacrosExample extends AbstractRestApiExample
 
     /**
      * @param array<mixed,IStatistic>|IStatistic $anyData
-     * @param AddonTypeEnum                                $mode
+     * @param AddonTypeEnum                      $mode
      */
     private function writeFile(IStatistic|array $anyData, AddonTypeEnum $mode): void
     {
@@ -95,7 +93,7 @@ function main(): void
 {
     $thisClazz = new CountMacrosExample();
     $spaceData = new SpaceData();
-    $spaceKeys = $spaceData->getDataByMode(SpaceTypeEnum::SPACE_ALL);
+    $spaceKeys = $spaceData->getDataByMode(SpaceTypeEnum::SPACE_ALL->value);
 
     $cntSpaces = count($spaceKeys);
     $cntIdx = 0;

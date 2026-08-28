@@ -1,44 +1,42 @@
 <?php
 
+declare(strict_types=1);
+
 /*
- * Copyright 2026 GLO03.
+ * This file is part of yacorapi-examles
  *
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
+ * (c) 2024 Oliver Glowa, coding.glowa.com
  *
- *      http://www.apache.org/licenses/LICENSE-2.0
- *
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
+ * This source file is subject to the Apache-2.0 license that is bundled
+ * with this source code in the file LICENSE.
  */
 
 namespace oglow\example;
 
-use Psr\Log\LoggerInterface;
 use Monolog\ConsoleLogger;
 use Monolog\PlainLogger;
-use ollily\Tools\String\ImplodeTrait;
+use oglow\tools\Yacorapi\IResponse;
 use oglow\tools\Yacorapi\Store\CsvFileAdapter;
 use oglow\tools\Yacorapi\Store\FileAdapter;
+use ollily\Tools\String\ImplodeTrait;
+use Psr\Log\LoggerInterface;
 use Psr\Log\LogLevel;
-use oglow\tools\Yacorapi\IResponse;
 
-class AbstractExample {
+class AbstractExample
+{
     use ImplodeTrait;
 
     /** Default output level (DEBUG) */
     public const string LEVEL_DEFAULT = LogLevel::INFO;
 
     protected PlainLogger $output;
+
     private LoggerInterface $logger;
 
     private string $outputFileName;
 
-    public function __construct(string $outputFileName = '') {
+    public function __construct(string $outputFileName = '')
+    {
         $this->logger = new ConsoleLogger(get_class($this));
         $this->logger->debug("START");
 
@@ -47,8 +45,9 @@ class AbstractExample {
 
         $this->logger->debug("END");
     }
-    
-    protected function outputLine(string $line, ?int $idx = null): void {
+
+    protected function outputLine(string $line, ?int $idx = null): void
+    {
         $prefix = '';
         if (isset($idx)) {
             $prefix = sprintf("%s;", $idx);
@@ -60,7 +59,8 @@ class AbstractExample {
      * @param mixed    $anyData
      * @param null|int $idx
      */
-    protected function outputData(mixed $anyData, ?int $idx = null): void {
+    protected function outputData(mixed $anyData, ?int $idx = null): void
+    {
         $prefix = '';
         if (isset($idx)) {
             $prefix = sprintf("%s;", $idx);
@@ -72,7 +72,8 @@ class AbstractExample {
         }
     }
 
-    protected function outputDatas(IResponse $response): void {
+    protected function outputDatas(IResponse $response): void
+    {
         $idx = 0;
         /**
          * FIXME: IResponse liefert falschen Wert.
@@ -84,7 +85,8 @@ class AbstractExample {
         }
     }
 
-    protected function prepareTargetFileName(string $suffix = ''): string {
+    protected function prepareTargetFileName(string $suffix = ''): string
+    {
         $fileName = basename($this->outputFileName);
         if (!empty($suffix)) {
             $fileName .= '-' . $suffix;
@@ -97,7 +99,8 @@ class AbstractExample {
      * @param mixed  $anyData
      * @param string $fileExtension
      */
-    protected function storeOrg(mixed $anyData, string $fileExtension = 'txt'): void {
+    protected function storeOrg(mixed $anyData, string $fileExtension = 'txt'): void
+    {
         $fileAdapter = new FileAdapter($this->outputFileName, $fileExtension);
         $fileAdapter->storeData($anyData);
     }
@@ -106,7 +109,8 @@ class AbstractExample {
      * @param mixed  $anyData
      * @param string $fileExtension
      */
-    protected function storeMod(mixed $anyData, string $fileExtension = 'txt'): void {
+    protected function storeMod(mixed $anyData, string $fileExtension = 'txt'): void
+    {
         $fileAdapter = new FileAdapter($this->outputFileName, $fileExtension);
         $fileAdapter->storeData($anyData);
     }
@@ -115,7 +119,8 @@ class AbstractExample {
      * @param mixed  $anyData
      * @param string $fileExtension
      */
-    protected function storeAsDump(mixed $anyData, string $fileExtension = 'txt'): void {
+    protected function storeAsDump(mixed $anyData, string $fileExtension = 'txt'): void
+    {
         $fileAdapter = new FileAdapter($this->outputFileName, $fileExtension);
         $anyString = print_r($anyData, true);
         $fileAdapter->storeData($anyString);
@@ -126,7 +131,8 @@ class AbstractExample {
      * @param string          $fileExtension
      * @param string|string[] $dataHeader
      */
-    protected function storeAsCsv(mixed $anyData, string $fileExtension = 'csv', string|array $dataHeader = []): void {
+    protected function storeAsCsv(mixed $anyData, string $fileExtension = 'csv', string|array $dataHeader = []): void
+    {
         $csvAdapter = new CsvFileAdapter($this->outputFileName, $fileExtension);
         $csvAdapter->storeDataHeader($dataHeader);
         $csvAdapter->storeData($anyData);

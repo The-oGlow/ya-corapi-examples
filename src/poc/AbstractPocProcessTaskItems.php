@@ -14,12 +14,12 @@ declare(strict_types=1);
 namespace oglow\poc;
 
 use Ds\Map;
+use Monolog\ConsoleLogger;
 use oglow\example\ExampleErrorCodesEnum;
+use ollily\Tools\Batch\BatchConfig;
 use ollily\Tools\Batch\BatchTaskHelper;
-use ollily\Tools\Batch\ItemConfig;
 use ollily\Tools\Emergency;
 use Psr\Log\LoggerInterface;
-use Monolog\ConsoleLogger;
 
 abstract class AbstractPocProcessTaskItems extends AbstractPoc
 {
@@ -29,7 +29,8 @@ abstract class AbstractPocProcessTaskItems extends AbstractPoc
 
     private LoggerInterface $logger;
 
-    public function __construct(string $outputFileName = '') {
+    public function __construct(string $outputFileName = '')
+    {
         $this->logger = new ConsoleLogger(get_class($this));
 
         $this->logger->debug("START");
@@ -43,7 +44,7 @@ abstract class AbstractPocProcessTaskItems extends AbstractPoc
     {
         $this->logger->info('Starting Demo');
 
-        $itemConfig = new ItemConfig(new Map());
+        $batchConfig = new BatchConfig(new Map());
 
         if (count($args) >= self::EXPECTED_ARGS) { // @phpstan-ignore greaterOrEqual.alwaysTrue
             $fileName = self::getProjectRoot() . self::DEMO_PATH . $args[0];
@@ -51,7 +52,7 @@ abstract class AbstractPocProcessTaskItems extends AbstractPoc
 
             $this->logger->info('Filename / ListKey', [$fileName, $listName]);
 
-            $tasklist = BatchTaskHelper::readTaskList($fileName, $itemConfig, $listName, true);
+            $tasklist = BatchTaskHelper::readTaskList($fileName, $batchConfig, $listName, true);
 
             $this->logger->info('Found tasks', [$tasklist->count()]);
 
