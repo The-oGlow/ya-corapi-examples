@@ -11,13 +11,15 @@ declare(strict_types=1);
  * with this source code in the file LICENSE.
  */
 
-namespace oglowa\example\Restapi\Projectdoc;
+namespace oglowa\example\projectdoc;
 
 use Monolog\ConsoleLogger;
-use oglow\example\Restapi\AbstractRestApiExample;
+use oglow\example\AbstractRestApiExample;
 use oglow\tools\Yacorapi\ConstData;
 use oglow\tools\Yacorapi\IResponse;
 use Psr\Log\LoggerInterface;
+
+require_once __DIR__ . '/../../bootstrap.php'; // NOSONAR: php:S4833
 
 class FixEmptyPageExample extends AbstractRestApiExample
 {

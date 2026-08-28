@@ -11,10 +11,10 @@ declare(strict_types=1);
  * with this source code in the file LICENSE.
  */
 
-namespace oglow\example\Restapi\Projectdoc;
+namespace oglow\example\projectdoc;
 
 use Monolog\ConsoleLogger;
-use oglow\example\Restapi\AbstractRestApiExample;
+use oglow\example\AbstractRestApiExample;
 use Psr\Log\LoggerInterface;
 
 require_once __DIR__ . '/../../bootstrap.php'; // NOSONAR: php:S4833

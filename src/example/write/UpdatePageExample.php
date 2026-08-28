@@ -11,10 +11,11 @@ declare(strict_types=1);
  * with this source code in the file LICENSE.
  */
 
-namespace oglow\example\Restapi;
+namespace oglow\example\write;
 
 use Ds\Map;
 use Monolog\ConsoleLogger;
+use oglow\example\AbstractRestApiExample;
 use oglow\example\ExampleErrorCodesEnum;
 use oglow\tools\Yacorapi\Helper\ContentHelper;
 use ollily\Tools\Batch\BatchConfig;

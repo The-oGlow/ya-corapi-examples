@@ -11,14 +11,16 @@ declare(strict_types=1);
  * with this source code in the file LICENSE.
  */
 
-namespace oglow\example\Restapi;
+namespace oglow\example\read;
 
 use Monolog\ConsoleLogger;
+use oglow\example\AbstractRestApiExample;
+use oglow\tools\Yacorapi\IResponse;
 use Psr\Log\LoggerInterface;
 
 require_once __DIR__ . '/../../bootstrap.php'; // NOSONAR: php:S4833
 
-class RestrictionReadExample extends AbstractRestApiExample
+class GetSpaceHomepage extends AbstractRestApiExample
 {
     private LoggerInterface $logger;
 
@@ -32,24 +34,22 @@ class RestrictionReadExample extends AbstractRestApiExample
         $this->logger->debug("END");
     }
 
-    public function readRestrictionByPageId(int $pageId): void
+    public function getHomepage(string $spaceKey): void
     {
-        $this->logger->debug("START", [$pageId]);
+        $pageId = $this->apiClient->spaceHomepage($spaceKey);
 
-        $response = $this->apiClient->readRestrictionsByPageId($pageId);
-        $this->outputData($response);
-
-        $this->logger->debug("END");
+        if ($pageId > IResponse::NO_PAGE_ID) {
+            $this->logger->info('Hompage for space is', [$spaceKey,$pageId]);
+        } else {
+            $this->logger->warning('No homepage for space', [$spaceKey]);
+        }
     }
 }
-
 function main(): void
 {
-    /** 98-Playground on NMAS (TEST) */
-    $pageId = 532951146;
+    $thisClazz = new GetSpaceHomepage();
 
-    $thisClazz = new RestrictionReadExample();
-    $thisClazz->readRestrictionByPageId($pageId);
+    $thisClazz->getHomepage('NMAS');
 }
 
 main();

@@ -23,8 +23,8 @@ parameters:
         # Custom
 
     excludePaths:
-        - src\example\Restapi\Projectdoc\ReadDocumentExample.php
-        - src\example\Restapi\Projectdoc\DoctypeOverviewExample.php
+        - src\example\projectdoc\ReadDocumentExample.php
+        - src\example\projectdoc\DoctypeOverviewExample.php
 
 includes:
     - vendor/phpstan/phpstan-strict-rules/rules.neon

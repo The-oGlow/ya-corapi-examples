@@ -11,10 +11,9 @@ declare(strict_types=1);
  * with this source code in the file LICENSE.
  */
 
-namespace oglow\example\Restapi;
+namespace oglow\example;
 
 use Monolog\ConsoleLogger;
-use oglow\example\AbstractExample;
 use oglow\tools\Yacorapi\Client\RapiClient;
 use oglow\tools\Yacorapi\IRapiClient;
 use Psr\Log\LoggerInterface;

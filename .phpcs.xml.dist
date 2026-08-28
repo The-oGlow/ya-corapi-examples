@@ -10,6 +10,7 @@
 
     <exclude-pattern>*/data/*</exclude-pattern>
     <exclude-pattern>*/vendor/*</exclude-pattern>
+    <exclude-pattern>*/src/example/projectdoc/*</exclude-pattern>
 
     <arg name="extensions" value="php,inc" />
     <arg name="parallel" value="75" />
