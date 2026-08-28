@@ -13,23 +13,37 @@ declare(strict_types=1);
 
 namespace oglow\example\Restapi;
 
-require_once __DIR__ . '/../../bootstrap.php'; // NOSONAR: php:S4833
-
 use oglow\tools\Yacorapi\Data\RequestParameterData;
 use oglow\tools\Yacorapi\Data\SpaceData;
 use oglow\tools\Yacorapi\Response\ResponseSpaceDataDecorate;
 use oglow\tools\Yacorapi\Store\FileAdapter;
+use Psr\Log\LoggerInterface;
+use Monolog\ConsoleLogger;
+use oglow\tools\Yacorapi\Data\SpaceTypeEnum;
+
+require_once __DIR__ . '/../../bootstrap.php'; // NOSONAR: php:S4833
 
 class SearchSpacesExample extends AbstractRestApiExample
 {
+    private LoggerInterface $logger;
+
+    public function __construct(string $outputFileName = '') {
+        $this->logger = new ConsoleLogger(get_class($this));
+
+        $this->logger->debug("START");
+        parent::__construct($outputFileName);
+
+        $this->logger->debug("END");
+    }
+
     public function spacesGlobal(): void
     {
         $this->logger->debug("START");
 
         /** @var ResponseSpaceDataDecorate $response */
-        $response = $this->apiClient->listSpaces(RequestParameterData::SPACE_TYPE_GLOBAL);
+        $response = $this->apiClient->listSpaces(SpaceTypeEnum::SPACE_TYPE_GLOBAL);
 
-        $this->storeAsCsv($response->getSpaces(), RequestParameterData::SPACE_TYPE_GLOBAL);
+        $this->storeAsCsv($response->getSpaces());
         $this->prepareMySpaces($response);
 
         $this->logger->debug("END");
@@ -40,9 +54,9 @@ class SearchSpacesExample extends AbstractRestApiExample
         $this->logger->debug("START");
 
         /** @var ResponseSpaceDataDecorate $response */
-        $response = $this->apiClient->listSpaces(RequestParameterData::SPACE_TYPE_PERSONAL);
+        $response = $this->apiClient->listSpaces(SpaceTypeEnum::SPACE_TYPE_PERSONAL);
 
-        $this->storeAsCsv($response->getSpaces(), RequestParameterData::SPACE_TYPE_PERSONAL);
+        $this->storeAsCsv($response->getSpaces());
 
         $this->logger->debug("END");
     }

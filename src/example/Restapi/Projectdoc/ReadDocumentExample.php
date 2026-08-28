@@ -14,6 +14,8 @@ declare(strict_types=1);
 namespace oglow\example\Restapi\Projectdoc;
 
 use oglow\example\Restapi\AbstractRestApiExample;
+use Psr\Log\LoggerInterface;
+use Monolog\ConsoleLogger;
 
 require_once __DIR__ . '/../../bootstrap.php'; // NOSONAR: php:S4833
 
@@ -24,6 +26,17 @@ require_once __DIR__ . '/../../bootstrap.php'; // NOSONAR: php:S4833
  */
 class ReadDocumentExample extends AbstractRestApiExample
 {
+    private LoggerInterface $logger;
+
+    public function __construct(string $outputFileName = '') {
+        $this->logger = new ConsoleLogger(get_class($this));
+
+        $this->logger->debug("START");
+        parent::__construct($outputFileName);
+
+        $this->logger->debug("END");
+    }
+
     public function readDocument(string $spaceKey, string $where): void
     {
         $response = $this->apiClient->pdtReadDocument(\oglow\tools\Yacorapi\Projectdoc\PDT_PROP_ALL_DEFAULT, $spaceKey, $where);

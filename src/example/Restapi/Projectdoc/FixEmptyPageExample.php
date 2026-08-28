@@ -16,12 +16,25 @@ namespace oglowa\example\Restapi\Projectdoc;
 use oglow\example\Restapi\AbstractRestApiExample;
 use oglow\tools\Yacorapi\ConstData;
 use oglow\tools\Yacorapi\IResponse;
+use Psr\Log\LoggerInterface;
+use Monolog\ConsoleLogger;
 
 class FixEmptyPageExample extends AbstractRestApiExample
 {
     public const int BODYSIZE_MIN = 10;
 
     private ConstData $constData;
+
+    private LoggerInterface $logger;
+
+    public function __construct(string $outputFileName = '') {
+        $this->logger = new ConsoleLogger(get_class($this));
+
+        $this->logger->debug("START");
+        parent::__construct($outputFileName);
+
+        $this->logger->debug("END");
+    }
 
     public function scanPagesInSpace(string $spaceKey): void
     {

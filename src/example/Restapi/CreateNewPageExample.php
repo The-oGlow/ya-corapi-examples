@@ -15,8 +15,8 @@ namespace oglow\example\Restapi;
 
 use Ds\Map;
 use oglow\tools\Yacorapi\Helper\ContentHelper;
-use oglow\tools\Yacorapi\Data\RequestParameterData;
-use oglow\tools\Yacorapi\ConstData;
+use Psr\Log\LoggerInterface;
+use Monolog\ConsoleLogger;
 
 require_once __DIR__ . '/../../bootstrap.php'; // NOSONAR: php:S4833
 
@@ -43,36 +43,41 @@ class CreateNewPageExample extends AbstractRestApiExample
 
     public static string $C_NEW_MACRO_4;
 
+    private LoggerInterface $logger;
+
     public function __construct()
     {
+        $this->logger = new ConsoleLogger(get_class($this));
+
+        $this->logger->debug("START");
+
         parent::__construct();
-        self::$C_NEW_MACRO_1 =
-        "<p><ac:structured-macro ac:name=\"status\" ac:schema-version=\"1\">" .
-        "<ac:parameter ac:name=\"colour\">Green</ac:parameter>" .
-        "<ac:parameter ac:name=\"title\">Low</ac:parameter></ac:structured-macro></p>";
-        self::$C_NEW_MACRO_2 = ContentHelper::prepareMacro('status', new Map(['title' => 'high', 'colour' => 'Red']), '');
-        self::$C_NEW_MACRO_3 = ContentHelper::prepareMacro(
-            'panel',
-            new Map(
-                ['borderColor' => 'red', 'bgColor' => '#eeeeee', 'titleColor' => 'white', 'borderWidth' => '2',
-                    'titleBGColor' => 'blue', 'borderStyle' => 'solid', 'title' => 'Panel Title']
-            ),
-            "Panel Text"
-        );
-        self::$C_NEW_MACRO_4 = ContentHelper::prepareMacro(
-            'section',
-             new Map(),
-            ContentHelper::prepareMacro('column', new Map(), 'left') . ContentHelper::prepareMacro('column', new Map(['width' => '33%']), 'right')
-        );
+        $this->init();
+        
+        $this->logger->debug("END");
     }
 
-    public function createPage(
-        string $spaceKey, 
-        string $pageTitle, 
-        string $pageBody = '', 
-        int $parentId= RequestParameterData::NO_PARENT, 
-        string $pageType = RequestParameterData::ITEM_TYPE_PAGE
-        ): void
+    public function init():void {
+        self::$C_NEW_MACRO_1 = "<p><ac:structured-macro ac:name=\"status\" ac:schema-version=\"1\">" .
+                "<ac:parameter ac:name=\"colour\">Green</ac:parameter>" .
+                "<ac:parameter ac:name=\"title\">Low</ac:parameter></ac:structured-macro></p>";
+        self::$C_NEW_MACRO_2 = ContentHelper::prepareMacro('status', new Map(['title' => 'high', 'colour' => 'Red']), '');
+        self::$C_NEW_MACRO_3 = ContentHelper::prepareMacro(
+                'panel',
+                new Map(
+                        ['borderColor' => 'red', 'bgColor' => '#eeeeee', 'titleColor' => 'white', 'borderWidth' => '2',
+                    'titleBGColor' => 'blue', 'borderStyle' => 'solid', 'title' => 'Panel Title']
+                ),
+                "Panel Text"
+        );
+        self::$C_NEW_MACRO_4 = ContentHelper::prepareMacro(
+                'section',
+                null,
+                ContentHelper::prepareMacro('column', null, 'left') . ContentHelper::prepareMacro('column', new Map(['width' => '33%']), 'right')
+        );
+    }
+    
+    public function createPage(string $spaceKey, string $pageTitle, string $pageBody = '', ?int $parentId = null, string $pageType = 'page'): void
     {
         $this->logger->debug("START spaceKey,pageTitle,parentId,pageType,empty(pageBody)", [$spaceKey, $pageTitle, $parentId, $pageType, empty($pageBody)]);
 
@@ -88,7 +93,7 @@ function main(): void
 
     $thisClazz = new CreateNewPageExample();
 
-    $title = sprintf(CreateNewPageExample::C_NEW_TITLE, ConstData::getTsNow(), $idx++);
+    $title = sprintf(CreateNewPageExample::C_NEW_TITLE, \oglow\tools\Yacorapi\ConstData::getTsNow(), $idx++);
     $body  =
     CreateNewPageExample::C_NEW_BODY .
     CreateNewPageExample::$C_NEW_MACRO_1 .

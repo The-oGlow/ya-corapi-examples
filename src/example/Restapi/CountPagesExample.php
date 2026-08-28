@@ -18,12 +18,26 @@ use oglow\tools\Yacorapi\Data\SpaceData;
 use oglow\tools\Yacorapi\Statistic\IStatistic;
 use oglow\tools\Yacorapi\Statistic\StatisticStatistic;
 use oglow\tools\Yacorapi\Statistic\StatisticTypeEnum;
+use Psr\Log\LoggerInterface;
+use Monolog\ConsoleLogger;
+use oglow\tools\Yacorapi\Data\SpaceTypeEnum;
+use oglow\tools\Yacorapi\Data\ItemTypeEnum;
 
 require_once __DIR__ . '/../../bootstrap.php'; // NOSONAR: php:S4833
 
 class CountPagesExample extends AbstractRestApiExample
 {
+    private LoggerInterface $logger;
     private bool $headerWritten = false;
+
+    public function __construct(string $outputFileName = '') {
+        $this->logger = new ConsoleLogger(get_class($this));
+
+        $this->logger->debug("START");
+        parent::__construct($outputFileName);
+
+        $this->logger->debug("END");
+    }
 
     public function countItemsInSpace(string $spaceKey, bool $singleFile = false): void
     {
@@ -41,7 +55,7 @@ class CountPagesExample extends AbstractRestApiExample
 
         $spaceStatistic = new StatisticStatistic($spaceKey, StatisticTypeEnum::SPACE);
 
-        foreach (RequestParameterData::ITEM_TYPES as $pageType) {
+        foreach (ItemTypeEnum::TYPES as $pageType) {
             $this->logger->info("Count for", [$spaceKey, $pageType]);
             $countPages = $this->apiClient->countItemsinSpace($spaceKey, $pageType);
             $spaceStatistic->addItem($pageType, $countPages);
@@ -83,7 +97,7 @@ function main(): void
     $thisClazz = new CountPagesExample();
 
     $spaceData = new SpaceData();
-    $spaceKeys = $spaceData->getDataByMode(SpaceData::SPACE_SIMPLE);
+    $spaceKeys = $spaceData->getDataByMode(SpaceTypeEnum::SPACE_SIMPLE);
     $singleFile = false;
 
     $cntSpaces = count($spaceKeys);

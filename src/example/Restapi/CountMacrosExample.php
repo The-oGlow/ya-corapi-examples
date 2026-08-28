@@ -21,12 +21,25 @@ use oglow\tools\Yacorapi\Macro\SingleAddon;
 use oglow\tools\Yacorapi\Statistic\IStatistic;
 use oglow\tools\Yacorapi\Statistic\StatisticStatistic;
 use oglow\tools\Yacorapi\Statistic\StatisticTypeEnum;
-
+use Psr\Log\LoggerInterface;
+use Monolog\ConsoleLogger;
+use oglow\tools\Yacorapi\Data\SpaceTypeEnum;
 
 require_once __DIR__ . '/../../bootstrap.php'; // NOSONAR: php:S4833
 
 class CountMacrosExample extends AbstractRestApiExample
 {
+    private LoggerInterface $logger;
+
+    public function __construct(string $outputFileName = '') {
+        $this->logger = new ConsoleLogger(get_class($this));
+
+        $this->logger->debug("START");
+        parent::__construct($outputFileName);
+
+        $this->logger->debug("END");
+    }
+
     public function countMacrosInSpace(string $spaceKey, AddonTypeEnum $mode = AddonTypeEnum::ADDON_SINGLE): void
     {
         $this->logger->debug("START", [$spaceKey]);
@@ -82,7 +95,7 @@ function main(): void
 {
     $thisClazz = new CountMacrosExample();
     $spaceData = new SpaceData();
-    $spaceKeys = $spaceData->getDataByMode(SpaceData::SPACE_ALL);
+    $spaceKeys = $spaceData->getDataByMode(SpaceTypeEnum::SPACE_ALL);
 
     $cntSpaces = count($spaceKeys);
     $cntIdx = 0;

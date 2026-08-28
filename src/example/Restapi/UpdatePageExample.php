@@ -18,11 +18,27 @@ use oglow\tools\Yacorapi\Helper\ContentHelper;
 use ollily\Tools\Batch\BatchTaskHelper;
 use ollily\Tools\Batch\ITaskItem;
 use ollily\Tools\Batch\ItemConfig;
+use oglow\example\ExampleErrorCodesEnum;
+use Psr\Log\LoggerInterface;
+use Monolog\ConsoleLogger;
 
 require_once __DIR__ . '/../../bootstrap.php'; // NOSONAR: php:S4833
 
 class UpdatePageExample extends AbstractRestApiExample
 {
+    public const int MAX_ITERATION = 10;
+    
+    private LoggerInterface $logger;
+
+    public function __construct(string $outputFileName = '') {
+        $this->logger = new ConsoleLogger(get_class($this));
+
+        $this->logger->debug("START");
+        parent::__construct($outputFileName);
+
+        $this->logger->debug("END");
+    }
+
     private function loopThruUpdates(ITaskItem $task): void
     {
         /** @var int $pageId */
@@ -67,10 +83,9 @@ class UpdatePageExample extends AbstractRestApiExample
             if (!is_null($task)) {
                 $this->loopThruUpdates($task);
                 $fallbackIdx++;
-                if ($fallbackIdx >= 10) {
+                if ($fallbackIdx >= self::MAX_ITERATION) {
                     $this->logger->warning("+++ fallback exit after iterations +++", [$fallbackIdx]);
-
-                    die(10); // NOSONAR:php:S1799
+                    die(ExampleErrorCodesEnum::ERR_MAX_ITERATION); // NOSONAR:php:S1799
                 }
             }
         }

@@ -18,12 +18,25 @@ use oglow\example\ExampleErrorCodesEnum;
 use ollily\Tools\Batch\BatchTaskHelper;
 use ollily\Tools\Batch\ItemConfig;
 use ollily\Tools\Emergency;
+use Psr\Log\LoggerInterface;
+use Monolog\ConsoleLogger;
 
 abstract class AbstractPocProcessTaskItems extends AbstractPoc
 {
     public const string DEMO_PATH = '//input//oglow//poc//';
 
     protected const int EXPECTED_ARGS = 0;
+
+    private LoggerInterface $logger;
+
+    public function __construct(string $outputFileName = '') {
+        $this->logger = new ConsoleLogger(get_class($this));
+
+        $this->logger->debug("START");
+        parent::__construct($outputFileName);
+
+        $this->logger->debug("END");
+    }
 
     #[\Override]
     public function startDemo(...$args): void
