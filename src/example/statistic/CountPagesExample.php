@@ -41,7 +41,8 @@ class CountPagesExample extends AbstractRestApiExample
         $this->logger->debug("END");
     }
 
-    public function countPages(SpaceTypeEnum $spaceMode):void {
+    public function countPages(SpaceTypeEnum $spaceMode): void
+    {
         $spaceData = new SpaceData();
         $spaceKeys = $spaceData->getDataByMode($spaceMode->value);
         $singleFile = false;
@@ -53,7 +54,7 @@ class CountPagesExample extends AbstractRestApiExample
             $this->countItemsInSpace($spaceKey, $singleFile);
         }
     }
-    
+
     public function countItemsInSpace(string $spaceKey, bool $singleFile = false): void
     {
         $this->logger->debug("START", [$spaceKey]);
@@ -110,7 +111,7 @@ class CountPagesExample extends AbstractRestApiExample
 function main(): void
 {
     $spaceMode = SpaceTypeEnum::SPACE_SINGLE;
-    
+
     $thisClazz = new CountPagesExample();
     $thisClazz->countPages($spaceMode);
 }

@@ -38,7 +38,7 @@ class GetSpaceHomepage extends AbstractRestApiExample
     {
         $pageId = $this->apiClient->spaceHomepage($spaceKey);
 
-        if ($pageId > IResponse::NO_PAGE_ID) {
+        if ($pageId > IResponse::VAL_PAGE_ID_NO) {
             $this->logger->info('Hompage for space is', [$spaceKey,$pageId]);
         } else {
             $this->logger->warning('No homepage for space', [$spaceKey]);
@@ -47,7 +47,7 @@ class GetSpaceHomepage extends AbstractRestApiExample
 }
 function main(): void
 {
-    /*     * space */
+    // space
     $spaceKey = 'CMMN';
 
     $thisClazz = new GetSpaceHomepage();

@@ -25,11 +25,12 @@ use Psr\Log\LoggerInterface;
 
 require_once __DIR__ . '/../../bootstrap.php'; // NOSONAR: php:S4833
 
-class CountMacrosExample extends AbstractRestApiExample {
-
+class CountMacrosExample extends AbstractRestApiExample
+{
     private LoggerInterface $logger;
 
-    public function __construct(string $outputFileName = '') {
+    public function __construct(string $outputFileName = '')
+    {
         $this->logger = new ConsoleLogger(get_class($this));
 
         $this->logger->debug("START");
@@ -38,7 +39,8 @@ class CountMacrosExample extends AbstractRestApiExample {
         $this->logger->debug("END");
     }
 
-    public function countMacros(SpaceTypeEnum $spaceMode, AddonTypeEnum $addonMode): void {
+    public function countMacros(SpaceTypeEnum $spaceMode, AddonTypeEnum $addonMode): void
+    {
         $spaceData = new SpaceData();
         $spaceKeys = $spaceData->getDataByMode($spaceMode->value);
 
@@ -51,7 +53,8 @@ class CountMacrosExample extends AbstractRestApiExample {
         }
     }
 
-    public function countMacrosInSpace(string $spaceKey, AddonTypeEnum $addonMode = AddonTypeEnum::ADDON_SINGLE): void {
+    public function countMacrosInSpace(string $spaceKey, AddonTypeEnum $addonMode = AddonTypeEnum::ADDON_SINGLE): void
+    {
         $this->logger->debug("START", [$spaceKey]);
 
         $addonSet = $this->apiClient->prepareAddonSet($addonMode);
@@ -67,7 +70,8 @@ class CountMacrosExample extends AbstractRestApiExample {
      * @param array<mixed,IStatistic>|IStatistic $anyData
      * @param AddonTypeEnum                      $mode
      */
-    private function writeFile(IStatistic|array $anyData, AddonTypeEnum $mode): void {
+    private function writeFile(IStatistic|array $anyData, AddonTypeEnum $mode): void
+    {
         $this->logger->debug("START");
 
         if (!is_array($anyData)) {
@@ -100,7 +104,8 @@ class CountMacrosExample extends AbstractRestApiExample {
     }
 }
 
-function main(): void {
+function main(): void
+{
     $spaceMode = SpaceTypeEnum::SPACE_SINGLE;
     $addonMode = AddonTypeEnum::ADDON_SINGLE;
 

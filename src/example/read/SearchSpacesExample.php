@@ -46,7 +46,7 @@ class SearchSpacesExample extends AbstractRestApiExample
 
         $spaces = $response->getSpaces();
         $this->logger->info("Found global spaces", [count($spaces)]);
-       
+
         $this->storeAsCsv($spaces);
         $this->prepareMySpaces($spaces);
 
@@ -62,7 +62,6 @@ class SearchSpacesExample extends AbstractRestApiExample
 
         $spaces = $response->getSpaces();
         $this->logger->info("Found personal spaces", [count($spaces)]);
-     
 
         $this->storeAsCsv($response->getSpaces());
 
@@ -76,7 +75,6 @@ class SearchSpacesExample extends AbstractRestApiExample
         $fileContent = SpaceData::prepareMySpacesContent($spaces);
         $fileName    = SpaceData::prepareMySpacesFileName();
 
-        
         $storeAdapter = new FileAdapter($fileName);
         $this->logger->info("Writing file", [$storeAdapter->getStoreItem()]);
         $storeAdapter->storeData($fileContent);

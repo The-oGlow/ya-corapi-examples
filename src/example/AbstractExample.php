@@ -75,24 +75,22 @@ class AbstractExample
     protected function outputDatas(?IResponse $response): void
     {
         $idx = 1;
-        /**
-         * FIXME: IResponse liefert falschen Wert.
-         */
+        // FIXME: IResponse liefert falschen Wert.
         if (!empty($response)) {
             if ($response->getResults()->count() > 0) {
-        
                 foreach ($response->getResults() as $singleResult) {
                     if ($singleResult instanceof IResponse) {
                         $this->outputData($singleResult->getValue(IResponse::KEY_ID), $idx++);
                     } else {
-                        $this->outputData([$singleResult[IResponse::KEY_ID], $singleResult[IResponse::KEY_SPACE][IResponse::KEY_KEY], $singleResult[IResponse::KEY_TITLE]], $idx++);
+                        $this->outputData([$singleResult[IResponse::KEY_ID],
+                            $singleResult[IResponse::KEY_SPACE][IResponse::KEY_KEY], $singleResult[IResponse::KEY_TITLE]], $idx++);
                     }
                 }
             } else {
-                $this->output->out('Empty results!');
+                $this->output->out('Empty results');
             }
         } else {
-                $this->output->out('Empty response!');
+            $this->output->out('Empty response');
         }
     }
 

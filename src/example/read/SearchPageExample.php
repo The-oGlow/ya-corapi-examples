@@ -15,9 +15,9 @@ namespace oglow\example\read;
 
 use Monolog\ConsoleLogger;
 use oglow\example\AbstractRestApiExample;
+use oglow\tools\Yacorapi\Client\IRapiClientBase;
 use oglow\tools\Yacorapi\IResponse;
 use Psr\Log\LoggerInterface;
-use oglow\tools\Yacorapi\Client\IRapiClientBase;
 
 require_once __DIR__ . '/../../bootstrap.php'; // NOSONAR: php:S4833
 
@@ -26,7 +26,9 @@ class SearchPageExample extends AbstractRestApiExample
     private LoggerInterface $logger;
 
     private int $totalSize = 0;
+
     private int $currentPos = 0;
+
     private int $nextPos = 0;
 
     public function __construct(string $outputFileName = '')
@@ -75,8 +77,8 @@ class SearchPageExample extends AbstractRestApiExample
         $this->outputDatas($response);
     }
 
-    public function searchPagesWithFilter(string $filterTerm, string $spaceKey, int $searchLimit = IRapiClientBase::REQ_SEARCH_LIMIT): void {
-
+    public function searchPagesWithFilter(string $filterTerm, string $spaceKey, int $searchLimit = IRapiClientBase::REQ_SEARCH_LIMIT): void
+    {
         $this->output->out("\n+++ searchPagesWithFilter($filterTerm,$spaceKey,$searchLimit)");
         $fallbackIdx = 0;
         do {
@@ -103,8 +105,9 @@ class SearchPageExample extends AbstractRestApiExample
             if ($singleResult instanceof IResponse) {
                 $this->outputData($singleResult->getValue(IResponse::KEY_CONTENT), $idx++);
             } else {
-                $singleResult=$singleResult[IResponse::KEY_CONTENT];
-                $this->outputData([$singleResult[IResponse::KEY_ID],  $singleResult[IResponse::KEY_SPACE][IResponse::KEY_KEY],$singleResult[IResponse::KEY_TITLE]], $idx++);
+                $singleResult = $singleResult[IResponse::KEY_CONTENT];
+                $this->outputData([$singleResult[IResponse::KEY_ID],
+                    $singleResult[IResponse::KEY_SPACE][IResponse::KEY_KEY],$singleResult[IResponse::KEY_TITLE]], $idx++);
             }
         }
         $this->resultPosUpdate(
@@ -131,12 +134,12 @@ function main(): void
     /** 98-Playground on CMMN (TEST) */
     $pageId = 631573347;
 
-    /**space */
+    // space
     $spaceKey = 'CMMN';
-    
+
     /** Page title */
     $pageTitle = 'REST-External%20Documentation';
-    
+
     /** Search/Filter Term*/
     $searchTerm = 'REST';
 
