@@ -125,6 +125,14 @@ class BulkCreatePageExample extends AbstractRestApiExample
         return $dataNamePageId;
     }
 
+    /**
+     * @param string                  $spaceKey
+     * @param int                     $parentPageId
+     * @param string                  $dataName
+     * @param Collection<mixed,mixed> $dataItems
+     *
+     * @return int
+     */
     protected function createLevelTwo(string $spaceKey, int $parentPageId, string $dataName, Collection $dataItems): int
     {
         $dataItemPageId = IResponse::VAL_PAGE_ID_NO;
@@ -136,7 +144,7 @@ class BulkCreatePageExample extends AbstractRestApiExample
                 [$dataItemName, $dataItemValue] = $this->prepareDataLevelTwo($dataItem);
                 $result = $this->apiClient->createOrUpdatePage($spaceKey, $dataItemName, $dataItemValue, $parentPageId);
                 if ($result->checkStatus()) {
-                    $dataItemPageId = $result->getValue(IResponse::KEY_ID);
+                    $dataItemPageId = (int) $result->getValue(IResponse::KEY_ID);
                     $this->logger->info('CreateOrUpdate level 2 page', [$spaceKey, $parentPageId, $dataName, $dataItemName, $dataItemPageId]);
                 }
             }
@@ -150,7 +158,7 @@ class BulkCreatePageExample extends AbstractRestApiExample
     /**
      * @param AddonTypeEnum $dataMode
      *
-     * @return Collection
+     * @return Collection<mixed,mixed>
      */
     protected function prepareDataLevelOne(AddonTypeEnum $dataMode): Collection
     {

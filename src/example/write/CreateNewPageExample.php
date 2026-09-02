@@ -20,96 +20,88 @@ use oglow\tools\Yacorapi\Client\IRapiClientBase;
 use oglow\tools\Yacorapi\ConstData;
 use oglow\tools\Yacorapi\Data\ItemTypeEnum;
 use oglow\tools\Yacorapi\Helper\ContentHelper;
+use oglow\tools\Yacorapi\IResponse;
 use Psr\Log\LoggerInterface;
 
 require_once __DIR__ . '/../../bootstrap.php'; // NOSONAR: php:S4833
 
-/**
- * FIXME:Remove.
- *
- * @SuppressWarnings(PHPMD)
- */
 class CreateNewPageExample extends AbstractRestApiExample
 {
-    public const int C_PLAYGROUND_ID = 532951146;
-
-    public const string C_SPACE = 'NMAS';
-
-    public const string C_NEW_TITLE = 'NEW PAGE %s-%s';
-
-    public const string C_NEW_BODY = "<p>This is <br/> a new page</p>\n";
-
-    public static string $C_NEW_MACRO_1;
-
-    public static string $C_NEW_MACRO_2;
-
-    public static string $C_NEW_MACRO_3;
-
-    public static string $C_NEW_MACRO_4;
-
     private LoggerInterface $logger;
 
     public function __construct()
     {
         $this->logger = new ConsoleLogger(get_class($this));
 
-        $this->logger->debug("START");
+        $this->logger->debug('START');
 
         parent::__construct();
-        $this->init();
 
-        $this->logger->debug("END");
-    }
-
-    public function init(): void
-    {
-        self::$C_NEW_MACRO_1 = "<p><ac:structured-macro ac:name=\"status\" ac:schema-version=\"1\">" .
-        "<ac:parameter ac:name=\"colour\">Green</ac:parameter>" .
-        "<ac:parameter ac:name=\"title\">Low</ac:parameter></ac:structured-macro></p>";
-        self::$C_NEW_MACRO_2 = ContentHelper::prepareMacro('status', new Map(['title' => 'high', 'colour' => 'Red']), '');
-        self::$C_NEW_MACRO_3 = ContentHelper::prepareMacro(
-            'panel',
-            new Map(
-                ['borderColor' => 'red', 'bgColor' => '#eeeeee', 'titleColor' => 'white', 'borderWidth' => '2',
-                    'titleBGColor' => 'blue', 'borderStyle' => 'solid', 'title' => 'Panel Title']
-            ),
-            "Panel Text"
-        );
-        self::$C_NEW_MACRO_4 = ContentHelper::prepareMacro(
-            'section',
-            new Map(),
-            ContentHelper::prepareMacro('column', new Map(), 'left') . ContentHelper::prepareMacro('column', new Map(['width' => '33%']), 'right')
-        );
+        $this->logger->debug('END');
     }
 
     public function createPage(
         string $spaceKey,
         string $pageTitle,
-        string $pageBody = '',
-        int $parentId = IRapiClientBase::REQ_NO_PARENT,
-        ItemTypeEnum $itemType = IRapiClientBase::REQ_ITEM_TYPE_PAGE
+        string $pageBody = IRapiClientBase::REQ_VAL_BODY_EMPTY,
+        string $parentPageTitle = IRapiClientBase::REQ_VAL_PAGE_TITLE_EMPTY,
+        ItemTypeEnum $itemType = IRapiClientBase::REQ_VAL_ITEM_TYPE_PAGE
     ): void {
-        $this->logger->debug("START spaceKey,pageTitle,parentId,itemType,empty(pageBody)", [$spaceKey, $pageTitle, $parentId, $itemType, empty($pageBody)]);
+        $this->logger->info(
+            'START spaceKey,parentPageTitle,pageTitle,itemType,strlen(pageBody)',
+            [$spaceKey, $parentPageTitle, $pageTitle, $itemType, strlen($pageBody)]
+        );
 
-        $response = $this->apiClient->createPage($spaceKey, $pageTitle, $pageBody, $parentId, $itemType);
-        $this->outputData($response);
-        $this->logger->debug("END");
+        $parentPageId = $this->apiClient->checkPageExists($spaceKey, $parentPageTitle);
+
+        if (IRapiClientBase::RESP_VAL_PAGE_ID_NO !== $parentPageId) {
+            $result = $this->apiClient->createPage($spaceKey, $pageTitle, $pageBody, $parentPageId, IRapiClientBase::REQ_VAL_COMMENT_EMPTY, $itemType);
+            if ($result->checkStatus()) {
+                $pageId = $result->getValue(IResponse::KEY_ID);
+                $this->outputData($result);
+                $this->logger->info('Page created', [$spaceKey, $parentPageTitle, $pageTitle, $pageId]);
+            } else {
+                $this->logger->error('Page not created', [$result->getError()]);
+            }
+        } else {
+            $this->logger->error('Parent page not found', [$spaceKey, $parentPageTitle]);
+        }
+        $this->logger->debug('END');
     }
 }
 
 function main(): void
 {
-    $idx = 0;
+    /** Space */
+    $spaceKey = 'CMMN';
+
+    /** Parent page title */
+    $parentPageTitle = '98-Playground';
+
+    $parapgraph = '<p>This is <br/> a <strong>new</strong> page</p>';
+    $macroStatusHtml = '<p><ac:structured-macro ac:name="status" ac:schema-version="1">" .
+        "<ac:parameter ac:name="colour">Green</ac:parameter>" .
+        "<ac:parameter ac:name="title">Low</ac:parameter></ac:structured-macro></p>';
+    $macroStatusGenerated = ContentHelper::prepareMacro('status', new Map(['title' => 'high', 'colour' => 'Red']), '');
+    $macroPanelGenerated = ContentHelper::prepareMacro(
+        'panel',
+        new Map(
+            ['borderColor' => 'darkgrey', 'bgColor' => '#efefef', 'titleColor' => 'white', 'borderWidth' => '5',
+                'titleBGColor' => 'darkred', 'borderStyle' => 'solid', 'title' => 'Panel Title']
+        ),
+        '<i>Panel Text</i>'
+    );
+    $macroSectionGenerated = ContentHelper::prepareMacro(
+        'section',
+        new Map(['border' => 'true']),
+        ContentHelper::prepareMacro('column', new Map(), '<u>left</u>') . ContentHelper::prepareMacro('column', new Map(['width' => '33%']), '<i>right</i>')
+    );
+    $title = sprintf('%s %s-%s', 'NEW PAGE', ConstData::getTsNow(), 0);
+    $body = $parapgraph . $macroStatusHtml . $macroStatusGenerated . $macroPanelGenerated . $macroSectionGenerated;
 
     $thisClazz = new CreateNewPageExample();
 
-    $title = sprintf(CreateNewPageExample::C_NEW_TITLE, ConstData::getTsNow(), $idx++);
-    $body = CreateNewPageExample::C_NEW_BODY .
-    CreateNewPageExample::$C_NEW_MACRO_1 .
-    CreateNewPageExample::$C_NEW_MACRO_2 .
-    CreateNewPageExample::$C_NEW_MACRO_3 .
-    CreateNewPageExample::$C_NEW_MACRO_4;
-    $thisClazz->createPage(CreateNewPageExample::C_SPACE, $title, $body, CreateNewPageExample::C_PLAYGROUND_ID);
+    $thisClazz->createPage($spaceKey, $title, $body, $parentPageTitle);
 }
 
 main();

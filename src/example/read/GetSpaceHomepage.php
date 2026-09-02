@@ -28,10 +28,10 @@ class GetSpaceHomepage extends AbstractRestApiExample
     {
         $this->logger = new ConsoleLogger(get_class($this));
 
-        $this->logger->debug("START");
+        $this->logger->debug('START');
         parent::__construct($outputFileName);
 
-        $this->logger->debug("END");
+        $this->logger->debug('END');
     }
 
     public function getHomepage(string $spaceKey): void
@@ -47,7 +47,7 @@ class GetSpaceHomepage extends AbstractRestApiExample
 }
 function main(): void
 {
-    // space
+    /** Space */
     $spaceKey = 'CMMN';
 
     $thisClazz = new GetSpaceHomepage();

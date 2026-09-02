@@ -31,55 +31,58 @@ class SearchSpacesExample extends AbstractRestApiExample
     {
         $this->logger = new ConsoleLogger(get_class($this));
 
-        $this->logger->debug("START");
+        $this->logger->debug('START');
         parent::__construct($outputFileName);
 
-        $this->logger->debug("END");
+        $this->logger->debug('END');
     }
 
     public function spacesGlobal(): void
     {
-        $this->logger->debug("START");
+        $this->logger->debug('START');
 
         /** @var ResponseSpaceDataDecorate $response */
         $response = $this->apiClient->listSpaces(SpaceTypeEnum::SPACE_TYPE_GLOBAL);
 
         $spaces = $response->getSpaces();
-        $this->logger->info("Found global spaces", [count($spaces)]);
+        $this->logger->info('Found global spaces', [count($spaces)]);
 
         $this->storeAsCsv($spaces);
         $this->prepareMySpaces($spaces);
 
-        $this->logger->debug("END");
+        $this->logger->debug('END');
     }
 
     public function spacesPersonal(): void
     {
-        $this->logger->debug("START");
+        $this->logger->debug('START');
 
         /** @var ResponseSpaceDataDecorate $response */
         $response = $this->apiClient->listSpaces(SpaceTypeEnum::SPACE_TYPE_PERSONAL);
 
         $spaces = $response->getSpaces();
-        $this->logger->info("Found personal spaces", [count($spaces)]);
+        $this->logger->info('Found personal spaces', [count($spaces)]);
 
         $this->storeAsCsv($response->getSpaces());
 
-        $this->logger->debug("END");
+        $this->logger->debug('END');
     }
 
+    /**
+     * @param array<mixed,mixed> $spaces
+     */
     public function prepareMySpaces(array $spaces): void
     {
-        $this->logger->debug("START");
+        $this->logger->debug('START');
 
         $fileContent = SpaceData::prepareMySpacesContent($spaces);
         $fileName    = SpaceData::prepareMySpacesFileName();
 
         $storeAdapter = new FileAdapter($fileName);
-        $this->logger->info("Writing file", [$storeAdapter->getStoreItem()]);
+        $this->logger->info('Writing file', [$storeAdapter->getStoreItem()]);
         $storeAdapter->storeData($fileContent);
 
-        $this->logger->debug("END");
+        $this->logger->debug('END');
     }
 }
 
@@ -87,7 +90,10 @@ function main(): void
 {
     $thisClazz = new SearchSpacesExample();
 
+    // Search site spaces and write to file
     $thisClazz->spacesGlobal();
+
+    // Search personal spaces
     $thisClazz->spacesPersonal();
 }
 

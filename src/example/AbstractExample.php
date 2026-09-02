@@ -38,19 +38,19 @@ class AbstractExample
     public function __construct(string $outputFileName = '')
     {
         $this->logger = new ConsoleLogger(get_class($this));
-        $this->logger->debug("START");
+        $this->logger->debug('START');
 
         $this->outputFileName = empty($outputFileName) ? get_class($this) : $outputFileName;
         $this->output = new PlainLogger(get_class($this));
 
-        $this->logger->debug("END");
+        $this->logger->debug('END');
     }
 
     protected function outputLine(string $line, ?int $idx = null): void
     {
         $prefix = '';
         if (isset($idx)) {
-            $prefix = sprintf("%s;", $idx);
+            $prefix = sprintf('%s;', $idx);
         }
         $this->output->out($prefix . $line);
     }
@@ -63,12 +63,12 @@ class AbstractExample
     {
         $prefix = '';
         if (isset($idx)) {
-            $prefix = sprintf("%s;", $idx);
+            $prefix = sprintf('%s;', $idx);
         }
         if (is_a($anyData, IResponse::class)) {
-            $this->output->out($prefix . "$anyData");
+            $this->output->out($prefix .  "$anyData");
         } else {
-            $this->output->out($prefix . self::implode_recursive(",", $anyData, false, true));
+            $this->output->out($prefix . self::implode_recursive(',', $anyData, false, true));
         }
     }
 
