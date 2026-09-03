@@ -15,9 +15,9 @@ namespace oglow\example\statistic;
 
 use Monolog\ConsoleLogger;
 use oglow\example\AbstractRestApiExample;
-use oglow\tools\Yacorapi\Data\SpaceData;
-use oglow\tools\Yacorapi\Data\SpaceTypeEnum;
 use oglow\tools\Yacorapi\Macro\AddonTypeEnum;
+use oglow\tools\Yacorapi\Space\SpaceData;
+use oglow\tools\Yacorapi\Space\SpaceTypeEnum;
 use oglow\tools\Yacorapi\Statistic\IStatistic;
 use oglow\tools\Yacorapi\Statistic\StatisticStatistic;
 use oglow\tools\Yacorapi\Statistic\StatisticTypeEnum;

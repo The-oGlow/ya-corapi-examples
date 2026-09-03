@@ -15,9 +15,9 @@ namespace oglow\example\read;
 
 use Monolog\ConsoleLogger;
 use oglow\example\AbstractRestApiExample;
-use oglow\tools\Yacorapi\Data\SpaceData;
-use oglow\tools\Yacorapi\Data\SpaceTypeEnum;
 use oglow\tools\Yacorapi\Response\ResponseSpaceDataDecorate;
+use oglow\tools\Yacorapi\Space\SpaceData;
+use oglow\tools\Yacorapi\Space\SpaceTypeEnum;
 use oglow\tools\Yacorapi\Store\FileAdapter;
 use Psr\Log\LoggerInterface;
 
