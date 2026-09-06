@@ -18,9 +18,9 @@ use Ds\Map;
 use Monolog\ConsoleLogger;
 use oglow\example\AbstractRestApiExample;
 use oglow\tools\Yacorapi\Helper\ContentHelper;
-use oglow\tools\Yacorapi\IResponse;
 use oglow\tools\Yacorapi\Macro\AddonTypeEnum;
 use oglow\tools\Yacorapi\Response\ResponseAddonMacroDecorate;
+use oglow\tools\Yacorapi\Response\ResponseParameterData;
 use Psr\Log\LoggerInterface;
 
 require_once __DIR__ . '/../../bootstrap.php'; // NOSONAR: php:S4833
@@ -44,7 +44,7 @@ class BulkCreatePageExample extends AbstractRestApiExample
     {
         $startingPoint = $this->creatStartingPoint($spaceKey, $pageTitle);
 
-        if (IResponse::VAL_PAGE_ID_NO !== $startingPoint) {
+        if (ResponseParameterData::VAL_PAGE_ID_NO !== $startingPoint) {
             $this->logger->info('Starting point', [$spaceKey, $pageTitle, $startingPoint]);
 
             $allData = $this->prepareDataLevelOne($dataMode);
@@ -52,11 +52,11 @@ class BulkCreatePageExample extends AbstractRestApiExample
                 foreach ($allData as $dataName => $dataItems) {
                     $dataNamePageId = $this->createLevelOne($spaceKey, $startingPoint, $dataName);
 
-                    if ($dataNamePageId == IResponse::VAL_PAGE_ID_NO) {
+                    if ($dataNamePageId == ResponseParameterData::VAL_PAGE_ID_NO) {
                         $this->logger->warning('Level 1 with error processed', [$dataName]);
                     } else {
                         $dataItemPageId = $this->createLevelTwo($spaceKey, $dataNamePageId, $dataName, $dataItems);
-                        if ($dataItemPageId == IResponse::VAL_PAGE_ID_NO) {
+                        if ($dataItemPageId == ResponseParameterData::VAL_PAGE_ID_NO) {
                             $this->logger->warning('Level 2 with error processed', [$dataName]);
                         } else {
                             $this->logger->info('Level 2 processed', [$dataName, $dataItems->count()]);
@@ -77,19 +77,19 @@ class BulkCreatePageExample extends AbstractRestApiExample
     {
         $startingPoint = $this->apiClient->checkPageExists($spaceKey, $pageTitle);
 
-        if (IResponse::VAL_PAGE_ID_NO == $startingPoint) {
+        if (ResponseParameterData::VAL_PAGE_ID_NO == $startingPoint) {
             // Create Starting point
             $this->logger->info('Starting point must be created', [$spaceKey, $pageTitle, $startingPoint]);
 
             $spaceRootPageId = $this->apiClient->spaceHomepage($spaceKey);
             $this->logger->info('Homepage of space', [$spaceKey, $spaceRootPageId]);
 
-            if (IResponse::VAL_PAGE_ID_NO !== $spaceRootPageId) {
+            if (ResponseParameterData::VAL_PAGE_ID_NO !== $spaceRootPageId) {
                 // Homepage found
                 $pageBody = '';
                 $result = $this->apiClient->createPage($spaceKey, $pageTitle, $pageBody, $spaceRootPageId);
                 if ($result->checkStatus()) {
-                    $startingPoint = $result->getValue(IResponse::KEY_ID);
+                    $startingPoint = $result->getValue(ResponseParameterData::KEY_ID);
                     $this->logger->info('Starting point created', [$spaceKey, $spaceRootPageId, $pageTitle, $startingPoint]);
                 }
             } else {
@@ -110,11 +110,11 @@ class BulkCreatePageExample extends AbstractRestApiExample
         $pageBody = $dataName;
 
         $dataNamePageId = $this->apiClient->checkPageExists($spaceKey, $pageTitle);
-        if ($dataNamePageId == IResponse::VAL_PAGE_ID_NO) {
+        if ($dataNamePageId == ResponseParameterData::VAL_PAGE_ID_NO) {
             // Create page
             $result = $this->apiClient->createPage($spaceKey, $pageTitle, $pageBody, $parentPageId);
             if ($result->checkStatus()) {
-                $dataNamePageId = $result->getValue(IResponse::KEY_ID);
+                $dataNamePageId = $result->getValue(ResponseParameterData::KEY_ID);
                 $this->logger->info('Create level 1 page', [$spaceKey, $parentPageId, $dataName, $dataNamePageId]);
             }
         } else {
@@ -135,7 +135,7 @@ class BulkCreatePageExample extends AbstractRestApiExample
      */
     protected function createLevelTwo(string $spaceKey, int $parentPageId, string $dataName, Collection $dataItems): int
     {
-        $dataItemPageId = IResponse::VAL_PAGE_ID_NO;
+        $dataItemPageId = ResponseParameterData::VAL_PAGE_ID_NO;
         $dataItemsMax = $dataItems->count();
         if ($dataItemsMax > 0) {
             $idxCount = 0;
@@ -144,7 +144,7 @@ class BulkCreatePageExample extends AbstractRestApiExample
                 [$dataItemName, $dataItemValue] = $this->prepareDataLevelTwo($dataItem);
                 $result = $this->apiClient->createOrUpdatePage($spaceKey, $dataItemName, $dataItemValue, $parentPageId);
                 if ($result->checkStatus()) {
-                    $dataItemPageId = (int) $result->getValue(IResponse::KEY_ID);
+                    $dataItemPageId = (int) $result->getValue(ResponseParameterData::KEY_ID);
                     $this->logger->info('CreateOrUpdate level 2 page', [$spaceKey, $parentPageId, $dataName, $dataItemName, $dataItemPageId]);
                 }
             }
@@ -165,7 +165,7 @@ class BulkCreatePageExample extends AbstractRestApiExample
         /** @var ResponseAddonMacroDecorate $dataSet */
         $dataSet = $this->apiClient->prepareAddonSet($dataMode);
 
-        return $dataSet->getResponse();
+        return $dataSet->getRawData();
     }
 
     /**

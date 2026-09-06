@@ -15,7 +15,7 @@ namespace oglow\example\read;
 
 use Monolog\ConsoleLogger;
 use oglow\example\AbstractRestApiExample;
-use oglow\tools\Yacorapi\IResponse;
+use oglow\tools\Yacorapi\Response\ResponseParameterData;
 use Psr\Log\LoggerInterface;
 
 require_once __DIR__ . '/../../bootstrap.php'; // NOSONAR: php:S4833
@@ -38,7 +38,7 @@ class GetSpaceHomepage extends AbstractRestApiExample
     {
         $pageId = $this->apiClient->spaceHomepage($spaceKey);
 
-        if ($pageId > IResponse::VAL_PAGE_ID_NO) {
+        if ($pageId > ResponseParameterData::VAL_PAGE_ID_NO) {
             $this->logger->info('Hompage for space is', [$spaceKey,$pageId]);
         } else {
             $this->logger->warning('No homepage for space', [$spaceKey]);

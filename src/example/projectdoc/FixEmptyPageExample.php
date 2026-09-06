@@ -16,7 +16,7 @@ namespace oglowa\example\projectdoc;
 use Monolog\ConsoleLogger;
 use oglow\example\AbstractRestApiExample;
 use oglow\tools\Yacorapi\ConstData;
-use oglow\tools\Yacorapi\IResponse;
+use oglow\tools\Yacorapi\Response\ResponseParameterData;
 use Psr\Log\LoggerInterface;
 
 require_once __DIR__ . '/../../bootstrap.php'; // NOSONAR: php:S4833
@@ -55,17 +55,17 @@ class FixEmptyPageExample extends AbstractRestApiExample
             $response = $this->apiClient->searchPagesWithFilter($filterTerm, $spaceKey, $start, $pageLimit);
             if ($response->isResultsAvailable()) {
                 $results = $response->getResults();
-                if ($results->hasKey(IResponse::KEY_CONTENT)) {
-                    $results = $results->get(IResponse::KEY_CONTENT);
+                if ($results->hasKey(ResponseParameterData::KEY_CONTENT)) {
+                    $results = $results->get(ResponseParameterData::KEY_CONTENT);
                 }
                 foreach ($results as $resultValue) {
-                    $bodySize = strlen($resultValue[IResponse::KEY_BODY][IResponse::KEY_STORAGE][IResponse::KEY_VALUE]);
+                    $bodySize = strlen($resultValue[ResponseParameterData::KEY_BODY][ResponseParameterData::KEY_STORAGE][ResponseParameterData::KEY_VALUE]);
                     if ($bodySize <= self::BODYSIZE_MIN) {
                         $line = [
                             $idxLoop,
-                            $resultValue[IResponse::KEY_ID],
-                            $resultValue[IResponse::KEY_TYPE],
-                            $resultValue[IResponse::KEY_TITLE],
+                            $resultValue[ResponseParameterData::KEY_ID],
+                            $resultValue[ResponseParameterData::KEY_TYPE],
+                            $resultValue[ResponseParameterData::KEY_TITLE],
                             $bodySize,
                             $this->constData->c(ConstData::KEY_WEB_SHOW_PAGEID) . $resultValue['id'],
                         ];

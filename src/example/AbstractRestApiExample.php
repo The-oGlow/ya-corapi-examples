@@ -17,7 +17,7 @@ use Monolog\ConsoleLogger;
 use oglow\tools\Yacorapi\Client\IRapiClientBase;
 use oglow\tools\Yacorapi\Client\RapiClient;
 use oglow\tools\Yacorapi\IRapiClient;
-use oglow\tools\Yacorapi\IResponse;
+use oglow\tools\Yacorapi\Response\ResponseParameterData;
 use Psr\Log\LoggerInterface;
 
 abstract class AbstractRestApiExample extends AbstractExample
@@ -53,7 +53,7 @@ abstract class AbstractRestApiExample extends AbstractExample
 
         $result = $this->apiClient->createOrUpdatePage($spaceKey, $pageTitle, $pageBody, $parentPageId);
         if ($result->checkStatus()) {
-            $pageId = (int) $result->getValue(IResponse::KEY_ID);
+            $pageId = (int) $result->getValue(ResponseParameterData::KEY_ID);
             $this->logger->info('Page created/updated', [$spaceKey, $parentPageId, $pageTitle, $pageId]);
         } else {
             $this->logger->error('Page not created/updated', [$result->getError()]);
@@ -71,7 +71,7 @@ abstract class AbstractRestApiExample extends AbstractExample
 
         $result = $this->apiClient->createOrUpdatePage($spaceKey, $pageTitle, $pageBody, $parentPageId);
         if ($result->checkStatus()) {
-            $pageId = (int) $result->getValue(IResponse::KEY_ID);
+            $pageId = (int) $result->getValue(ResponseParameterData::KEY_ID);
             $this->logger->info('Page created', [$spaceKey, $parentPageId, $pageTitle, $pageId]);
         } else {
             $this->logger->error('Page not created', [$result->getError()]);

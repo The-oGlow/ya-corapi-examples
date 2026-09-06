@@ -16,6 +16,7 @@ namespace oglow\example;
 use Monolog\ConsoleLogger;
 use Monolog\PlainLogger;
 use oglow\tools\Yacorapi\IResponse;
+use oglow\tools\Yacorapi\Response\ResponseParameterData;
 use oglow\tools\Yacorapi\Store\CsvFileAdapter;
 use oglow\tools\Yacorapi\Store\FileAdapter;
 use ollily\Tools\String\ImplodeTrait;
@@ -80,10 +81,10 @@ class AbstractExample
             if ($response->getResults()->count() > 0) {
                 foreach ($response->getResults() as $singleResult) {
                     if ($singleResult instanceof IResponse) {
-                        $this->outputData($singleResult->getValue(IResponse::KEY_ID), $idx++);
+                        $this->outputData($singleResult->getValue(ResponseParameterData::KEY_ID), $idx++);
                     } else {
-                        $this->outputData([$singleResult[IResponse::KEY_ID],
-                            $singleResult[IResponse::KEY_SPACE][IResponse::KEY_KEY], $singleResult[IResponse::KEY_TITLE]], $idx++);
+                        $this->outputData([$singleResult[ResponseParameterData::KEY_ID],
+                            $singleResult[ResponseParameterData::KEY_SPACE][ResponseParameterData::KEY_KEY], $singleResult[ResponseParameterData::KEY_TITLE]], $idx++);
                     }
                 }
             } else {
