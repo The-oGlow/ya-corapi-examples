@@ -17,8 +17,8 @@
         <directory name="tests"/>
         <ignoreFiles>
             <directory name="vendor"/>
-            <file name="src/example/Restapi/Projectdoc/ReadDocumentExample.php"/>
-            <file name="src/example/Restapi/Projectdoc/DoctypeOverviewExample.php"/>
+            <file name="src/example/projectdoc/ReadDocumentExample.php"/>
+            <file name="src/example/projectdoc/DoctypeOverviewExample.php"/>
         </ignoreFiles>
     </projectFiles>
     <issueHandlers>

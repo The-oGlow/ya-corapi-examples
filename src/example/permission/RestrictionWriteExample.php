@@ -11,12 +11,28 @@ declare(strict_types=1);
  * with this source code in the file LICENSE.
  */
 
-namespace oglow\example\Restapi;
+namespace oglow\example\permission;
+
+use Monolog\ConsoleLogger;
+use oglow\example\AbstractRestApiExample;
+use Psr\Log\LoggerInterface;
 
 require_once __DIR__ . '/../../bootstrap.php'; // NOSONAR: php:S4833
 
 class RestrictionWriteExample extends AbstractRestApiExample
 {
+    private LoggerInterface $logger;
+
+    public function __construct(string $outputFileName = '')
+    {
+        $this->logger = new ConsoleLogger(get_class($this));
+
+        $this->logger->debug("START");
+        parent::__construct($outputFileName);
+
+        $this->logger->debug("END");
+    }
+
     public function readRestrictionByPageId(int $pageId): void
     {
         $this->logger->debug("START", [$pageId]);

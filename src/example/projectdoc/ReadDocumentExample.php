@@ -11,9 +11,11 @@ declare(strict_types=1);
  * with this source code in the file LICENSE.
  */
 
-namespace oglow\example\Restapi\Projectdoc;
+namespace oglow\example\projectdoc;
 
-use oglow\example\Restapi\AbstractRestApiExample;
+use Monolog\ConsoleLogger;
+use oglow\example\AbstractRestApiExample;
+use Psr\Log\LoggerInterface;
 
 require_once __DIR__ . '/../../bootstrap.php'; // NOSONAR: php:S4833
 
@@ -24,6 +26,18 @@ require_once __DIR__ . '/../../bootstrap.php'; // NOSONAR: php:S4833
  */
 class ReadDocumentExample extends AbstractRestApiExample
 {
+    private LoggerInterface $logger;
+
+    public function __construct(string $outputFileName = '')
+    {
+        $this->logger = new ConsoleLogger(get_class($this));
+
+        $this->logger->debug("START");
+        parent::__construct($outputFileName);
+
+        $this->logger->debug("END");
+    }
+
     public function readDocument(string $spaceKey, string $where): void
     {
         $response = $this->apiClient->pdtReadDocument(\oglow\tools\Yacorapi\Projectdoc\PDT_PROP_ALL_DEFAULT, $spaceKey, $where);
@@ -42,8 +56,8 @@ class ReadDocumentExample extends AbstractRestApiExample
 
     public function readDefaultProperties($pageId): void
     {
-        prepareFilesystem();
-        storeCsv(TARGET_DIR, TARGET_FILENAME, CSV_LINE_PDT_PROPERTY_HEADER . "\n");
+        $this->prepareFilesystem();
+        $this->storeCsv(TARGET_DIR, TARGET_FILENAME, CSV_LINE_PDT_PROPERTY_HEADER . "\n");
         $curlSession = prepareCurl();
 
         foreach (PDT_PROP_ALL_DEFAULT as $property) {

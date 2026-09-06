@@ -11,12 +11,10 @@ declare(strict_types=1);
  * with this source code in the file LICENSE.
  */
 
-namespace oglow\example\Restapi;
+namespace oglow\example;
 
 use Monolog\ConsoleLogger;
 use Monolog\PlainLogger;
-use oglow\tools\Yacorapi\Client\RapiClient;
-use oglow\tools\Yacorapi\IRapiClient;
 use oglow\tools\Yacorapi\IResponse;
 use oglow\tools\Yacorapi\Store\CsvFileAdapter;
 use oglow\tools\Yacorapi\Store\FileAdapter;
@@ -24,38 +22,35 @@ use ollily\Tools\String\ImplodeTrait;
 use Psr\Log\LoggerInterface;
 use Psr\Log\LogLevel;
 
-abstract class AbstractRestApiExample
+class AbstractExample
 {
     use ImplodeTrait;
 
     /** Default output level (DEBUG) */
     public const string LEVEL_DEFAULT = LogLevel::INFO;
 
-    protected LoggerInterface $logger;
-
     protected PlainLogger $output;
 
-    protected IRapiClient $apiClient;
+    private LoggerInterface $logger;
 
     private string $outputFileName;
 
     public function __construct(string $outputFileName = '')
     {
         $this->logger = new ConsoleLogger(get_class($this));
-        $this->logger->debug("START");
+        $this->logger->debug('START');
 
         $this->outputFileName = empty($outputFileName) ? get_class($this) : $outputFileName;
-        $this->output         = new PlainLogger(get_class($this));
-        $this->apiClient      = RapiClient::newClient(level: self::LEVEL_DEFAULT);
+        $this->output = new PlainLogger(get_class($this));
 
-        $this->logger->debug("END");
+        $this->logger->debug('END');
     }
 
     protected function outputLine(string $line, ?int $idx = null): void
     {
         $prefix = '';
         if (isset($idx)) {
-            $prefix = sprintf("%s;", $idx);
+            $prefix = sprintf('%s;', $idx);
         }
         $this->output->out($prefix . $line);
     }
@@ -68,25 +63,34 @@ abstract class AbstractRestApiExample
     {
         $prefix = '';
         if (isset($idx)) {
-            $prefix = sprintf("%s;", $idx);
+            $prefix = sprintf('%s;', $idx);
         }
         if (is_a($anyData, IResponse::class)) {
-            $this->output->out($prefix . "$anyData");
+            $this->output->out($prefix .  "$anyData");
         } else {
-            $this->output->out($prefix . self::implode_recursive(",", $anyData, false, true));
+            $this->output->out($prefix . self::implode_recursive(',', $anyData, false, true));
         }
     }
 
-    protected function outputDatas(IResponse $response): void
+    protected function outputDatas(?IResponse $response): void
     {
-        $idx = 0;
-        /**
-         * FIXME: IResponse liefert falschen Wert.
-         *
-         * @var IResponse|mixed[] $singleResult
-         */
-        foreach ($response->getResults() as $singleResult) {
-            $this->outputData($singleResult, $idx++);
+        $idx = 1;
+        // FIXME: IResponse liefert falschen Wert.
+        if (!empty($response)) {
+            if ($response->getResults()->count() > 0) {
+                foreach ($response->getResults() as $singleResult) {
+                    if ($singleResult instanceof IResponse) {
+                        $this->outputData($singleResult->getValue(IResponse::KEY_ID), $idx++);
+                    } else {
+                        $this->outputData([$singleResult[IResponse::KEY_ID],
+                            $singleResult[IResponse::KEY_SPACE][IResponse::KEY_KEY], $singleResult[IResponse::KEY_TITLE]], $idx++);
+                    }
+                }
+            } else {
+                $this->output->out('Empty results');
+            }
+        } else {
+            $this->output->out('Empty response');
         }
     }
 

@@ -11,9 +11,11 @@ declare(strict_types=1);
  * with this source code in the file LICENSE.
  */
 
-namespace oglow\example\Restapi\Projectdoc;
+namespace oglow\example\projectdoc;
 
-use oglow\example\Restapi\AbstractRestApiExample;
+use Monolog\ConsoleLogger;
+use oglow\example\AbstractRestApiExample;
+use Psr\Log\LoggerInterface;
 
 require_once __DIR__ . '/../../bootstrap.php'; // NOSONAR: php:S4833
 
@@ -29,6 +31,18 @@ class DoctypeOverviewExample extends AbstractRestApiExample
     public const IDX_LAZY = 'ids';
 
     public const IDX_SIZE = 'size';
+
+    private LoggerInterface $logger;
+
+    public function __construct(string $outputFileName = '')
+    {
+        $this->logger = new ConsoleLogger(get_class($this));
+
+        $this->logger->debug("START");
+        parent::__construct($outputFileName);
+
+        $this->logger->debug("END");
+    }
 
     public function getDoctype(int $foundPageId, string $propertyName): string
     {

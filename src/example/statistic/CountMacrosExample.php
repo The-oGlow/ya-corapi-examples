@@ -11,38 +11,64 @@ declare(strict_types=1);
  * with this source code in the file LICENSE.
  */
 
-namespace oglow\example\Restapi;
+namespace oglow\example\statistic;
 
-use oglow\tools\Yacorapi\Data\SpaceData;
+use Monolog\ConsoleLogger;
+use oglow\example\AbstractRestApiExample;
 use oglow\tools\Yacorapi\Macro\AddonTypeEnum;
-use oglow\tools\Yacorapi\Macro\AllAddon;
-use oglow\tools\Yacorapi\Macro\BlockerAddon;
-use oglow\tools\Yacorapi\Macro\SingleAddon;
+use oglow\tools\Yacorapi\Space\SpaceData;
+use oglow\tools\Yacorapi\Space\SpaceTypeEnum;
 use oglow\tools\Yacorapi\Statistic\IStatistic;
 use oglow\tools\Yacorapi\Statistic\StatisticStatistic;
 use oglow\tools\Yacorapi\Statistic\StatisticTypeEnum;
-
+use Psr\Log\LoggerInterface;
 
 require_once __DIR__ . '/../../bootstrap.php'; // NOSONAR: php:S4833
 
 class CountMacrosExample extends AbstractRestApiExample
 {
-    public function countMacrosInSpace(string $spaceKey, AddonTypeEnum $mode = AddonTypeEnum::ADDON_SINGLE): void
+    private LoggerInterface $logger;
+
+    public function __construct(string $outputFileName = '')
+    {
+        $this->logger = new ConsoleLogger(get_class($this));
+
+        $this->logger->debug("START");
+        parent::__construct($outputFileName);
+
+        $this->logger->debug("END");
+    }
+
+    public function countMacros(SpaceTypeEnum $spaceMode, AddonTypeEnum $addonMode): void
+    {
+        $spaceData = new SpaceData();
+        $spaceKeys = $spaceData->getDataByMode($spaceMode->value);
+
+        $cntSpaces = count($spaceKeys);
+        $cntIdx = 0;
+        foreach ($spaceKeys as $spaceKey) {
+            ++$cntIdx;
+            echo sprintf("\n\n%s/%s Count all in space '%s'\n", $cntIdx, $cntSpaces, $spaceKey);
+            $this->countMacrosInSpace($spaceKey, $addonMode);
+        }
+    }
+
+    public function countMacrosInSpace(string $spaceKey, AddonTypeEnum $addonMode = AddonTypeEnum::ADDON_SINGLE): void
     {
         $this->logger->debug("START", [$spaceKey]);
 
-        $addonSet     = $this->apiClient->prepareAddonSet($mode);
+        $addonSet = $this->apiClient->prepareAddonSet($addonMode);
         $outputMatrix = new StatisticStatistic($spaceKey, StatisticTypeEnum::SPACE);
-        $anyData      = $this->apiClient->countMacrosInSpace($spaceKey, $addonSet, $outputMatrix);
+        $anyData = $this->apiClient->countMacrosInSpace($spaceKey, $addonSet, $outputMatrix);
 
-        $this->writeFile($anyData, $mode);
+        $this->writeFile($anyData, $addonMode);
 
         $this->logger->debug("END", [$spaceKey]);
     }
 
     /**
      * @param array<mixed,IStatistic>|IStatistic $anyData
-     * @param AddonTypeEnum                                $mode
+     * @param AddonTypeEnum                      $mode
      */
     private function writeFile(IStatistic|array $anyData, AddonTypeEnum $mode): void
     {
@@ -53,7 +79,7 @@ class CountMacrosExample extends AbstractRestApiExample
         }
 
         foreach ($anyData as $space) {
-            $spaceKey      = $space->getStatisticName();
+            $spaceKey = $space->getStatisticName();
             $fileExtension = "$spaceKey-" . $mode->value;
             $this->logger->notice("Write Data for space to file with extension", [$spaceKey, $fileExtension]);
 
@@ -80,17 +106,11 @@ class CountMacrosExample extends AbstractRestApiExample
 
 function main(): void
 {
-    $thisClazz = new CountMacrosExample();
-    $spaceData = new SpaceData();
-    $spaceKeys = $spaceData->getDataByMode(SpaceData::SPACE_ALL);
+    $spaceMode = SpaceTypeEnum::SPACE_SINGLE;
+    $addonMode = AddonTypeEnum::ADDON_SINGLE;
 
-    $cntSpaces = count($spaceKeys);
-    $cntIdx = 0;
-    foreach ($spaceKeys as $spaceKey) {
-        ++$cntIdx;
-        echo sprintf("\n\n%s/%s Count all in space '%s'\n", $cntIdx, $cntSpaces, $spaceKey);
-        $thisClazz->countMacrosInSpace($spaceKey, AddonTypeEnum::ADDON_ALL);
-    }
+    $thisClazz = new CountMacrosExample();
+    $thisClazz->countMacros($spaceMode, $addonMode);
 }
 
 main();

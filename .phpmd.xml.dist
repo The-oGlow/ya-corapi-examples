@@ -7,33 +7,40 @@
 
     <description>PHPMD Standard Ruleset</description>
 
+    <!-- Exclude rules -->
     <rule ref="rulesets/codesize.xml">
-        <!-- refine -->
         <exclude name="CyclomaticComplexity"/>
-        <!-- refine -->
         <exclude name="TooManyPublicMethods"/>
     </rule>
     <rule ref="rulesets/cleancode.xml">
         <!-- too strict -->
         <exclude name="MissingImport"/>
+        <!-- too strict -->
         <exclude name="BooleanArgumentFlag"/>
+        <!-- too strict -->
         <exclude name="ElseExpression"/>
+        <!-- too strict -->
         <exclude name="StaticAccess"/>
     </rule>
     <rule ref="rulesets/controversial.xml">
         <!-- too strict -->
         <exclude name="CamelCaseMethodName"/>
+        <!-- too strict -->
+        <exclude name="CamelCasePropertyName"/>
     </rule>
     <rule ref="rulesets/design.xml">
         <exclude name="CouplingBetweenObjects"/>
+        <!-- too strict -->
+        <exclude name="NumberOfChildren" />
+        <exclude name="DepthOfInheritance"/>
     </rule>
     <rule ref="rulesets/naming.xml">
-        <!-- refine -->
         <exclude name="LongClassName"/>
         <exclude name="LongVariable"/>
     </rule>
     <rule ref="rulesets/unusedcode.xml"/>
 
+    <!-- Refine rules -->
     <rule ref="rulesets/codesize.xml/CyclomaticComplexity">
         <!-- refine -->
         <priority>1</priority>
@@ -60,6 +67,13 @@
         <priority>1</priority>
         <properties>
             <property name="maximum" value="30"/>
+        </properties>
+    </rule>
+    <rule ref="rulesets/design.xml/DepthOfInheritance">
+        <!-- refine -->
+        <priority>1</priority>
+        <properties>
+            <property name="minimum" value="10"/>
         </properties>
     </rule>
     <rule ref="rulesets/naming.xml/LongClassName">

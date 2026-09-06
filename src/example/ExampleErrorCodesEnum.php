@@ -15,10 +15,11 @@ namespace oglow\example;
 
 use ollily\Tools\Arrays\IDoubleBackedEnum;
 
-enum ExampleErrorCodesEnum: string implements ollily\Tools\Arrays\IDoubleBackedEnum
+enum ExampleErrorCodesEnum: string implements IDoubleBackedEnum
 {
     case ERR_ARGS_MISSING = '254';
     case ERR_PROCESSDATA_WRONG = '253';
+    case ERR_MAX_ITERATION = '252';
 
     #[\Override]
     public function intValue(): int
@@ -31,7 +32,14 @@ enum ExampleErrorCodesEnum: string implements ollily\Tools\Arrays\IDoubleBackedE
     {
         return match ($this) {
             self::ERR_ARGS_MISSING => 'Not enough arguments given',
-            self::ERR_PROCESSDATA_WRONG => 'Data for processing is invalid'
+            self::ERR_PROCESSDATA_WRONG => 'Data for processing is invalid',
+            self::ERR_MAX_ITERATION => 'Maximum of iteration reached'
         };
+    }
+
+    #[\Override]
+    public function objectValue(): mixed
+    {
+        return null;
     }
 }

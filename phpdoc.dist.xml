@@ -14,6 +14,7 @@
             </source>
             <ignore hidden="true" symlinks="true">
                 <path>src/foo/**/*</path>
+                <path>src/example/projectdoc/**/*</path>
             </ignore>
             <output>./target/docs/api</output>
             <default-package-name>oglow</default-package-name>

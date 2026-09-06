@@ -11,23 +11,53 @@ declare(strict_types=1);
  * with this source code in the file LICENSE.
  */
 
-namespace oglow\example\Restapi;
+namespace oglow\example\statistic;
 
-use oglow\tools\Yacorapi\Data\RequestParameterData;
-use oglow\tools\Yacorapi\Data\SpaceData;
+use Monolog\ConsoleLogger;
+use oglow\example\AbstractRestApiExample;
+use oglow\tools\Yacorapi\Data\ItemTypeEnum;
+use oglow\tools\Yacorapi\Space\SpaceData;
+use oglow\tools\Yacorapi\Space\SpaceTypeEnum;
 use oglow\tools\Yacorapi\Statistic\IStatistic;
 use oglow\tools\Yacorapi\Statistic\StatisticStatistic;
 use oglow\tools\Yacorapi\Statistic\StatisticTypeEnum;
+use Psr\Log\LoggerInterface;
 
 require_once __DIR__ . '/../../bootstrap.php'; // NOSONAR: php:S4833
 
 class CountPagesExample extends AbstractRestApiExample
 {
+    private LoggerInterface $logger;
+
     private bool $headerWritten = false;
+
+    public function __construct(string $outputFileName = '')
+    {
+        $this->logger = new ConsoleLogger(get_class($this));
+
+        $this->logger->debug("START");
+        parent::__construct($outputFileName);
+
+        $this->logger->debug("END");
+    }
+
+    public function countPages(SpaceTypeEnum $spaceMode): void
+    {
+        $spaceData = new SpaceData();
+        $spaceKeys = $spaceData->getDataByMode($spaceMode->value);
+        $singleFile = false;
+
+        $cntSpaces = count($spaceKeys);
+        $cntIdx = 0;
+        foreach ($spaceKeys as $spaceKey) {
+            echo sprintf("\n\n%s/%s Count in space '%s'\n", ++$cntIdx, $cntSpaces, $spaceKey);
+            $this->countItemsInSpace($spaceKey, $singleFile);
+        }
+    }
 
     public function countItemsInSpace(string $spaceKey, bool $singleFile = false): void
     {
-        $this->logger->info("START", [$spaceKey]);
+        $this->logger->debug("START", [$spaceKey]);
 
         $spaceStatistic = $this->loopPageTypes($spaceKey);
         $this->writeFile($spaceKey, $singleFile, $spaceStatistic);
@@ -41,9 +71,9 @@ class CountPagesExample extends AbstractRestApiExample
 
         $spaceStatistic = new StatisticStatistic($spaceKey, StatisticTypeEnum::SPACE);
 
-        foreach (RequestParameterData::ITEM_TYPES as $pageType) {
-            $this->logger->info("Count for", [$spaceKey, $pageType]);
+        foreach (ItemTypeEnum::TYPES as $pageType) {
             $countPages = $this->apiClient->countItemsinSpace($spaceKey, $pageType);
+            $this->logger->info("Count for", [$spaceKey, $pageType->value, $countPages->flatten(false)]);
             $spaceStatistic->addItem($pageType, $countPages);
         }
 
@@ -80,18 +110,10 @@ class CountPagesExample extends AbstractRestApiExample
 
 function main(): void
 {
+    $spaceMode = SpaceTypeEnum::SPACE_SINGLE;
+
     $thisClazz = new CountPagesExample();
-
-    $spaceData = new SpaceData();
-    $spaceKeys = $spaceData->getDataByMode(SpaceData::SPACE_SIMPLE);
-    $singleFile = false;
-
-    $cntSpaces = count($spaceKeys);
-    $cntIdx = 0;
-    foreach ($spaceKeys as $spaceKey) {
-        echo sprintf("\n\n%s/%s Count in space '%s'\n", ++$cntIdx, $cntSpaces, $spaceKey);
-        $thisClazz->countItemsInSpace($spaceKey, $singleFile);
-    }
+    $thisClazz->countPages($spaceMode);
 }
 
 main();
