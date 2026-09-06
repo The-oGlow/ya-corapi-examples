@@ -14,6 +14,7 @@ declare(strict_types=1);
 namespace oglow\example\Restapi;
 
 use oglow\tools\Yacorapi\IResponse;
+use oglow\tools\Yacorapi\Response\ResponseParameterData;
 
 require_once __DIR__ . '/../../bootstrap.php'; // NOSONAR: php:S4833
 
@@ -92,9 +93,9 @@ class SearchPageExample extends AbstractRestApiExample
             $this->outputData($singleResult, $idx++);
         }
         $this->resultPosUpdate(
-            (int)$response->getValue(IResponse::KEY_START),
-            (int)$response->getValue(IResponse::KEY_SIZE),
-            (int)$response->getValue(IResponse::KEY_TOTAL_SIZE)
+            (int)$response->getValue(ResponseParameterData::KEY_START),
+            (int)$response->getValue(ResponseParameterData::KEY_SIZE),
+            (int)$response->getValue(ResponseParameterData::KEY_TOTAL_SIZE)
         );
     }
 
