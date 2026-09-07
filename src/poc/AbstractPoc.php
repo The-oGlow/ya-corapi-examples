@@ -17,13 +17,10 @@ use Monolog\ConsoleLogger;
 use oglow\example\AbstractExample;
 use oglow\example\ExampleErrorCodesEnum;
 use ollily\Tools\Emergency;
-use ollily\Tools\EnvironmentVariableTrait;
 use Psr\Log\LoggerInterface;
 
 abstract class AbstractPoc extends AbstractExample
 {
-    use EnvironmentVariableTrait;
-
     protected const int EXPECTED_ARGS = 0;
 
     private LoggerInterface $logger;

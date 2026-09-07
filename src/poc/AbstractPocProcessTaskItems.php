@@ -19,6 +19,7 @@ use oglow\example\ExampleErrorCodesEnum;
 use ollily\Tools\Batch\BatchConfig;
 use ollily\Tools\Batch\BatchTaskHelper;
 use ollily\Tools\Emergency;
+use ollily\Tools\EnvironmentHelper;
 use Psr\Log\LoggerInterface;
 
 abstract class AbstractPocProcessTaskItems extends AbstractPoc
@@ -47,7 +48,7 @@ abstract class AbstractPocProcessTaskItems extends AbstractPoc
         $batchConfig = new BatchConfig(new Map());
 
         if (count($args) >= self::EXPECTED_ARGS) { // @phpstan-ignore greaterOrEqual.alwaysTrue
-            $fileName = self::getProjectRoot() . self::DEMO_PATH . $args[0];
+            $fileName = EnvironmentHelper::getProjectRoot() . self::DEMO_PATH . $args[0];
             $listName = $args[1];
 
             $this->logger->info('Filename / ListKey', [$fileName, $listName]);
