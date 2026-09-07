@@ -89,7 +89,7 @@ class BulkCreatePageExample extends AbstractRestApiExample
                 $pageBody = '';
                 $result = $this->apiClient->createPage($spaceKey, $pageTitle, $pageBody, $spaceRootPageId);
                 if ($result->checkStatus()) {
-                    $startingPoint = $result->getValue(ResponseParameterData::KEY_ID);
+                    $startingPoint = intval($result->getValue(ResponseParameterData::KEY_ID));
                     $this->logger->info('Starting point created', [$spaceKey, $spaceRootPageId, $pageTitle, $startingPoint]);
                 }
             } else {
@@ -114,7 +114,7 @@ class BulkCreatePageExample extends AbstractRestApiExample
             // Create page
             $result = $this->apiClient->createPage($spaceKey, $pageTitle, $pageBody, $parentPageId);
             if ($result->checkStatus()) {
-                $dataNamePageId = $result->getValue(ResponseParameterData::KEY_ID);
+                $dataNamePageId = intval($result->getValue(ResponseParameterData::KEY_ID));
                 $this->logger->info('Create level 1 page', [$spaceKey, $parentPageId, $dataName, $dataNamePageId]);
             }
         } else {
@@ -144,7 +144,7 @@ class BulkCreatePageExample extends AbstractRestApiExample
                 [$dataItemName, $dataItemValue] = $this->prepareDataLevelTwo($dataItem);
                 $result = $this->apiClient->createOrUpdatePage($spaceKey, $dataItemName, $dataItemValue, $parentPageId);
                 if ($result->checkStatus()) {
-                    $dataItemPageId = (int) $result->getValue(ResponseParameterData::KEY_ID);
+                    $dataItemPageId = intval($result->getValue(ResponseParameterData::KEY_ID));
                     $this->logger->info('CreateOrUpdate level 2 page', [$spaceKey, $parentPageId, $dataName, $dataItemName, $dataItemPageId]);
                 }
             }
@@ -204,7 +204,7 @@ function main(): void
     $pageTitle = 'Bulk create pages';
 
     /** AddonMode, used for this example only */
-    $dataMode = AddonTypeEnum::ADDON_SINGLE;
+    $dataMode = AddonTypeEnum::ADDON_BLOCKER;
 
     $thisClazz = new BulkCreatePageExample();
     $thisClazz->bulkCreate($spaceKey, $pageTitle, $dataMode);

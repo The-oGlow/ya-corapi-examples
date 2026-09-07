@@ -91,7 +91,6 @@ class CountMacrosExample extends AbstractRestApiExample
                 foreach ($addon->keys() as $macroName) {
                     /** @var IStatistic $macro */
                     $macro = $addon->getItem($macroName);
-                    // FIXME: ->flatten must be fixed
                     $count = str_replace(['{', '}', 'count,'], '', $macro->flatten(false));
                     $count = empty($count) ? '0' : $count;
                     $csvLine = [$spaceKey, $addonName, $macroName, $count];
@@ -106,8 +105,8 @@ class CountMacrosExample extends AbstractRestApiExample
 
 function main(): void
 {
-    $spaceMode = SpaceTypeEnum::SPACE_SINGLE;
-    $addonMode = AddonTypeEnum::ADDON_SINGLE;
+    $spaceMode = SpaceTypeEnum::SPACE_ALL;
+    $addonMode = AddonTypeEnum::ADDON_ALL;
 
     $thisClazz = new CountMacrosExample();
     $thisClazz->countMacros($spaceMode, $addonMode);
