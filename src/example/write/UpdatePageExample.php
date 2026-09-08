@@ -39,7 +39,29 @@ class UpdatePageExample extends AbstractRestApiExample
         $this->logger->debug('END');
     }
 
-    public function updatePage(
+    public function startUpdate(string $spaceKey, string $pageTitle, string $pageBody): void
+    {
+        $newPageTitle = sprintf('%s-%s', $pageTitle, 1);
+        $newPageBody = ContentHelper::prepareMacro('projectdoc-iteration', new Map(['value' => 'finished']));
+        $finalPageTitle = sprintf('%s-%s', $newPageTitle, 2);
+        $finalPageBody = ContentHelper::prepareMacro('projectdoc-iteration', new Map(['value' => 'production']));
+
+        $pageId = $this->createExamplePage($spaceKey, $pageTitle, $pageBody);
+
+        $this->storeOrg($this->apiClient->readPageByPageId($pageId));
+
+        // Update page body
+        $this->updatePage($spaceKey, $pageId, $pageTitle, $pageBody, newPageBody: $newPageBody);
+        $this->storeMod($this->apiClient->readPageByPageId($pageId));
+
+        // Update page title
+        $this->updatePage($spaceKey, $pageId, $pageTitle, $pageBody, newPageTitle: $newPageTitle);
+
+        // Update page title and body
+        $this->updatePage($spaceKey, $pageId, $pageTitle, $pageBody, $finalPageTitle, $finalPageBody);
+    }
+
+    private function updatePage(
         string $spaceKey,
         int $pageId,
         string $pageTitle,
@@ -76,25 +98,12 @@ function main(): void
     $spaceKey = 'CMMN';
 
     $pageTitle = sprintf('%s %s-%s', 'NEW PAGE TO UPDATE', ConstData::getTsNow(), 0);
-    $newPageTitle = sprintf('%s-%s', $pageTitle, 1);
-    $finalPageTitle = sprintf('%s-%s', $newPageTitle, 2);
 
     $pageBody = ContentHelper::prepareMacro('projectdoc-iteration', new Map(['value' => 'facade']));
-    $newPageBody = ContentHelper::prepareMacro('projectdoc-iteration', new Map(['value' => 'finished']));
-    $finalPageBody = ContentHelper::prepareMacro('projectdoc-iteration', new Map(['value' => 'production']));
 
     $thisClazz = new UpdatePageExample();
 
-    $pageId = $thisClazz->createExamplePage($spaceKey, $pageTitle, $pageBody);
-
-    // Update page body
-    $thisClazz->updatePage($spaceKey, $pageId, $pageTitle, $pageBody, newPageBody: $newPageBody);
-
-    // Update page title
-    $thisClazz->updatePage($spaceKey, $pageId, $pageTitle, $pageBody, newPageTitle: $newPageTitle);
-
-    // Update page title and body
-    $thisClazz->updatePage($spaceKey, $pageId, $pageTitle, $pageBody, $finalPageTitle, $finalPageBody);
+    $thisClazz->startUpdate($spaceKey, $pageTitle, $pageBody);
 }
 
 main();

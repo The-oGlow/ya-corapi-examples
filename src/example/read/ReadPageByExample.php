@@ -54,6 +54,7 @@ class ReadPageByExample extends AbstractRestApiExample
         $response = $this->apiClient->readPagesByTitle($pageTitle);
         if ($response->checkStatus()) {
             $this->outputDatas($response);
+            $this->storeAsCsv($response);
         } else {
             $this->logger->error('Nothing found', [$response->getError()]);
         }
