@@ -26,9 +26,12 @@ abstract class AbstractRestApiExample extends AbstractExample
 
     private LoggerInterface $logger;
 
+    /**
+     * @param string $outputFileName  The outputfile incl. path and file extension
+     */
     public function __construct(string $outputFileName = '')
     {
-        $this->logger = new ConsoleLogger(get_class($this));
+        $this->logger = new ConsoleLogger(AbstractRestApiExample::class);
 
         $this->logger->debug('START');
         parent::__construct($outputFileName);

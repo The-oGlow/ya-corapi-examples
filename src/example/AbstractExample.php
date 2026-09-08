@@ -22,23 +22,30 @@ use oglow\tools\Yacorapi\Store\FileAdapter;
 use ollily\Tools\String\ImplodeTrait;
 use Psr\Log\LoggerInterface;
 use Psr\Log\LogLevel;
+use oglow\tools\Yacorapi\Store\FileStoreStageEnum;
+use oglow\tools\Yacorapi\Store\IStoreItem;
 
 class AbstractExample
 {
     use ImplodeTrait;
 
-    /** Default output level (DEBUG) */
+    /** Default output level*/
     public const string LEVEL_DEFAULT = LogLevel::INFO;
 
+    /** Writes text as it is to console. */
     protected PlainLogger $output;
 
     private LoggerInterface $logger;
 
+    /** The outputfile incl. path and file extension or the class-string of the caller class. */
     private string $outputFileName;
 
+    /**
+     * @param string $outputFileName  The outputfile incl. path and file extension
+     */
     public function __construct(string $outputFileName = '')
     {
-        $this->logger = new ConsoleLogger(get_class($this));
+        $this->logger = new ConsoleLogger(AbstractExample::class);
         $this->logger->debug('START');
 
         $this->outputFileName = empty($outputFileName) ? get_class($this) : $outputFileName;
@@ -47,6 +54,12 @@ class AbstractExample
         $this->logger->debug('END');
     }
 
+    /**
+     * Writes a text into {@link AbstractExample->$output}.
+     * 
+     * @param string $line The text for the output
+     * @param int|null $idx A counter (Default: null)
+     */
     protected function outputLine(string $line, ?int $idx = null): void
     {
         $prefix = '';
@@ -57,8 +70,10 @@ class AbstractExample
     }
 
     /**
-     * @param mixed    $anyData
-     * @param null|int $idx
+     * Writes everything you want into {@link AbstractExample->$output}.
+     * 
+     * @param mixed  $anyData Everything you want to output
+     * @param int|null $idx A counter (Default: null)
      */
     protected function outputData(mixed $anyData, ?int $idx = null): void
     {
@@ -73,6 +88,11 @@ class AbstractExample
         }
     }
 
+    /**
+     * Writes a response from a REST-API call into  {@link AbstractExample->$output}.
+     * 
+     * @param IResponse|null $response The response from the REST-API call
+     */
     protected function outputDatas(?IResponse $response): void
     {
         $idx = 1;
@@ -95,53 +115,50 @@ class AbstractExample
         }
     }
 
-    protected function prepareTargetFileName(string $suffix = ''): string
-    {
-        $fileName = basename($this->outputFileName);
-        if (!empty($suffix)) {
-            $fileName .= '-' . $suffix;
-        }
-
-        return $fileName;
-    }
-
     /**
-     * @param mixed  $anyData
-     * @param string $fileExtension
+     * Stores everything you give into a file at stage {@link FileStoreStageEnum::ORIGINAL}.
+     * 
+     * @param mixed  $anyData Everything you want to store
+     * @param string $fileExtension The file extension for the output file (Default: {@link IStoreItem::C_FILE_EXT_TEXT})
      */
-    protected function storeOrg(mixed $anyData, string $fileExtension = 'txt'): void
+    protected function storeOrg(mixed $anyData, string $fileExtension = IStoreItem::C_FILE_EXT_TEXT): void
     {
-        $fileAdapter = new FileAdapter($this->outputFileName, $fileExtension);
+        $fileAdapter = new FileAdapter($this->outputFileName, $fileExtension, storeStage: FileStoreStageEnum::ORIGINAL);
         $fileAdapter->storeData($anyData);
     }
 
     /**
-     * @param mixed  $anyData
-     * @param string $fileExtension
+     * Stores everything you give into a file at stage {@link FileStoreStageEnum::MODIFIED}.
+     * 
+     * @param mixed  $anyData Everything you want to store
+     * @param string $fileExtension The file extension for the output file (Default: {@link IStoreItem::C_FILE_EXT_TEXT})
      */
-    protected function storeMod(mixed $anyData, string $fileExtension = 'txt'): void
+    protected function storeMod(mixed $anyData, string $fileExtension = IStoreItem::C_FILE_EXT_TEXT): void
     {
-        $fileAdapter = new FileAdapter($this->outputFileName, $fileExtension);
+        $fileAdapter = new FileAdapter($this->outputFileName, $fileExtension, storeStage: FileStoreStageEnum::MODIFIED);
         $fileAdapter->storeData($anyData);
     }
 
     /**
-     * @param mixed  $anyData
-     * @param string $fileExtension
+     * Stores everything you give into a file as a dump.
+     *  
+     * @param mixed  $anyData Everything you want to store
+     * @param string $fileExtension The file extension for the output file (Default: {@link IStoreItem::C_FILE_EXT_TEXT})
      */
-    protected function storeAsDump(mixed $anyData, string $fileExtension = 'txt'): void
+    protected function storeAsDump(mixed $anyData, string $fileExtension = IStoreItem::C_FILE_EXT_TEXT): void
     {
         $fileAdapter = new FileAdapter($this->outputFileName, $fileExtension);
-        $anyString = print_r($anyData, true);
-        $fileAdapter->storeData($anyString);
+        $fileAdapter->storeData(print_r($anyData, true));
     }
 
     /**
-     * @param mixed           $anyData
-     * @param string          $fileExtension
-     * @param string|string[] $dataHeader
+     * Stores everything you give into a file with csv format.
+     *  
+     * @param mixed  $anyData Everything you want to store
+     * @param string $fileExtension The file extension for the output file (Default: {@link IStoreItem::C_FILE_EXT_CSV})
+     * @param string|string[] $dataHeader A header, which will be set at the top of the file (Default: [])
      */
-    protected function storeAsCsv(mixed $anyData, string $fileExtension = 'csv', string|array $dataHeader = []): void
+    protected function storeAsCsv(mixed $anyData, string $fileExtension = IStoreItem::C_FILE_EXT_CSV, string|array $dataHeader = []): void
     {
         $csvAdapter = new CsvFileAdapter($this->outputFileName, $fileExtension);
         $csvAdapter->storeDataHeader($dataHeader);
