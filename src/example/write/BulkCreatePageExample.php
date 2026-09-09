@@ -211,7 +211,7 @@ class BulkCreatePageExample extends AbstractRestApiExample
     protected function prepareDataLevelOne(string $dataName): array
     {
         $dataNameTitle = $dataName;
-        $dataNameBody = ContentHelper::prepareHeading($dataName, 2) . $this->prepareToc();
+        $dataNameBody = ContentHelper::prepareHeading($dataName, 2) . $this->prepareToc(0);
 
         return [$dataNameTitle, $dataNameBody];
     }
@@ -256,13 +256,16 @@ class BulkCreatePageExample extends AbstractRestApiExample
     }
 
     /**
+     * @param int $style level 1-6, 0=disable style (Default: 2)
      * @return string A table of contents macro to show the children pages
      */
-    protected function prepareToc(): string
+    protected function prepareToc(int $style=2): string
     {
         $parameters = new Map();
         $parameters->put('all', 'true');
-        $parameters->put('style', 'h2');
+        if ($style > 0) {
+            $parameters->put('style', "h$style");
+        }
         $parameters->put('sort', 'title');
 
         return ContentHelper::prepareMacro('children', $parameters);

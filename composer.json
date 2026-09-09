@@ -39,9 +39,10 @@
         "php": ">=8.4.1",
         "ext-curl": "*",
         "ext-json": "*",
+        "ext-ds": "^1.0",
         "php-ds/php-ds": "^1.0",
-        "ollily/ezlogging": "^8.4@dev",
-        "oglow/yacorapi": "*@dev"
+        "ollily/ezlogging": "^8.4",
+        "oglow/yacorapi": "*"
     },
     "provide": {
     },
