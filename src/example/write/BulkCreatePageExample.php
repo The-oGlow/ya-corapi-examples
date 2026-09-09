@@ -42,10 +42,10 @@ class BulkCreatePageExample extends AbstractRestApiExample
 
     /**
      * Controller function for the bulk process.
-     * 
-     * @param string       $spaceKey  The space for the new pages
-     * @param string       $pageTitle The page title of the starting point page
-     * @param AddonTypeEnum $dataMode AddonMode, used for this example only
+     *
+     * @param string        $spaceKey  The space for the new pages
+     * @param string        $pageTitle The page title of the starting point page
+     * @param AddonTypeEnum $dataMode  AddonMode, used for this example only
      */
     public function bulkCreate(string $spaceKey, string $pageTitle, AddonTypeEnum $dataMode): void
     {
@@ -55,7 +55,7 @@ class BulkCreatePageExample extends AbstractRestApiExample
         if (ResponseParameterData::VAL_PAGE_ID_NO !== $startingPoint) {
             $this->logger->info('Starting point', [$spaceKey, $pageTitle, $startingPoint]);
 
-            $allData = $this->prepareDataLevelOne($dataMode);
+            $allData = $this->prepareAllDataLevel($dataMode);
             if (!$allData->isEmpty()) {
                 foreach ($allData as $dataName => $dataItems) {
                     $dataNamePageId = $this->createLevelOne($spaceKey, $startingPoint, $dataName);
@@ -84,18 +84,19 @@ class BulkCreatePageExample extends AbstractRestApiExample
 
     /**
      * Creates the entry point (aka root page) for all bulk entries.
-     * 
-     * @param string       $spaceKey  The space for the new pages
-     * @param string       $pageTitle The page title of the starting point page
+     *
+     * @param string $spaceKey      The space for the new pages
+     * @param string $dataNameTitle The page title of the starting point page
+     *
      * @return int The pageId of the starting point or {@link ResponseParameterData::VAL_PAGE_ID_NO}
      */
-    protected function creatStartingPoint(string $spaceKey, string $pageTitle): int
+    protected function creatStartingPoint(string $spaceKey, string $dataNameTitle): int
     {
-        $startingPoint = $this->apiClient->checkPageExists($spaceKey, $pageTitle);
+        $startingPoint = $this->apiClient->checkPageExists($spaceKey, $dataNameTitle);
 
         if (ResponseParameterData::VAL_PAGE_ID_NO == $startingPoint) {
             // Create Starting point
-            $this->logger->info('Starting point must be created', [$spaceKey, $pageTitle, $startingPoint]);
+            $this->logger->info('Starting point must be created', [$spaceKey, $dataNameTitle, $startingPoint]);
 
             $spaceRootPageId = $this->apiClient->spaceHomepage($spaceKey);
             $this->logger->info('Homepage of space', [$spaceKey, $spaceRootPageId]);
@@ -103,10 +104,10 @@ class BulkCreatePageExample extends AbstractRestApiExample
             if (ResponseParameterData::VAL_PAGE_ID_NO !== $spaceRootPageId) {
                 // Homepage found
                 $pageBody = $this->prepareStartingPointBody();
-                $result = $this->apiClient->createPage($spaceKey, $pageTitle, $pageBody, $spaceRootPageId);
+                $result = $this->apiClient->createPage($spaceKey, $dataNameTitle, $pageBody, $spaceRootPageId);
                 if ($result->checkStatus()) {
                     $startingPoint = intval($result->getValue(ResponseParameterData::KEY_ID));
-                    $this->logger->info('Starting point created', [$spaceKey, $spaceRootPageId, $pageTitle, $startingPoint]);
+                    $this->logger->info('Starting point created', [$spaceKey, $spaceRootPageId, $dataNameTitle, $startingPoint]);
                 }
             } else {
                 // Homepage not found
@@ -114,7 +115,7 @@ class BulkCreatePageExample extends AbstractRestApiExample
             }
         } else {
             // Starting point exists
-            $this->logger->info('Starting point already exists', [$spaceKey, $pageTitle, $startingPoint]);
+            $this->logger->info('Starting point already exists', [$spaceKey, $dataNameTitle, $startingPoint]);
         }
 
         return $startingPoint;
@@ -122,21 +123,21 @@ class BulkCreatePageExample extends AbstractRestApiExample
 
     /**
      * Creates the page directly under the starting point.
-     * 
-     * @param string       $spaceKey  The space for the new pages
-     * @param int $parentPageId The parent pageId for this page (in this case the starting point)
-     * @param string $dataName The name of the page to create
+     *
+     * @param string $spaceKey     The space for the new pages
+     * @param int    $parentPageId The parent pageId for this page (in this case the starting point)
+     * @param string $dataName     The name of the page to create
+     *
      * @return int The pageId of the create page or {@link ResponseParameterData::VAL_PAGE_ID_NO}
      */
     protected function createLevelOne(string $spaceKey, int $parentPageId, string $dataName): int
     {
-        $pageTitle = $dataName;
-        $pageBody = $dataName;
+        [$dataNameTitle, $dataNameBody] = $this->prepareDataLevelOne($dataName);
 
-        $dataNamePageId = $this->apiClient->checkPageExists($spaceKey, $pageTitle);
+        $dataNamePageId = $this->apiClient->checkPageExists($spaceKey, $dataNameTitle);
         if ($dataNamePageId == ResponseParameterData::VAL_PAGE_ID_NO) {
             // Create page
-            $result = $this->apiClient->createPage($spaceKey, $pageTitle, $pageBody, $parentPageId);
+            $result = $this->apiClient->createPage($spaceKey, $dataNameTitle, $dataNameBody, $parentPageId);
             if ($result->checkStatus()) {
                 $dataNamePageId = intval($result->getValue(ResponseParameterData::KEY_ID));
                 $this->logger->info('Create level 1 page', [$spaceKey, $parentPageId, $dataName, $dataNamePageId]);
@@ -151,11 +152,11 @@ class BulkCreatePageExample extends AbstractRestApiExample
 
     /**
      * Creates the page under the "level one" page.
-     * 
-     * @param string       $spaceKey  The space for the new pages
-     * @param int $parentPageId The parent pageId for this page (in this case the "level one" pageId)
-     * @param string $dataName The name of th "level one" page
-     * @param Collection<mixed,mixed> $dataItems A collection of page names to create on "level two"
+     *
+     * @param string                  $spaceKey     The space for the new pages
+     * @param int                     $parentPageId The parent pageId for this page (in this case the "level one" pageId)
+     * @param string                  $dataName     The name of th "level one" page
+     * @param Collection<mixed,mixed> $dataItems    A collection of page names to create on "level two"
      *
      * @return int The pageId of the last create "level two" page or {@link ResponseParameterData::VAL_PAGE_ID_NO}
      */
@@ -167,15 +168,15 @@ class BulkCreatePageExample extends AbstractRestApiExample
             $idxCount = 0;
             foreach ($dataItems as $dataItem) {
                 ++$idxCount;
-                [$dataItemName, $dataItemValue] = $this->prepareDataLevelTwo($dataItem);
-                $this->storeOrg($dataItemValue, $dataItemName);
+                [$dataItemTitle, $dataItemBody] = $this->prepareDataLevelTwo($dataItem);
+                $this->storeOrg($dataItemBody, $dataItemTitle);
 
-                $result = $this->apiClient->createOrUpdatePage($spaceKey, $dataItemName, $dataItemValue, $parentPageId);
-                $this->storeMod($result->getBody(), $dataItemName);
+                $result = $this->apiClient->createOrUpdatePage($spaceKey, $dataItemTitle, $dataItemBody, $parentPageId);
+                $this->storeMod($result->getBody(), $dataItemTitle);
 
                 if ($result->checkStatus()) {
                     $dataItemPageId = intval($result->getValue(ResponseParameterData::KEY_ID));
-                    $this->logger->info('CreateOrUpdate level 2 page', [$spaceKey, $parentPageId, $dataName, $dataItemName, $dataItemPageId]);
+                    $this->logger->info('CreateOrUpdate level 2 page', [$spaceKey, $parentPageId, $dataName, $dataItemTitle, $dataItemPageId]);
                 }
             }
         } else {
@@ -186,13 +187,13 @@ class BulkCreatePageExample extends AbstractRestApiExample
     }
 
     /**
-     * Returns the "level one" content : a collection of page names for the "level one", "level two" pages.
-     * 
+     * Returns a collection of page names for the "level one", "level two" pages.
+     *
      * @param AddonTypeEnum $dataMode AddonMode, used for this example only
      *
      * @return Collection<mixed,mixed> A collection of page names for the "level one", "level two" pages
      */
-    protected function prepareDataLevelOne(AddonTypeEnum $dataMode): Collection
+    protected function prepareAllDataLevel(AddonTypeEnum $dataMode): Collection
     {
         /** @var ResponseAddonMacroDecorate $dataSet */
         $dataSet = $this->apiClient->prepareAddonSet($dataMode);
@@ -201,45 +202,70 @@ class BulkCreatePageExample extends AbstractRestApiExample
     }
 
     /**
+     * Returns the "level one" content : page title (itemName) and body (itemValue).
+     *
+     * @param string $dataName An item containing the data for the page
+     *
+     * @return array<mixed,mixed> The "level one" page title (itemName) and body (itemValue)
+     */
+    protected function prepareDataLevelOne(string $dataName): array
+    {
+        $dataNameTitle = $dataName;
+        $dataNameBody = ContentHelper::prepareHeading($dataName, 2) . $this->prepareToc();
+
+        return [$dataNameTitle, $dataNameBody];
+    }
+
+    /**
      * Returns the "level two" content : page title (itemName) and body (itemValue).
-     * 
+     *
      * @param string $dataItem An item containing the data for the page
      *
      * @return array<mixed,mixed> The "level two" page title (itemName) and body (itemValue)
      */
     protected function prepareDataLevelTwo(string $dataItem): array
     {
-        $dataItemName = $dataItem;
-        [$dataItemValue] = $this->prepareDataLevelThree($dataItem);
+        $dataItemTitle = $dataItem;
+        [$dataItemBody] = $this->prepareDataLevelThree($dataItem);
 
-        return [$dataItemName, $dataItemValue];
+        return [$dataItemTitle, $dataItemBody];
     }
 
     /**
-     * Returns the "level three" content : body (itemValue)
+     * Returns the "level three" content : body (itemValue).
+     *
      * @param string $dataItem An item containing the data for the page
      *
      * @return array<mixed,mixed> The "level three" body (itemValue)
      */
     protected function prepareDataLevelThree(string $dataItem): array
     {
-        $parameters = new Map();
-        $bodyContent = 'Content of the macro body';
-        $dataItemValue = ContentHelper::prepareMacro($dataItem, $parameters, $bodyContent);
+        $macroParameter = new Map();
+        $macroBody = 'Content of the macro body';
+        $dataItemBody = ContentHelper::prepareMacro($dataItem, $macroParameter, $macroBody);
 
-        return [$dataItemValue];
+        return [$dataItemBody];
     }
 
     /**
      * @return string The page body for the starting point
      */
-    public function prepareStartingPointBody():string {
+    protected function prepareStartingPointBody(): string
+    {
+        return $this->prepareToc();
+    }
+
+    /**
+     * @return string A table of contents macro to show the children pages
+     */
+    protected function prepareToc(): string
+    {
         $parameters = new Map();
         $parameters->put('all', 'true');
         $parameters->put('style', 'h2');
         $parameters->put('sort', 'title');
-        $body = ContentHelper::prepareMacro('children', $parameters);
-        return $body;
+
+        return ContentHelper::prepareMacro('children', $parameters);
     }
 }
 

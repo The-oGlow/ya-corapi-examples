@@ -19,11 +19,11 @@ use oglow\tools\Yacorapi\IResponse;
 use oglow\tools\Yacorapi\Response\ResponseParameterData;
 use oglow\tools\Yacorapi\Store\CsvFileAdapter;
 use oglow\tools\Yacorapi\Store\FileAdapter;
+use oglow\tools\Yacorapi\Store\FileStoreStageEnum;
+use oglow\tools\Yacorapi\Store\IStoreItem;
 use ollily\Tools\String\ImplodeTrait;
 use Psr\Log\LoggerInterface;
 use Psr\Log\LogLevel;
-use oglow\tools\Yacorapi\Store\FileStoreStageEnum;
-use oglow\tools\Yacorapi\Store\IStoreItem;
 
 class AbstractExample
 {
@@ -41,7 +41,7 @@ class AbstractExample
     private string $outputFileName;
 
     /**
-     * @param string $outputFileName  The outputfile incl. path and file extension
+     * @param string $outputFileName The outputfile incl. path and file extension
      */
     public function __construct(string $outputFileName = '')
     {
@@ -56,9 +56,9 @@ class AbstractExample
 
     /**
      * Writes a text into {@link AbstractExample->$output}.
-     * 
-     * @param string $line The text for the output
-     * @param int|null $idx A counter (Default: null)
+     *
+     * @param string   $line The text for the output
+     * @param null|int $idx  A counter (Default: null)
      */
     protected function outputLine(string $line, ?int $idx = null): void
     {
@@ -71,9 +71,9 @@ class AbstractExample
 
     /**
      * Writes everything you want into {@link AbstractExample->$output}.
-     * 
-     * @param mixed  $anyData Everything you want to output
-     * @param int|null $idx A counter (Default: null)
+     *
+     * @param mixed    $anyData Everything you want to output
+     * @param null|int $idx     A counter (Default: null)
      */
     protected function outputData(mixed $anyData, ?int $idx = null): void
     {
@@ -90,8 +90,8 @@ class AbstractExample
 
     /**
      * Writes a response from a REST-API call into  {@link AbstractExample->$output}.
-     * 
-     * @param IResponse|null $response The response from the REST-API call
+     *
+     * @param null|IResponse $response The response from the REST-API call
      */
     protected function outputDatas(?IResponse $response): void
     {
@@ -117,8 +117,8 @@ class AbstractExample
 
     /**
      * Stores everything you give into a file at stage {@link FileStoreStageEnum::ORIGINAL}.
-     * 
-     * @param mixed  $anyData Everything you want to store
+     *
+     * @param mixed  $anyData       Everything you want to store
      * @param string $fileExtension The file extension for the output file (Default: {@link IStoreItem::C_FILE_EXT_TEXT})
      */
     protected function storeOrg(mixed $anyData, string $fileExtension = IStoreItem::C_FILE_EXT_TEXT): void
@@ -129,8 +129,8 @@ class AbstractExample
 
     /**
      * Stores everything you give into a file at stage {@link FileStoreStageEnum::MODIFIED}.
-     * 
-     * @param mixed  $anyData Everything you want to store
+     *
+     * @param mixed  $anyData       Everything you want to store
      * @param string $fileExtension The file extension for the output file (Default: {@link IStoreItem::C_FILE_EXT_TEXT})
      */
     protected function storeMod(mixed $anyData, string $fileExtension = IStoreItem::C_FILE_EXT_TEXT): void
@@ -141,8 +141,8 @@ class AbstractExample
 
     /**
      * Stores everything you give into a file as a dump.
-     *  
-     * @param mixed  $anyData Everything you want to store
+     *
+     * @param mixed  $anyData       Everything you want to store
      * @param string $fileExtension The file extension for the output file (Default: {@link IStoreItem::C_FILE_EXT_TEXT})
      */
     protected function storeAsDump(mixed $anyData, string $fileExtension = IStoreItem::C_FILE_EXT_TEXT): void
@@ -153,10 +153,10 @@ class AbstractExample
 
     /**
      * Stores everything you give into a file with csv format.
-     *  
-     * @param mixed  $anyData Everything you want to store
-     * @param string $fileExtension The file extension for the output file (Default: {@link IStoreItem::C_FILE_EXT_CSV})
-     * @param string|string[] $dataHeader A header, which will be set at the top of the file (Default: [])
+     *
+     * @param mixed           $anyData       Everything you want to store
+     * @param string          $fileExtension The file extension for the output file (Default: {@link IStoreItem::C_FILE_EXT_CSV})
+     * @param string|string[] $dataHeader    A header, which will be set at the top of the file (Default: [])
      */
     protected function storeAsCsv(mixed $anyData, string $fileExtension = IStoreItem::C_FILE_EXT_CSV, string|array $dataHeader = []): void
     {

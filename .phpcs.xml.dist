@@ -77,6 +77,9 @@
         <exclude name="PSR2.ControlStructures.SwitchDeclaration.WrongOpenercase" />
         <exclude name="PSR2.ControlStructures.SwitchDeclaration.WrongOpenerdefault" />
     </rule>
+    <rule ref="PSR2.ControlStructures.ControlStructureSpacing">
+        <exclude name="PSR2.ControlStructures.ControlStructureSpacing.SpacingAfterOpenBrace" />
+    </rule>
 
     <!-- Squiz -->
     <rule ref="Squiz.Functions.MultiLineFunctionDeclaration.CloseBracketNewLine" />
