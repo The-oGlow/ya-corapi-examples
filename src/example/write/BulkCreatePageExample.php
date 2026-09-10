@@ -19,7 +19,7 @@ use Monolog\ConsoleLogger;
 use oglow\example\AbstractRestApiExample;
 use oglow\tools\Yacorapi\Helper\ContentHelper;
 use oglow\tools\Yacorapi\Macro\AddonTypeEnum;
-use oglow\tools\Yacorapi\Response\ResponseAddonMacroDecorate;
+use oglow\tools\Yacorapi\Response\ResponseAddonMacro;
 use oglow\tools\Yacorapi\Response\ResponseParameterData;
 use Psr\Log\LoggerInterface;
 
@@ -195,7 +195,7 @@ class BulkCreatePageExample extends AbstractRestApiExample
      */
     protected function prepareAllDataLevel(AddonTypeEnum $dataMode): Collection
     {
-        /** @var ResponseAddonMacroDecorate $dataSet */
+        /** @var ResponseAddonMacro $dataSet */
         $dataSet = $this->apiClient->prepareAddonSet($dataMode);
 
         return $dataSet->getRawData();
@@ -257,9 +257,10 @@ class BulkCreatePageExample extends AbstractRestApiExample
 
     /**
      * @param int $style level 1-6, 0=disable style (Default: 2)
+     *
      * @return string A table of contents macro to show the children pages
      */
-    protected function prepareToc(int $style=2): string
+    protected function prepareToc(int $style = 2): string
     {
         $parameters = new Map();
         $parameters->put('all', 'true');

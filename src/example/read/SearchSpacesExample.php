@@ -15,7 +15,7 @@ namespace oglow\example\read;
 
 use Monolog\ConsoleLogger;
 use oglow\example\AbstractRestApiExample;
-use oglow\tools\Yacorapi\Response\ResponseSpaceDataDecorate;
+use oglow\tools\Yacorapi\Response\ResponseSpace;
 use oglow\tools\Yacorapi\Space\SpaceData;
 use oglow\tools\Yacorapi\Space\SpaceTypeEnum;
 use oglow\tools\Yacorapi\Store\FileAdapter;
@@ -41,13 +41,15 @@ class SearchSpacesExample extends AbstractRestApiExample
     {
         $this->logger->debug('START');
 
-        /** @var ResponseSpaceDataDecorate $response */
+        /** @var ResponseSpace $response */
         $response = $this->apiClient->listSpaces(SpaceTypeEnum::SPACE_TYPE_GLOBAL);
 
         $spaces = $response->getSpaces();
         $this->logger->info('Found global spaces', [count($spaces)]);
 
-        $this->storeAsCsv($spaces);
+        $header = array_keys($spaces[array_key_first($spaces)]);
+        $this->storeAsCsv($spaces, SpaceTypeEnum::SPACE_TYPE_GLOBAL->value, $header);
+
         $this->prepareMySpaces($spaces);
 
         $this->logger->debug('END');
@@ -57,13 +59,14 @@ class SearchSpacesExample extends AbstractRestApiExample
     {
         $this->logger->debug('START');
 
-        /** @var ResponseSpaceDataDecorate $response */
+        /** @var ResponseSpace $response */
         $response = $this->apiClient->listSpaces(SpaceTypeEnum::SPACE_TYPE_PERSONAL);
 
         $spaces = $response->getSpaces();
         $this->logger->info('Found personal spaces', [count($spaces)]);
 
-        $this->storeAsCsv($response->getSpaces());
+        $header = array_keys($spaces[array_key_first($spaces)]);
+        $this->storeAsCsv($response->getSpaces(), SpaceTypeEnum::SPACE_TYPE_PERSONAL->value, $header);
 
         $this->logger->debug('END');
     }
@@ -76,9 +79,9 @@ class SearchSpacesExample extends AbstractRestApiExample
         $this->logger->debug('START');
 
         $fileContent = SpaceData::prepareMySpacesContent($spaces);
-        $fileName    = SpaceData::prepareMySpacesFileName();
+        $fileName = SpaceData::prepareMySpacesFileName();
 
-        $storeAdapter = new FileAdapter($fileName);
+        $storeAdapter = new FileAdapter(pathinfo($fileName, PATHINFO_FILENAME), pathinfo($fileName, PATHINFO_EXTENSION));
         $this->logger->info('Writing file', [$storeAdapter->getStoreItem()]);
         $storeAdapter->storeData($fileContent);
 
