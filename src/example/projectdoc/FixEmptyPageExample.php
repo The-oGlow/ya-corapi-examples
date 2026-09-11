@@ -16,7 +16,7 @@ namespace oglowa\example\projectdoc;
 use Monolog\ConsoleLogger;
 use oglow\example\AbstractRestApiExample;
 use oglow\tools\Yacorapi\ConstData;
-use oglow\tools\Yacorapi\Response\ResponseParameterData;
+use oglow\tools\Yacorapi\Response\ResponseParameter;
 use Psr\Log\LoggerInterface;
 
 require_once __DIR__ . '/../../bootstrap.php'; // NOSONAR: php:S4833
@@ -55,17 +55,17 @@ class FixEmptyPageExample extends AbstractRestApiExample
             $response = $this->apiClient->searchPagesWithFilter($filterTerm, $spaceKey, $start, $pageLimit);
             if ($response->isResultsAvailable()) {
                 $results = $response->getResults();
-                if ($results->hasKey(ResponseParameterData::KEY_CONTENT)) {
-                    $results = $results->get(ResponseParameterData::KEY_CONTENT);
+                if ($results->hasKey(ResponseParameter::KEY_CONTENT)) {
+                    $results = $results->get(ResponseParameter::KEY_CONTENT);
                 }
                 foreach ($results as $resultValue) {
-                    $bodySize = strlen($resultValue[ResponseParameterData::KEY_BODY][ResponseParameterData::KEY_STORAGE][ResponseParameterData::KEY_VALUE]);
+                    $bodySize = strlen($resultValue[ResponseParameter::KEY_BODY][ResponseParameter::KEY_STORAGE][ResponseParameter::KEY_VALUE]);
                     if ($bodySize <= self::BODYSIZE_MIN) {
                         $line = [
                             $idxLoop,
-                            $resultValue[ResponseParameterData::KEY_ID],
-                            $resultValue[ResponseParameterData::KEY_TYPE],
-                            $resultValue[ResponseParameterData::KEY_TITLE],
+                            $resultValue[ResponseParameter::KEY_ID],
+                            $resultValue[ResponseParameter::KEY_TYPE],
+                            $resultValue[ResponseParameter::KEY_TITLE],
                             $bodySize,
                             $this->constData->c(ConstData::KEY_WEB_SHOW_PAGEID) . $resultValue['id'],
                         ];

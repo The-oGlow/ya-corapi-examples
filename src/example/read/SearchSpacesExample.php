@@ -47,8 +47,10 @@ class SearchSpacesExample extends AbstractRestApiExample
         $spaces = $response->getSpaces();
         $this->logger->info('Found global spaces', [count($spaces)]);
 
-        $header = array_keys($spaces[array_key_first($spaces)]);
-        $this->storeAsCsv($spaces, SpaceTypeEnum::SPACE_TYPE_GLOBAL->value, $header);
+        if (!empty($spaces)) {
+            $header = array_keys($spaces[array_key_first($spaces)]);
+            $this->storeAsCsv($spaces, SpaceTypeEnum::SPACE_TYPE_GLOBAL->value, $header);
+        };
 
         $this->prepareMySpaces($spaces);
 
@@ -65,9 +67,10 @@ class SearchSpacesExample extends AbstractRestApiExample
         $spaces = $response->getSpaces();
         $this->logger->info('Found personal spaces', [count($spaces)]);
 
-        $header = array_keys($spaces[array_key_first($spaces)]);
-        $this->storeAsCsv($response->getSpaces(), SpaceTypeEnum::SPACE_TYPE_PERSONAL->value, $header);
-
+        if (!empty($spaces)) {
+            $header = array_keys($spaces[array_key_first($spaces)]);
+            $this->storeAsCsv($response->getSpaces(), SpaceTypeEnum::SPACE_TYPE_PERSONAL->value, $header);
+        }
         $this->logger->debug('END');
     }
 

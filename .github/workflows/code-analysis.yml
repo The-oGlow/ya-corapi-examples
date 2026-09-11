@@ -1,0 +1,138 @@
+name: code-analysis
+
+on:
+  workflow_dispatch:
+  push:
+    branches:
+      - master
+      - develop
+    paths-ignore:
+      - '.github/workflows/**'
+      - '.run/**'
+      - '.idea/**'
+      - 'site/**'
+
+env:
+  # PHP Configuration
+  PHP_MODULES: none,bcmath,bz2,calendar,Core,ctype,curl,date,dom,exif,fileinfo,filter,gd,hash,iconv,intl,json,libxml,mbstring,openssl,pcre,PDO,Phar,readline,Reflection,session,SimpleXML,soap,sockets,SPL,standard,tokenizer,xml,xmlreader,xmlwriter,xsl,zip,zlib
+  PHPUNIT_DIR: ${{ github.workspace }}/target/analysis/phpunit
+  PHPUNIT_LOG: ${{ github.workspace }}/target/analysis/phpunit/phpunit-test.log
+
+  # User Configuration
+  AUTH_DIR: "${HOME}/.yacorapi"
+
+  # Github Additional Configuration
+  GITHUB_REPO_NAME: ${{ github.event.repository.name }}
+  GITHUB_ACTOR: ${{ github.actor }}
+  GITHUB_PROJECT_DIR: ${{ github.workspace }}
+  GITHUB_TARGET_DIR: ${{ github.workspace }}/target
+  GITHUB_BRANCH_NAME: ${{ github.ref_name }}
+  GITHUB_UPLOAD_DIR: ${{ github.workspace }}/target/staging
+  GITHUB_UPLOAD_NAME: ${{ github.event.repository.name }}.zip
+  GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+  # Sonarcloud Configuration
+  SONAR_TOKEN: ${{ secrets.SONAR_TOKEN_GH}}
+  SONAR_CACHE_DIR: "${HOME}/.sonar/cache"
+  SONAR_HOST_URL: "https://sonarcloud.io"
+  SONAR_BRANCH: ${{ github.ref_name }}
+
+  # Composer Configuration
+  COMPOSER_VENDOR_DIR: ${{ github.workspace }}/vendor
+
+  # Codacy Configuration
+  CODACY_API_TOKEN: ${{ secrets.CODACY_TOKEN_GH }}
+  CODACY_COVERAGE_FILE: ${{ github.workspace }}/target/analysis/clover/coverage.xml
+
+  # Coveralls Configuration
+  COVERALLS_REPO_TOKEN: ${{ secrets.COVERALLS_REPO_TOKEN }}
+  COVERALLS_COVERAGE_FILE: ${{ github.workspace }}/target/analysis/clover/coverage.xml
+
+jobs:
+  code-analysis:
+    strategy:
+      matrix:
+        os: [ ubuntu-latest ]
+        version: [ 24 ]
+        php: ["8.4"]
+    runs-on: ${{ matrix.os }}
+
+    steps:
+      - name: set current timestamp
+        id: TS_NOW
+        run: echo "TS_NOW=$(date +'%Y-%m-%dT%H-%M-%S')" >> $GITHUB_OUTPUT
+
+      - name: echo current timestamp
+        run: echo ${TS_NOW} - ${{ env.TS_NOW }} - ${{ steps.TS_NOW.outputs.TS_NOW }}
+
+      - name: create target dir
+        run: mkdir -p ${{ env.PHPUNIT_DIR }}
+
+      - name: checkout
+        uses: actions/checkout@v7
+        with:
+          fetch-depth: 0
+
+      - name: setup PHP
+        id: setup-php
+        uses: shivammathur/setup-php@v2
+        with:
+          php-version: '${{ matrix.php }}'
+          extensions: ${{ env.PHP_MODULES }}
+          coverage: xdebug
+          ini-values: xdebug.mode=coverage
+        env:
+          fail-fast: true
+
+      - name: identify composer cache
+        id: composer-cache
+        run: |
+          echo "dir=$(composer config cache-files-dir)" >> $GITHUB_OUTPUT
+
+      - name: cache composer packages
+        uses: actions/cache@v6
+        id: cache
+        with:
+          path: |
+            ${{ steps.composer-cache.outputs.dir }}
+            ${{ env.COMPOSER_VENDOR_DIR }}
+          key: ${{ matrix.os }}-${{env.GITHUB_REPO_NAME}}-${{ hashFiles('**/composer.lock') }}
+          restore-keys: |
+            ${{ matrix.os }}-${{env.GITHUB_REPO_NAME}}-
+
+      - name: install dependencies
+        run: composer update --no-ansi --no-interaction --no-progress
+
+      - name: install programm
+        run: bash ${{ env.GITHUB_PROJECT_DIR }}/install/install.sh
+          
+      - name: execute tests
+        run: composer c-test
+
+      #- name: show test log
+      #  run: test -f ${{ env.PHPUNIT_LOG }} && cat ${{ env.PHPUNIT_LOG }}
+
+      # not using automatic from sonarcloud
+      - name: sonarcloud
+        if: ${{ always() }}
+        uses: SonarSource/sonarqube-scan-action@v8
+        env:
+          SONAR_TOKEN: ${{ env.SONAR_TOKEN }}
+          SONAR_HOST_URL: ${{ env.SONAR_HOST_URL }}
+
+      # coverage must be uploaded manually
+      - name: codacy scan
+        if: ${{ always() }} && ${{ hashFiles('target/analysis/clover/coverage.xml') != '' }}
+        uses: codacy/codacy-coverage-reporter-action@v1
+        with:
+          api-token: ${{ env.CODACY_API_TOKEN }}
+          coverage-reports: ${{ env.CODACY_COVERAGE_FILE }}
+
+      # coverage must be uploaded manually
+      - name: coveralls scan
+        if: ${{ always() }} && ${{ hashFiles('target/analysis/clover/coverage.xml') != '' }}
+        uses: coverallsapp/github-action@v2
+        with:
+          github-token: ${{ env.GITHUB_TOKEN }}
+          file: ${{ env.COVERALLS_COVERAGE_FILE }}
+          format: clover

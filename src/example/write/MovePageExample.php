@@ -17,7 +17,7 @@ use Monolog\ConsoleLogger;
 use oglow\example\AbstractRestApiExample;
 use oglow\tools\Yacorapi\Client\IRapiClientBase;
 use oglow\tools\Yacorapi\ConstData;
-use oglow\tools\Yacorapi\Response\ResponseParameterData;
+use oglow\tools\Yacorapi\Response\ResponseParameter;
 use Psr\Log\LoggerInterface;
 
 require_once __DIR__ . '/../../bootstrap.php'; // NOSONAR: php:S4833
@@ -44,7 +44,7 @@ class MovePageExample extends AbstractRestApiExample
 
         $result = $this->apiClient->movePage($pageId, $newParentId);
         if ($result->checkStatus()) {
-            $movedParentPageId = (int) $result->getValue(ResponseParameterData::KEY_ID);
+            $movedParentPageId = (int) $result->getValue(ResponseParameter::KEY_ID);
             $this->logger->info('Page moved to', [$pageId, $movedParentPageId]);
         } else {
             $this->logger->error('Page not moved', [$result->getError()]);

@@ -19,7 +19,7 @@ use Monolog\ConsoleLogger;
 use oglow\example\AbstractRestApiExample;
 use oglow\tools\Yacorapi\Client\IRapiClientBase;
 use oglow\tools\Yacorapi\ConstData;
-use oglow\tools\Yacorapi\Response\ResponseParameterData;
+use oglow\tools\Yacorapi\Response\ResponseParameter;
 use Psr\Log\LoggerInterface;
 
 /**
@@ -48,7 +48,7 @@ class CreateOrUpdatePageExample extends AbstractRestApiExample
         string $newPageBody,
         string $updatePageBody,
         string $parentPageTitle = IRapiClientBase::REQ_VAL_PAGE_TITLE_EMPTY
-    ) {
+    ): void {
         $this->logger->info('START spaceKey,pageTitle,parentPageTitle', [$spaceKey, $pageTitle, $parentPageTitle]);
 
         $parentPageId = $this->apiClient->checkPageExists($spaceKey, $parentPageTitle);
@@ -58,7 +58,7 @@ class CreateOrUpdatePageExample extends AbstractRestApiExample
             $this->storeOrg($result->getBody(), $pageTitle);
 
             if ($result->checkStatus()) {
-                $pageId = intval($result->getValue(ResponseParameterData::KEY_ID));
+                $pageId = intval($result->getValue(ResponseParameter::KEY_ID));
                 $this->logger->info('Created new page', [$spaceKey, $parentPageId, $pageTitle, $pageId]);
             }
 
@@ -66,7 +66,7 @@ class CreateOrUpdatePageExample extends AbstractRestApiExample
             $this->storeMod($result->getBody(), $pageTitle);
 
             if ($result->checkStatus()) {
-                $pageId = intval($result->getValue(ResponseParameterData::KEY_ID));
+                $pageId = intval($result->getValue(ResponseParameter::KEY_ID));
                 $this->logger->info('Updated page', [$spaceKey, $parentPageId, $pageTitle, $pageId]);
             }
         } else {

@@ -20,7 +20,7 @@ use oglow\tools\Yacorapi\Client\IRapiClientBase;
 use oglow\tools\Yacorapi\ConstData;
 use oglow\tools\Yacorapi\Data\ItemTypeEnum;
 use oglow\tools\Yacorapi\Helper\ContentHelper;
-use oglow\tools\Yacorapi\Response\ResponseParameterData;
+use oglow\tools\Yacorapi\Response\ResponseParameter;
 use Psr\Log\LoggerInterface;
 
 require_once __DIR__ . '/../../bootstrap.php'; // NOSONAR: php:S4833
@@ -57,7 +57,7 @@ class CreateNewPageExample extends AbstractRestApiExample
         if (IRapiClientBase::RESP_VAL_PAGE_ID_NO !== $parentPageId) {
             $result = $this->apiClient->createPage($spaceKey, $pageTitle, $pageBody, $parentPageId, IRapiClientBase::REQ_VAL_COMMENT_EMPTY, $itemType);
             if ($result->checkStatus()) {
-                $pageId = $result->getValue(ResponseParameterData::KEY_ID);
+                $pageId = $result->getValue(ResponseParameter::KEY_ID);
                 $this->outputData($result);
                 $this->logger->info('Page created', [$spaceKey, $parentPageTitle, $pageTitle, $pageId]);
             } else {

@@ -17,7 +17,7 @@ use Monolog\ConsoleLogger;
 use oglow\example\AbstractRestApiExample;
 use oglow\tools\Yacorapi\Client\IRapiClientBase;
 use oglow\tools\Yacorapi\IResponse;
-use oglow\tools\Yacorapi\Response\ResponseParameterData;
+use oglow\tools\Yacorapi\Response\ResponseParameter;
 use Psr\Log\LoggerInterface;
 
 require_once __DIR__ . '/../../bootstrap.php'; // NOSONAR: php:S4833
@@ -73,17 +73,17 @@ class SearchPagesExample extends AbstractRestApiExample
          */
         foreach ($response->getResults() as $singleResult) {
             if ($singleResult instanceof IResponse) {
-                $this->outputData($singleResult->getValue(ResponseParameterData::KEY_CONTENT), $idx++);
+                $this->outputData($singleResult->getValue(ResponseParameter::KEY_CONTENT), $idx++);
             } else {
-                $singleResult = $singleResult[ResponseParameterData::KEY_CONTENT];
-                $this->outputData([$singleResult[ResponseParameterData::KEY_ID],
-                    $singleResult[ResponseParameterData::KEY_SPACE][ResponseParameterData::KEY_KEY],$singleResult[ResponseParameterData::KEY_TITLE]], $idx++);
+                $singleResult = $singleResult[ResponseParameter::KEY_CONTENT];
+                $this->outputData([$singleResult[ResponseParameter::KEY_ID],
+                    $singleResult[ResponseParameter::KEY_SPACE][ResponseParameter::KEY_KEY],$singleResult[ResponseParameter::KEY_TITLE]], $idx++);
             }
         }
         $this->resultPosUpdate(
-            (int)$response->getValue(ResponseParameterData::KEY_START),
-            (int)$response->getValue(ResponseParameterData::KEY_SIZE),
-            (int)$response->getValue(ResponseParameterData::KEY_TOTAL_SIZE)
+            (int)$response->getValue(ResponseParameter::KEY_START),
+            (int)$response->getValue(ResponseParameter::KEY_SIZE),
+            (int)$response->getValue(ResponseParameter::KEY_TOTAL_SIZE)
         );
     }
 
