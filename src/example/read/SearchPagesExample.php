@@ -45,7 +45,7 @@ class SearchPagesExample extends AbstractRestApiExample
         $this->logger->debug('END');
     }
 
-    public function searchPagesWithFilter(string $filterTerm, string $spaceKey, int $searchLimit = IRapiClientBase::REQ_VAL_SEARCH_LIMIT_MIN): void
+    public function searchPagesWithFilter(string $filterTerm, string $spaceKey, int $searchLimit = IRapiClientBase::REQ_VAL_SEARCH_OVERALL_MIN): void
     {
         $this->output->out("\n+++ searchPagesWithFilter($filterTerm,$spaceKey,$searchLimit)");
         $this->initCounter();

@@ -80,10 +80,10 @@ class CountMacrosExample extends AbstractRestApiExample
 
         foreach ($anyData as $space) {
             $spaceKey = $space->getStatisticName();
-            $fileExtension = "$spaceKey-" . $mode->value;
-            $this->logger->notice("Write Data for space to file with extension", [$spaceKey, $fileExtension]);
+            $fileSuffix = "$spaceKey-" . $mode->value;
+            $this->logger->notice("Write Data for space to file with suffix", [$spaceKey, $fileSuffix]);
 
-            $this->storeAsCsv(null, $fileExtension, $space->flattenHeader());
+            $this->storeAsCsv(null, fileSuffix: $fileSuffix, dataHeader: $space->flattenHeader());
 
             foreach ($space->keys() as $addonName) {
                 /** @var IStatistic $addon */
@@ -94,7 +94,7 @@ class CountMacrosExample extends AbstractRestApiExample
                     $count = str_replace(['{', '}', 'count,'], '', $macro->flatten(false));
                     $count = empty($count) ? '0' : $count;
                     $csvLine = [$spaceKey, $addonName, $macroName, $count];
-                    $this->storeAsCsv($csvLine, $fileExtension);
+                    $this->storeAsCsv($csvLine, fileSuffix: $fileSuffix);
                 }
             }
         }

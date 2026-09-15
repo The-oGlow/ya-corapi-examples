@@ -55,7 +55,7 @@ class CreateOrUpdatePageExample extends AbstractRestApiExample
 
         if (IRapiClientBase::RESP_VAL_PAGE_ID_NO !== $parentPageId) {
             $result = $this->apiClient->createOrUpdatePage($spaceKey, $pageTitle, $newPageBody, $parentPageId);
-            $this->storeOrg($result->getBody(), $pageTitle);
+            $this->storeOrg($result->getBody(), fileSuffix: $pageTitle);
 
             if ($result->checkStatus()) {
                 $pageId = intval($result->getValue(ResponseParameter::KEY_ID));
@@ -63,7 +63,7 @@ class CreateOrUpdatePageExample extends AbstractRestApiExample
             }
 
             $result = $this->apiClient->createOrUpdatePage($spaceKey, $pageTitle, $updatePageBody, $parentPageId);
-            $this->storeMod($result->getBody(), $pageTitle);
+            $this->storeMod($result->getBody(), fileSuffix: $pageTitle);
 
             if ($result->checkStatus()) {
                 $pageId = intval($result->getValue(ResponseParameter::KEY_ID));

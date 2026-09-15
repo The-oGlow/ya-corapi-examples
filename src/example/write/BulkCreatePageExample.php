@@ -169,10 +169,10 @@ class BulkCreatePageExample extends AbstractRestApiExample
             foreach ($dataItems as $dataItem) {
                 ++$idxCount;
                 [$dataItemTitle, $dataItemBody] = $this->prepareDataLevelTwo($dataItem);
-                $this->storeOrg($dataItemBody, $dataItemTitle);
+                $this->storeOrg($dataItemBody, fileSuffix: $dataItemTitle);
 
                 $result = $this->apiClient->createOrUpdatePage($spaceKey, $dataItemTitle, $dataItemBody, $parentPageId);
-                $this->storeMod($result->getBody(), $dataItemTitle);
+                $this->storeMod($result->getBody(), fileSuffix: $dataItemTitle);
 
                 if ($result->checkStatus()) {
                     $dataItemPageId = intval($result->getValue(ResponseParameter::KEY_ID));

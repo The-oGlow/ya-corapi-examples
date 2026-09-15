@@ -122,11 +122,12 @@ class AbstractExample
      * Stores everything you give into a file at stage {@link FileStoreStageEnum::ORIGINAL}.
      *
      * @param mixed  $anyData       Everything you want to store
+     * @param string $fileSuffix Suffix of the output file (Default: {@link StoreParameter:DEFAULT_FILE_SUFFIX})
      * @param string $fileExtension The file extension for the output file (Default: {@link StoreParameter::C_FILE_EXT_TEXT})
      */
-    protected function storeOrg(mixed $anyData, string $fileExtension = StoreParameter::C_FILE_EXT_TEXT): void
+    protected function storeOrg(mixed $anyData, string $fileSuffix= StoreParameter::DEFAULT_FILE_SUFFIX,  string $fileExtension = StoreParameter::C_FILE_EXT_TEXT): void
     {
-        $fileAdapter = new FileAdapter($this->outputFileName, $fileExtension, staging: FileStoreStageEnum::ORIGINAL);
+        $fileAdapter = new FileAdapter($this->outputFileName, fileSuffix:  $fileSuffix, fileExt: $fileExtension, staging: FileStoreStageEnum::ORIGINAL);
         $fileAdapter->storeData($anyData);
     }
 
@@ -134,11 +135,12 @@ class AbstractExample
      * Stores everything you give into a file at stage {@link FileStoreStageEnum::MODIFIED}.
      *
      * @param mixed  $anyData       Everything you want to store
+     * @param string $fileSuffix Suffix of the output file (Default: {@link StoreParameter:DEFAULT_FILE_SUFFIX})
      * @param string $fileExtension The file extension for the output file (Default: {@link StoreParameter::C_FILE_EXT_TEXT})
      */
-    protected function storeMod(mixed $anyData, string $fileExtension = StoreParameter::C_FILE_EXT_TEXT): void
+    protected function storeMod(mixed $anyData, string $fileSuffix = StoreParameter::DEFAULT_FILE_SUFFIX, string $fileExtension = StoreParameter::C_FILE_EXT_TEXT): void 
     {
-        $fileAdapter = new FileAdapter($this->outputFileName, $fileExtension, staging: FileStoreStageEnum::MODIFIED);
+        $fileAdapter = new FileAdapter($this->outputFileName, fileSuffix: $fileSuffix, fileExt: $fileExtension, staging: FileStoreStageEnum::MODIFIED);
         $fileAdapter->storeData($anyData);
     }
 
@@ -146,11 +148,12 @@ class AbstractExample
      * Stores everything you give into a file as a dump.
      *
      * @param mixed  $anyData       Everything you want to store
+     * @param string $fileSuffix Suffix of the output file (Default: {@link StoreParameter:DEFAULT_FILE_SUFFIX})
      * @param string $fileExtension The file extension for the output file (Default: {@link StoreParameter::C_FILE_EXT_TEXT})
      */
-    protected function storeAsDump(mixed $anyData, string $fileExtension = StoreParameter::C_FILE_EXT_TEXT): void
+    protected function storeAsDump(mixed $anyData, string $fileSuffix = StoreParameter::DEFAULT_FILE_SUFFIX, string $fileExtension = StoreParameter::C_FILE_EXT_TEXT): void 
     {
-        $fileAdapter = new FileAdapter($this->outputFileName, $fileExtension);
+        $fileAdapter = new FileAdapter($this->outputFileName, fileSuffix: $fileSuffix, fileExt: $fileExtension);
         $fileAdapter->storeData(print_r($anyData, true));
     }
 
@@ -158,12 +161,13 @@ class AbstractExample
      * Stores everything you give into a file with csv format.
      *
      * @param mixed                     $anyData       Everything you want to store
+     * @param string $fileSuffix Suffix of the output file (Default: {@link StoreParameter:DEFAULT_FILE_SUFFIX})
      * @param string                    $fileExtension The file extension for the output file (Default: {@link StoreParameter::C_FILE_EXT_CSV})
      * @param array<mixed,mixed>|string $dataHeader    A header, which will be set at the top of the file (Default: [])
      */
-    protected function storeAsCsv(mixed $anyData, string $fileExtension = StoreParameter::C_FILE_EXT_CSV, string|array $dataHeader = []): void
+    protected function storeAsCsv(mixed $anyData, string $fileSuffix = StoreParameter::DEFAULT_FILE_SUFFIX, string $fileExtension = StoreParameter::C_FILE_EXT_CSV, string|array $dataHeader = []): void
     {
-        $csvAdapter = new CsvFileAdapter($this->outputFileName, $fileExtension);
+        $csvAdapter = new CsvFileAdapter($this->outputFileName, fileSuffix: $fileSuffix, fileExt: $fileExtension);
         $csvAdapter->storeDataHeader($dataHeader);
         $csvAdapter->storeData($anyData);
     }

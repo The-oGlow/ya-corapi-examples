@@ -18,6 +18,7 @@ use oglow\example\AbstractRestApiExample;
 use oglow\tools\Yacorapi\ConstData;
 use oglow\tools\Yacorapi\Response\ResponseParameter;
 use Psr\Log\LoggerInterface;
+use oglow\tools\Yacorapi\Client\IRapiClientBase;
 
 require_once __DIR__ . '/../../bootstrap.php'; // NOSONAR: php:S4833
 
@@ -43,8 +44,8 @@ class FixEmptyPageExample extends AbstractRestApiExample
     {
         $this->constData = new ConstData(get_class($this));
 
-        $start      = ConstData::PAGE_START;
-        $pageLimit  = ConstData::PAGE_LIMIT;
+        $start      = IRapiClientBase::REQ_VAL_SEARCH_START;
+        $pageLimit  = IRapiClientBase::REQ_VAL_SEARCH_LIMIT_END;
         $filterTerm = 'type:page AND -macroName:projectdoc-properties-marker';
 
         $idxLoop = 0;
@@ -79,8 +80,8 @@ class FixEmptyPageExample extends AbstractRestApiExample
                 $bLoop = false;
                 break;
             }
-            if ($idxLoop > ConstData::PAGE_MAX_RESULTS) {
-                $this->logger->notice("After at least results, I stop.", [ConstData::PAGE_MAX_RESULTS]);
+            if ($idxLoop > IRapiClientBase::REQ_VAL_SEARCH_LIMIT_END) {
+                $this->logger->notice("After at least results, I stop.", [IRapiClientBase::REQ_VAL_SEARCH_LIMIT_END]);
                 $bLoop = false;
                 break;
             }

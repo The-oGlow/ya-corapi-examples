@@ -68,7 +68,7 @@ class DoctypeOverviewExample extends AbstractRestApiExample
         $this->logger->debug("START");
         $start      = 0;
         $limit      = 50;
-        $maxCount   = 6; // PAGE_MAX_RESULTS * 0.1;
+        $maxCount   = 6; // VAL_SEARCH_OVERALL_MAX * 0.1;
         $filterTerm = "type:page AND macroName:projectdoc-properties-marker";
 
         $doctypes[$spaceKey]    = [];

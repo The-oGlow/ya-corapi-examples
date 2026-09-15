@@ -41,7 +41,7 @@ class ReadPageByExample extends AbstractRestApiExample
         $response = $this->apiClient->readPageByPageId($pageId);
         if ($response->checkStatus()) {
             $this->outputData($response);
-            $this->storeAsDump($response);
+            $this->storeAsDump($response, fileSuffix: "$pageId");
         } else {
             $this->logger->error('Nothing found', [$response->getError()]);
         }
@@ -54,7 +54,7 @@ class ReadPageByExample extends AbstractRestApiExample
         $response = $this->apiClient->readPagesByTitle($pageTitle);
         if ($response->checkStatus()) {
             $this->outputDatas($response);
-            $this->storeAsCsv($response);
+            $this->storeAsCsv($response, fileSuffix: substr( $pageTitle,0, 50));
         } else {
             $this->logger->error('Nothing found', [$response->getError()]);
         }

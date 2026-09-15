@@ -86,11 +86,11 @@ class CountPagesExample extends AbstractRestApiExample
     {
         $this->logger->debug("START", [$spaceKey]);
 
-        $fileExtension = $isSingleFile ? '' : $spaceKey;
-        $this->logger->notice("Write Data for space to file with extension", [$spaceKey, $fileExtension]);
+        $fileSuffix = $isSingleFile ? '' : $spaceKey;
+        $this->logger->notice("Write Data for space to file with suffix", [$spaceKey, $fileSuffix]);
 
         if (($isSingleFile && !$this->headerWritten) || !$isSingleFile) {
-            $this->storeAsCsv(null, $fileExtension, $spaceStatistic->flattenHeader());
+            $this->storeAsCsv(null, fileSuffix: $fileSuffix, dataHeader: $spaceStatistic->flattenHeader());
             $this->headerWritten = true;
         }
 
@@ -101,7 +101,7 @@ class CountPagesExample extends AbstractRestApiExample
             $count = str_replace(['{', '}','count,'], '', $itemValue->flatten(false));
             $count = empty($count) ? '0' : $count;
             $entry = [$spaceKey, $itemName, $count];
-            $this->storeAsCsv($entry, $fileExtension);
+            $this->storeAsCsv($entry, fileSuffix: $fileSuffix);
         }
 
         $this->logger->debug("END", [$spaceKey]);

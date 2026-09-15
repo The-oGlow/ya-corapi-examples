@@ -49,7 +49,7 @@ class SearchSpacesExample extends AbstractRestApiExample
 
         if (!empty($spaces)) {
             $header = array_keys($spaces[array_key_first($spaces)]);
-            $this->storeAsCsv($spaces, SpaceTypeEnum::SPACE_TYPE_GLOBAL->value, $header);
+            $this->storeAsCsv($spaces, fileSuffix: SpaceTypeEnum::SPACE_TYPE_GLOBAL->value, dataHeader: $header);
         };
 
         $this->prepareMySpaces($spaces);
@@ -69,7 +69,7 @@ class SearchSpacesExample extends AbstractRestApiExample
 
         if (!empty($spaces)) {
             $header = array_keys($spaces[array_key_first($spaces)]);
-            $this->storeAsCsv($response->getSpaces(), SpaceTypeEnum::SPACE_TYPE_PERSONAL->value, $header);
+            $this->storeAsCsv($response->getSpaces(), fileSuffix: SpaceTypeEnum::SPACE_TYPE_PERSONAL->value, dataHeader: $header);
         }
         $this->logger->debug('END');
     }
