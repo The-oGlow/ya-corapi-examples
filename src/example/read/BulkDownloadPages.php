@@ -18,10 +18,12 @@
 
 namespace oglow\example\read;
 
+use Ds\Vector;
 use oglow\example\AbstractRestApiExample;
 use oglow\tools\Yacorapi\IResponse;
 use oglow\tools\Yacorapi\Response\Response;
 use oglow\tools\Yacorapi\Response\ResponseParameter as RP;
+use oglow\tools\Yacorapi\Store\CsvFileAdapter;
 use oglow\tools\Yacorapi\Store\StoreParameter;
 use Psr\Log\LoggerInterface;
 use Monolog\ConsoleLogger;
@@ -54,7 +56,7 @@ class BulkDownloadPages extends AbstractRestApiExample {
         $response = $this->prepareResults($spaceKey, $searchTerm);
 
         if ($response->checkStatus()) {
-            if ($response->isResultsAvailable()) {
+            if ($response->hasResults()) {
                 $maxResults = $response->getResultsCount();
                 $currIdx = 0;
                 foreach ($response->getResults() as $currentResult) {
@@ -91,21 +93,24 @@ class BulkDownloadPages extends AbstractRestApiExample {
             $bodyResponse = $this->apiClient->readPageByPageId($currentResult->getItemId());
             if ($bodyResponse->checkStatus()) {
                 $infoLine = sprintf(
-                        "%03d-%s-%s-%s-%s",
+                        "%03d-%s-%s-%s-%s, Body size: %d",
                         $currIdx,
                         $bodyResponse->getItemId(),
                         $bodyResponse->getValue(RP::KEY_SPACE, ['key' => 'no key'])[RP::KEY_KEY],
                         $bodyResponse->getValue(RP::KEY_TITLE, 'no title'),
-                        $bodyResponse->getValue(RP::KEY_TYPE, 'unknown')
+                        $bodyResponse->getValue(RP::KEY_TYPE, 'unknown'),
+                        strlen($bodyResponse->getBody())
                 );
-                $this->logger->info($infoLine,[strlen($bodyResponse->getBody())]);
-                $fileSuffix = sprintf(
+                $this->logger->info($infoLine);
+                $exportColumns = new Vector(RP::EXPORT_PAGE_FULL);
+                        $fileSuffix = sprintf(
                         '%03d-%s-%s', 
                         $currIdx, 
                         $bodyResponse->getItemId(), 
                         str_replace(StoreParameter::C_ILLEGAL_FILE_CHARS,'_', substr($bodyResponse->getValue(RP::KEY_TITLE), 0, 50)));
-                $fileExtension = 'xml';
-                $this->storeAsDump($bodyResponse->getBody(), fileSuffix: $fileSuffix,fileExtension: $fileExtension);
+                $header = CsvFileAdapter::prepareExportLine($bodyResponse,exportColumns: $exportColumns, header:true);
+                $line = CsvFileAdapter::prepareExportLine($bodyResponse, exportColumns: $exportColumns);
+                $this->storeAsCsv(anyData: $line, dataHeader: $header, fileSuffix: $fileSuffix);
             }
         } else {
             $this->logger->info("Nothing dumped");
