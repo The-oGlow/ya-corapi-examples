@@ -163,7 +163,7 @@ class AbstractExample
      * @param mixed                     $anyData       Everything you want to store
      * @param string $fileSuffix Suffix of the output file (Default: {@link StoreParameter:DEFAULT_FILE_SUFFIX})
      * @param string                    $fileExtension The file extension for the output file (Default: {@link StoreParameter::C_FILE_EXT_CSV})
-     * @param array<mixed,mixed>|string $dataHeader    A header, which will be set at the top of the file (Default: [])
+     * @param array<mixed>|string $dataHeader    A header, which will be set at the top of the file (Default: [])
      */
     protected function storeAsCsv(mixed $anyData, string $fileSuffix = StoreParameter::DEFAULT_FILE_SUFFIX, string $fileExtension = StoreParameter::C_FILE_EXT_CSV, string|array $dataHeader = []): void
     {

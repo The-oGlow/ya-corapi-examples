@@ -75,7 +75,7 @@ class SearchSpacesExample extends AbstractRestApiExample
     }
 
     /**
-     * @param array<mixed,mixed> $spaces
+     * @param array<mixed> $spaces
      */
     public function prepareMySpaces(array $spaces): void
     {

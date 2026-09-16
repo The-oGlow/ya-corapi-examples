@@ -206,7 +206,7 @@ class BulkCreatePageExample extends AbstractRestApiExample
      *
      * @param string $dataName An item containing the data for the page
      *
-     * @return array<mixed,mixed> The "level one" page title (itemName) and body (itemValue)
+     * @return array<mixed> The "level one" page title (itemName) and body (itemValue)
      */
     protected function prepareDataLevelOne(string $dataName): array
     {
@@ -221,7 +221,7 @@ class BulkCreatePageExample extends AbstractRestApiExample
      *
      * @param string $dataItem An item containing the data for the page
      *
-     * @return array<mixed,mixed> The "level two" page title (itemName) and body (itemValue)
+     * @return array<mixed> The "level two" page title (itemName) and body (itemValue)
      */
     protected function prepareDataLevelTwo(string $dataItem): array
     {
@@ -236,7 +236,7 @@ class BulkCreatePageExample extends AbstractRestApiExample
      *
      * @param string $dataItem An item containing the data for the page
      *
-     * @return array<mixed,mixed> The "level three" body (itemValue)
+     * @return array<mixed> The "level three" body (itemValue)
      */
     protected function prepareDataLevelThree(string $dataItem): array
     {
