@@ -42,7 +42,7 @@ class FixEmptyPageExample extends AbstractRestApiExample
 
     public function scanPagesInSpace(string $spaceKey): void
     {
-        $this->constData = new ConstData(get_class($this));
+        $this->constData = ConstData::i();
 
         $start      = IRapiClientBase::REQ_VAL_SEARCH_START;
         $pageLimit  = IRapiClientBase::REQ_VAL_SEARCH_LIMIT_END;

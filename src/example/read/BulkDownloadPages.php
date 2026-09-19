@@ -36,7 +36,7 @@ require_once __DIR__ . '/../../bootstrap.php'; // NOSONAR: php:S4833
  *
  * @author ollily
  */
-class BulkDownloadPages extends AbstractRestApiExample {
+class BulkDownloadPages extends BulkCreateDownloadList {
 
     private LoggerInterface $logger;
 
@@ -50,16 +50,16 @@ class BulkDownloadPages extends AbstractRestApiExample {
         $this->logger->debug('END');
     }
 
-    public function bulkDownload(string $spaceKey, string $searchTerm): void {
+    public function bulkDownloadPages(string $fileName): void {
 
 
-        $response = $this->prepareResults($spaceKey, $searchTerm);
+        $results = CsvFileAdapter::readResultFile($fileName);
 
-        if ($response->checkStatus()) {
-            if ($response->hasResults()) {
-                $maxResults = $response->getResultsCount();
+        if (is_array($results)) {
+            if (count($results)>0) {
+                $maxResults = count($results);
                 $currIdx = 0;
-                foreach ($response->getResults() as $currentResult) {
+                foreach ($results as $currentResult) {
                     $this->logger->info('Result of All',[++$currIdx, $maxResults]);
                     if (array_key_exists('content', $currentResult)) {
                         $this->exportItem($currentResult['content'], $currIdx);
@@ -73,10 +73,6 @@ class BulkDownloadPages extends AbstractRestApiExample {
         } else {
             $this->logger->warning("Response is invalud");
         }
-    }
-
-    public function prepareResults(string $spaceKey, string $searchTerm, int $startPos = IRapiClientBase::REQ_VAL_SEARCH_START): IResponse {
-        return $this->apiClient->searchPagesWithFilter($searchTerm, $spaceKey, $startPos);
     }
 
     /**
@@ -118,7 +114,7 @@ class BulkDownloadPages extends AbstractRestApiExample {
     }
 }
 
-function main():void {
+function main2():void {
 
     /** Space */
     $spaceKey = 'CMMN';
@@ -127,7 +123,10 @@ function main():void {
     $searchTerm = 'REST';
 
     $thisClazz = new BulkDownloadPages();
-    $thisClazz->bulkDownload($spaceKey, $searchTerm);
+
+    $fileName = $thisClazz->bulkCreateDownloadList($spaceKey, $searchTerm);    
+    $thisClazz->bulkDownloadPages($fileName);
+    
 }
 
-main();
+main2();
