@@ -1,46 +1,40 @@
 <?php
 
+declare(strict_types=1);
+
 /*
- * Copyright 2026 GLO03.
+ * This file is part of yacorapi-examles
  *
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
+ * (c) 2024 Oliver Glowa, coding.glowa.com
  *
- *      http://www.apache.org/licenses/LICENSE-2.0
- *
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
+ * This source file is subject to the Apache-2.0 license that is bundled
+ * with this source code in the file LICENSE.
  */
 
 namespace oglow\example\read;
 
 use Ds\Vector;
-use oglow\example\AbstractRestApiExample;
+use Monolog\ConsoleLogger;
 use oglow\tools\Yacorapi\IResponse;
 use oglow\tools\Yacorapi\Response\Response;
 use oglow\tools\Yacorapi\Response\ResponseParameter as RP;
 use oglow\tools\Yacorapi\Store\CsvFileAdapter;
 use oglow\tools\Yacorapi\Store\StoreParameter;
 use Psr\Log\LoggerInterface;
-use Monolog\ConsoleLogger;
-use oglow\tools\Yacorapi\Client\IRapiClientBase;
 
 require_once __DIR__ . '/../../bootstrap.php'; // NOSONAR: php:S4833
 
 /**
- * Description of BulkDownloadPages
+ * Description of BulkDownloadPages.
  *
  * @author ollily
  */
-class BulkDownloadPages extends BulkCreateDownloadList {
-
+class BulkDownloadPages extends BulkCreateDownloadList
+{
     private LoggerInterface $logger;
 
-    public function __construct(string $outputFileName = '') {
+    public function __construct(string $outputFileName = '')
+    {
         $this->logger = new ConsoleLogger(get_class($this));
 
         $this->logger->debug('START');
@@ -50,37 +44,32 @@ class BulkDownloadPages extends BulkCreateDownloadList {
         $this->logger->debug('END');
     }
 
-    public function bulkDownloadPages(string $fileName): void {
-
-
+    public function bulkDownloadPages(string $fileName): void
+    {
         $results = CsvFileAdapter::readResultFile($fileName);
 
-        if (is_array($results)) {
-            if (count($results)>0) {
-                $maxResults = count($results);
-                $currIdx = 0;
-                foreach ($results as $currentResult) {
-                    $this->logger->info('Result of All',[++$currIdx, $maxResults]);
-                    if (array_key_exists('content', $currentResult)) {
-                        $this->exportItem($currentResult['content'], $currIdx);
-                    } else {
-                        $this->exportItem($currentResult, $currIdx);
-                    }
+        if (count($results) > 0) {
+            $maxResults = count($results);
+            $currIdx = 0;
+            foreach ($results as $currentResult) {
+                $this->logger->info('Result of All', [++$currIdx, $maxResults]);
+                if (array_key_exists('content', $currentResult)) {
+                    $this->exportItem($currentResult['content'], $currIdx);
+                } else {
+                    $this->exportItem($currentResult, $currIdx);
                 }
-            } else {
-                $this->logger->info("Nothing found");
             }
         } else {
-            $this->logger->warning("Response is invalud");
+            $this->logger->info("Nothing found");
         }
     }
 
     /**
-     * 
      * @param mixed $currentResult
-     * @param int $currIdx
+     * @param int   $currIdx
      */
-    public function exportItem(mixed $currentResult, int $currIdx): void {
+    public function exportItem(mixed $currentResult, int $currIdx): void
+    {
         if (is_array($currentResult)) {
             $currentResult = new Response($currentResult);
         }
@@ -89,22 +78,23 @@ class BulkDownloadPages extends BulkCreateDownloadList {
             $bodyResponse = $this->apiClient->readPageByPageId($currentResult->getItemId());
             if ($bodyResponse->checkStatus()) {
                 $infoLine = sprintf(
-                        "%03d-%s-%s-%s-%s, Body size: %d",
-                        $currIdx,
-                        $bodyResponse->getItemId(),
-                        $bodyResponse->getValue(RP::KEY_SPACE, ['key' => 'no key'])[RP::KEY_KEY],
-                        $bodyResponse->getValue(RP::KEY_TITLE, 'no title'),
-                        $bodyResponse->getValue(RP::KEY_TYPE, 'unknown'),
-                        strlen($bodyResponse->getBody())
+                    "%03d-%s-%s-%s-%s, Body size: %d",
+                    $currIdx,
+                    $bodyResponse->getItemId(),
+                    $bodyResponse->getValue(RP::KEY_SPACE, ['key' => 'no key'])[RP::KEY_KEY],
+                    $bodyResponse->getValue(RP::KEY_TITLE, 'no title'),
+                    $bodyResponse->getValue(RP::KEY_TYPE, 'unknown'),
+                    strlen($bodyResponse->getBody())
                 );
                 $this->logger->info($infoLine);
                 $exportColumns = new Vector(RP::EXPORT_PAGE_FULL);
-                        $fileSuffix = sprintf(
-                        '%03d-%s-%s', 
-                        $currIdx, 
-                        $bodyResponse->getItemId(), 
-                        str_replace(StoreParameter::C_ILLEGAL_FILE_CHARS,'_', substr($bodyResponse->getValue(RP::KEY_TITLE), 0, 50)));
-                $header = CsvFileAdapter::prepareExportLine($bodyResponse,exportColumns: $exportColumns, header:true);
+                $fileSuffix = sprintf(
+                    '%03d-%s-%s',
+                    $currIdx,
+                    $bodyResponse->getItemId(),
+                    str_replace(StoreParameter::C_ILLEGAL_FILE_CHARS, '_', substr($bodyResponse->getValue(RP::KEY_TITLE), 0, 50))
+                );
+                $header = CsvFileAdapter::prepareExportLine($bodyResponse, exportColumns: $exportColumns, header:true);
                 $line = CsvFileAdapter::prepareExportLine($bodyResponse, exportColumns: $exportColumns);
                 $this->storeAsCsv(anyData: $line, dataHeader: $header, fileSuffix: $fileSuffix);
             }
@@ -114,8 +104,8 @@ class BulkDownloadPages extends BulkCreateDownloadList {
     }
 }
 
-function main2():void {
-
+function main2(): void
+{
     /** Space */
     $spaceKey = 'CMMN';
 
@@ -124,9 +114,8 @@ function main2():void {
 
     $thisClazz = new BulkDownloadPages();
 
-    $fileName = $thisClazz->bulkCreateDownloadList($spaceKey, $searchTerm);    
+    $fileName = $thisClazz->bulkCreateDownloadList($spaceKey, $searchTerm);
     $thisClazz->bulkDownloadPages($fileName);
-    
 }
 
 main2();

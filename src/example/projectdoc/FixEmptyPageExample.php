@@ -15,18 +15,16 @@ namespace oglowa\example\projectdoc;
 
 use Monolog\ConsoleLogger;
 use oglow\example\AbstractRestApiExample;
+use oglow\tools\Yacorapi\Client\IRapiClientBase;
 use oglow\tools\Yacorapi\ConstData;
 use oglow\tools\Yacorapi\Response\ResponseParameter;
 use Psr\Log\LoggerInterface;
-use oglow\tools\Yacorapi\Client\IRapiClientBase;
 
 require_once __DIR__ . '/../../bootstrap.php'; // NOSONAR: php:S4833
 
 class FixEmptyPageExample extends AbstractRestApiExample
 {
     public const int BODYSIZE_MIN = 10;
-
-    private ConstData $constData;
 
     private LoggerInterface $logger;
 
@@ -42,8 +40,6 @@ class FixEmptyPageExample extends AbstractRestApiExample
 
     public function scanPagesInSpace(string $spaceKey): void
     {
-        $this->constData = ConstData::i();
-
         $start      = IRapiClientBase::REQ_VAL_SEARCH_START;
         $pageLimit  = IRapiClientBase::REQ_VAL_SEARCH_LIMIT_END;
         $filterTerm = 'type:page AND -macroName:projectdoc-properties-marker';
@@ -68,7 +64,7 @@ class FixEmptyPageExample extends AbstractRestApiExample
                             $resultValue[ResponseParameter::KEY_TYPE],
                             $resultValue[ResponseParameter::KEY_TITLE],
                             $bodySize,
-                            $this->constData->c(ConstData::KEY_WEB_SHOW_PAGEID) . $resultValue['id'],
+                            ConstData::i()->c(ConstData::KEY_WEB_SHOW_PAGEID) . $resultValue['id'],
                         ];
                         $this->logger->debug("$idxLoop.", [$line]);
                         $this->storeAsCsv($line);

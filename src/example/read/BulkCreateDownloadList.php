@@ -1,32 +1,27 @@
 <?php
 
+declare(strict_types=1);
+
 /*
- * Copyright 2026 GLO03.
+ * This file is part of yacorapi-examles
  *
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
+ * (c) 2024 Oliver Glowa, coding.glowa.com
  *
- *      http://www.apache.org/licenses/LICENSE-2.0
- *
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
+ * This source file is subject to the Apache-2.0 license that is bundled
+ * with this source code in the file LICENSE.
  */
 
 namespace oglow\example\read;
 
 use Ds\Vector;
+use Monolog\ConsoleLogger;
 use oglow\example\AbstractRestApiExample;
+use oglow\tools\Yacorapi\Client\IRapiClientBase;
 use oglow\tools\Yacorapi\IResponse;
 use oglow\tools\Yacorapi\Response\Response;
 use oglow\tools\Yacorapi\Response\ResponseParameter as RP;
 use oglow\tools\Yacorapi\Store\CsvFileAdapter;
 use Psr\Log\LoggerInterface;
-use Monolog\ConsoleLogger;
-use oglow\tools\Yacorapi\Client\IRapiClientBase;
 
 require_once __DIR__ . '/../../bootstrap.php'; // NOSONAR: php:S4833
 
@@ -37,7 +32,6 @@ require_once __DIR__ . '/../../bootstrap.php'; // NOSONAR: php:S4833
  */
 class BulkCreateDownloadList extends AbstractRestApiExample
 {
-
     private LoggerInterface $logger;
 
     public function __construct(string $outputFileName = '')
@@ -76,7 +70,8 @@ class BulkCreateDownloadList extends AbstractRestApiExample
         } else {
             $this->logger->warning("Response is invalud");
         }
-        $this->logger->info("Written to",[$downloadList]);
+        $this->logger->info("Written to", [$downloadList]);
+
         return $downloadList;
     }
 

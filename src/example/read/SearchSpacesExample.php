@@ -85,7 +85,7 @@ class SearchSpacesExample extends AbstractRestApiExample
         $fileName = SpaceData::prepareMySpacesFileName();
 
         $storeAdapter = new FileAdapter(pathinfo($fileName, PATHINFO_FILENAME), pathinfo($fileName, PATHINFO_EXTENSION));
-        $this->logger->info('Writing file', [$storeAdapter->getStoreItem()]);
+        $this->logger->info('Writing file', [$storeAdapter->getFileName()]);
         $storeAdapter->storeData($fileContent);
 
         $this->logger->debug('END');
