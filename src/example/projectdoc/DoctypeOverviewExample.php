@@ -151,7 +151,7 @@ class DoctypeOverviewExample extends AbstractRestApiExample
         $this->logger->debug("START");
 
         $format = "\"%s\";\"%s\";%s;%s";
-        $this->storeAsCsv(null, null, ['Space', 'Doctype', 'Size', 'Page ID']);
+        $this->storeAsCsv(null, dataHeader: ['Space', 'Doctype', 'Size', 'Page ID']);
         foreach ($docTypes as $space => $spaceDoctypes) {
             foreach ($spaceDoctypes as $doctype => $doctypeData) {
                 $allDoctypeData = array_unique(array_merge($doctypeData[self::IDX_STRICT], $doctypeData[self::IDX_LAZY]));

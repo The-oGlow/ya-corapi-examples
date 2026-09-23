@@ -25,6 +25,20 @@ use Psr\Log\LoggerInterface;
 
 require_once __DIR__ . '/../../bootstrap.php'; // NOSONAR: php:S4833
 
+/**
+ * This example demonstrates the bulk creation of pages.
+ * It includes this features
+ * <ul>
+ * <li>Customizable for any space</li>
+ * <li>Find the homepage of the space</li>
+ * <li>Creates a root page for the bulk inserts</li>
+ * <li>Creates "subroot" pages (level one)</li>
+ * <li>Creates all the pages, according to the assigned "subroot" page (level two)</li>
+ * <li>Creates customizable content for the page (level three)</li>
+ * </ul>
+ * This example creates a bunch of confluence extensions and the assigned macro.
+ * The structure of this class is easily changable for your needs.
+ */
 class BulkCreatePageExample extends AbstractRestApiExample
 {
     private LoggerInterface $logger;
@@ -210,7 +224,7 @@ class BulkCreatePageExample extends AbstractRestApiExample
      */
     protected function prepareDataLevelOne(string $dataName): array
     {
-        $dataNameTitle = $dataName;
+        $dataNameTitle = $dataName . ' Extension';
         $dataNameBody = ContentHelper::prepareHeading($dataName, 2) . $this->prepareToc(0);
 
         return [$dataNameTitle, $dataNameBody];

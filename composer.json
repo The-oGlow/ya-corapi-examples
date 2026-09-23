@@ -27,20 +27,43 @@
         "wiki": "https://github.com/The-oGlow/yacorapi-examples/wiki",
         "source": "https://github.com/The-oGlow-examples/yacorapi"
     },
-    "minimum-stability": "stable",
+    "minimum-stability": "dev",
     "prefer-stable": true,
     "repositories": [
         {
-            "type": "vcs",
-            "url": "https://github.com/The-oGlow/yacorapi.git"
-        }
-    ],    
+            "type": "path",
+            "url": "../yacorapi",
+            "options": {
+                "versions": {
+                    "ollily/ezkoding": "8.999.999"
+                }
+            }
+        },
+        {
+            "type": "path",
+            "url": "../ezkoding/target/staging/ollily-ezkoding",
+            "options": {
+                "versions": {
+                    "ollily/ezkoding": "8.999.999"
+                }
+            }
+        },
+        {
+            "type": "path",
+            "url": "../ezlogging/target/staging/ollily-ezlogging",
+            "options": {
+                "versions": {
+                    "ollily/ezlogging": "8.999.999"
+                }
+            }
+        }        
+    ],
     "require": {
         "php": ">=8.4.1",
         "ext-curl": "*",
         "ext-json": "*",
         "ext-ds": "^1.0",
-        "php-ds/php-ds": "^1.0",
+        "ollily/ezkoding": "^8.4",
         "ollily/ezlogging": "^8.4",
         "oglow/yacorapi": "*"
     },
@@ -49,6 +72,7 @@
     "suggest": {
     },
     "require-dev": {
+        "php-ds/php-ds": "^1.0",
         "phpunit/phpunit": "^13.1",
         "phpstan/phpstan": "^2.1",
         "phpstan/phpstan-strict-rules": "^2.0",
