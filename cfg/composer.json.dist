@@ -73,11 +73,14 @@
                 "block": true,
                 "block-scope": "all",
                 "audit": "fail"
-        }
+            }
         }                        
     },
     "archive": {
-        "exclude": ["/target", "/nbproject/private"]
+        "exclude": [
+            "/target",
+            "/nbproject/private"
+        ]
     },
     "autoload": {
         "psr-4": {
@@ -160,4 +163,5 @@
             }
         }
     ]
+    #ph#
 }
