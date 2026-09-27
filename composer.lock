@@ -80,16 +80,16 @@
         },
         {
             "name": "composer/class-map-generator",
-            "version": "1.7.3",
+            "version": "1.8.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/composer/class-map-generator.git",
-                "reference": "86d8208fc3c649a3a999daf1a63c25201be2990f"
+                "reference": "c0efbeb2f3fd7e23c7f180a59765c0b48a31fbc4"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/composer/class-map-generator/zipball/86d8208fc3c649a3a999daf1a63c25201be2990f",
-                "reference": "86d8208fc3c649a3a999daf1a63c25201be2990f",
+                "url": "https://api.github.com/repos/composer/class-map-generator/zipball/c0efbeb2f3fd7e23c7f180a59765c0b48a31fbc4",
+                "reference": "c0efbeb2f3fd7e23c7f180a59765c0b48a31fbc4",
                 "shasum": ""
             },
             "require": {
@@ -133,7 +133,7 @@
             ],
             "support": {
                 "issues": "https://github.com/composer/class-map-generator/issues",
-                "source": "https://github.com/composer/class-map-generator/tree/1.7.3"
+                "source": "https://github.com/composer/class-map-generator/tree/1.8.0"
             },
             "funding": [
                 {
@@ -145,7 +145,7 @@
                     "type": "github"
                 }
             ],
-            "time": "2026-05-05T09:17:07+00:00"
+            "time": "2026-09-25T15:24:19+00:00"
         },
         {
             "name": "composer/composer",
@@ -405,16 +405,16 @@
         },
         {
             "name": "composer/semver",
-            "version": "3.4.4",
+            "version": "3.5.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/composer/semver.git",
-                "reference": "198166618906cb2de69b95d7d47e5fa8aa1b2b95"
+                "reference": "f7a296f4c4cf8cb8bb83e35d6951a406bb11afa5"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/composer/semver/zipball/198166618906cb2de69b95d7d47e5fa8aa1b2b95",
-                "reference": "198166618906cb2de69b95d7d47e5fa8aa1b2b95",
+                "url": "https://api.github.com/repos/composer/semver/zipball/f7a296f4c4cf8cb8bb83e35d6951a406bb11afa5",
+                "reference": "f7a296f4c4cf8cb8bb83e35d6951a406bb11afa5",
                 "shasum": ""
             },
             "require": {
@@ -456,7 +456,7 @@
                     "homepage": "http://robbast.nl"
                 }
             ],
-            "description": "Semver library that offers utilities, version constraint parsing and validation.",
+            "description": "Version comparison library that offers utilities, version constraint parsing and validation.",
             "keywords": [
                 "semantic",
                 "semver",
@@ -466,7 +466,7 @@
             "support": {
                 "irc": "ircs://irc.libera.chat:6697/composer",
                 "issues": "https://github.com/composer/semver/issues",
-                "source": "https://github.com/composer/semver/tree/3.4.4"
+                "source": "https://github.com/composer/semver/tree/3.5.0"
             },
             "funding": [
                 {
@@ -478,7 +478,7 @@
                     "type": "github"
                 }
             ],
-            "time": "2025-08-20T19:15:30+00:00"
+            "time": "2026-09-24T14:38:51+00:00"
         },
         {
             "name": "composer/spdx-licenses",
@@ -871,7 +871,7 @@
             "dist": {
                 "type": "path",
                 "url": "../yacorapi",
-                "reference": "d5e68116df622eead17b840cd6146f82745d112f"
+                "reference": "b72f2fff33c27c73e32d61589d8e43f304032ab3"
             },
             "require": {
                 "ext-curl": "*",
@@ -1044,80 +1044,7 @@
                     "ollily\\Common\\": "src/Common"
                 }
             },
-            "autoload-dev": {
-                "psr-4": {
-                    "Monolog\\": "tests/Monolog",
-                    "ollily\\Common\\": "tests/Common",
-                    "ollily\\Tools\\": "tests/Tools",
-                    "PHPUnit\\": "tests/PHPUnit"
-                }
-            },
-            "archive": {
-                "exclude": [
-                    "/target",
-                    "/nbproject/private"
-                ]
-            },
-            "scripts": {
-                "c-all": [
-                    "composer c-check",
-                    "composer c-test",
-                    "composer c-format"
-                ],
-                "c-check": [
-                    "composer c-phpstan",
-                    "composer c-psalm",
-                    "composer c-phpmd"
-                ],
-                "c-da": [
-                    "@composer dump-autoload"
-                ],
-                "c-dry-fix": [
-                    "@php vendor/bin/php-cs-fixer check --allow-unsupported-php-version=yes --allow-risky=yes --format txt"
-                ],
-                "c-fix": [
-                    "@php vendor/bin/php-cs-fixer fix --allow-unsupported-php-version=yes --allow-risky=yes"
-                ],
-                "c-format": [
-                    "composer c-fix",
-                    "composer c-phpcbf",
-                    "composer c-phpcs"
-                ],
-                "c-package": [
-                    "@composer archive --format=zip --dir=target/staging"
-                ],
-                "c-phpcs": [
-                    "@php bin/composer/phpcs.php"
-                ],
-                "c-phpcbf": [
-                    "@php bin/composer/phpbf.php"
-                ],
-                "c-phpdoc": [
-                    "phpDocumentor run"
-                ],
-                "c-phpmd": [
-                    "@php bin/composer/phpmd.php"
-                ],
-                "c-phpstan": [
-                    "@php vendor/bin/phpstan analyse"
-                ],
-                "c-psalm": [
-                    "@php vendor/bin/psalm --report=target/analysis/psalm/psalm-report.txt"
-                ],
-                "c-dry-psalter": [
-                    "@php vendor/bin/psalter --dry-run --issues=MissingReturnType,MissingClosureReturnType,MissingParamType,MissingPropertyType,PossiblyUndefinedVariable,PossiblyUndefinedGlobalVariable,ParamNameMismatch"
-                ],
-                "c-psalter": [
-                    "@php vendor/bin/psalter --issues=MissingReturnType,MissingClosureReturnType,MissingParamType,MissingPropertyType,PossiblyUndefinedVariable,PossiblyUndefinedGlobalVariable,ParamNameMismatch"
-                ],
-                "c-sonar": [
-                    "composer c-test",
-                    "@php -Dproject.settings=sonar-project.properties vendor/bin/sonar-scanner"
-                ],
-                "c-test": [
-                    "@php -d xdebug.mode=coverage vendor/bin/phpunit -c phpunit.xml.cov"
-                ]
-            },
+            "notification-url": "https://packagist.org/downloads/",
             "license": [
                 "Apache-2.0"
             ],
@@ -1182,77 +1109,7 @@
                     "Monolog\\": "src/Monolog"
                 }
             },
-            "autoload-dev": {
-                "psr-4": {
-                    "Monolog\\": "tests/Monolog"
-                }
-            },
-            "archive": {
-                "exclude": [
-                    "/target",
-                    "/nbproject/private"
-                ]
-            },
-            "scripts": {
-                "c-all": [
-                    "composer c-check",
-                    "composer c-test",
-                    "composer c-format"
-                ],
-                "c-check": [
-                    "composer c-phpstan",
-                    "composer c-psalm",
-                    "composer c-phpmd"
-                ],
-                "c-da": [
-                    "@composer dump-autoload"
-                ],
-                "c-dry-fix": [
-                    "@php vendor/bin/php-cs-fixer check --allow-unsupported-php-version=yes --allow-risky=yes --format txt"
-                ],
-                "c-fix": [
-                    "@php vendor/bin/php-cs-fixer fix --allow-unsupported-php-version=yes --allow-risky=yes"
-                ],
-                "c-format": [
-                    "composer c-fix",
-                    "composer c-phpcbf",
-                    "composer c-phpcs"
-                ],
-                "c-package": [
-                    "@composer archive --format=zip --dir=target/staging"
-                ],
-                "c-phpcs": [
-                    "@php bin/composer/phpcs.php"
-                ],
-                "c-phpcbf": [
-                    "@php bin/composer/phpbf.php"
-                ],
-                "c-phpdoc": [
-                    "phpDocumentor run"
-                ],
-                "c-phpmd": [
-                    "@php bin/composer/phpmd.php"
-                ],
-                "c-phpstan": [
-                    "@php vendor/bin/phpstan analyse"
-                ],
-                "c-psalm": [
-                    "@php vendor/bin/psalm --report=target/analysis/psalm/psalm-report.txt"
-                ],
-                "c-dry-psalter": [
-                    "@php vendor/bin/psalter --dry-run --issues=MissingReturnType,MissingClosureReturnType,MissingParamType,MissingPropertyType,PossiblyUndefinedVariable,PossiblyUndefinedGlobalVariable,ParamNameMismatch"
-                ],
-                "c-psalter": [
-                    "@php vendor/bin/psalter --issues=MissingReturnType,MissingClosureReturnType,MissingParamType,MissingPropertyType,PossiblyUndefinedVariable,PossiblyUndefinedGlobalVariable,ParamNameMismatch"
-                ],
-                "c-sonar": [
-                    "composer c-test",
-                    "@php -Dproject.settings=sonar-project.properties vendor/bin/sonar-scanner"
-                ],
-                "c-test": [
-                    "@php -d xdebug.mode=coverage vendor/bin/phpunit -c phpunit.xml.cov"
-                ]
-            },
+            "notification-url": "https://packagist.org/downloads/",
             "license": [
                 "Apache-2.0"
             ],
@@ -1277,6 +1134,61 @@
                 "source": "https://github.com/The-oGlow/ezlogging/tree/8.4.004"
             },
             "time": "2026-09-24T07:43:36+00:00"
+        },
+        {
+            "name": "php-ds/php-ds",
+            "version": "v1.8.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/php-ds/polyfill.git",
+                "reference": "2e1c133b99aaa1a5fa2318257a6e2501b9082b55"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/php-ds/polyfill/zipball/2e1c133b99aaa1a5fa2318257a6e2501b9082b55",
+                "reference": "2e1c133b99aaa1a5fa2318257a6e2501b9082b55",
+                "shasum": ""
+            },
+            "require": {
+                "php": ">=8.2"
+            },
+            "provide": {
+                "ext-ds": "1.5.0"
+            },
+            "require-dev": {
+                "php-ds/tests": "^1.8"
+            },
+            "suggest": {
+                "ext-ds": "to improve performance and reduce memory usage"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "Ds\\": "src"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Rudi Theunissen",
+                    "email": "rudolf.theunissen@gmail.com"
+                }
+            ],
+            "description": "Specialized data structures as alternatives to the PHP array",
+            "keywords": [
+                "data structures",
+                "ds",
+                "php",
+                "polyfill"
+            ],
+            "support": {
+                "issues": "https://github.com/php-ds/polyfill/issues",
+                "source": "https://github.com/php-ds/polyfill/tree/v1.8.0"
+            },
+            "time": "2026-04-10T23:35:50+00:00"
         },
         {
             "name": "psr/container",
@@ -2829,16 +2741,16 @@
         },
         {
             "name": "twig/twig",
-            "version": "v3.29.0",
+            "version": "v3.30.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/twigphp/Twig.git",
-                "reference": "45a3c6e9224c3377a39c7b150bb29d5d97d2c75d"
+                "reference": "8c737079b726af72ff8ef3c595be9f6a810ea1ef"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/twigphp/Twig/zipball/45a3c6e9224c3377a39c7b150bb29d5d97d2c75d",
-                "reference": "45a3c6e9224c3377a39c7b150bb29d5d97d2c75d",
+                "url": "https://api.github.com/repos/twigphp/Twig/zipball/8c737079b726af72ff8ef3c595be9f6a810ea1ef",
+                "reference": "8c737079b726af72ff8ef3c595be9f6a810ea1ef",
                 "shasum": ""
             },
             "require": {
@@ -2893,7 +2805,7 @@
             ],
             "support": {
                 "issues": "https://github.com/twigphp/Twig/issues",
-                "source": "https://github.com/twigphp/Twig/tree/v3.29.0"
+                "source": "https://github.com/twigphp/Twig/tree/v3.30.0"
             },
             "funding": [
                 {
@@ -2905,7 +2817,7 @@
                     "type": "tidelift"
                 }
             ],
-            "time": "2026-09-18T09:10:14+00:00"
+            "time": "2026-09-25T13:20:01+00:00"
         }
     ],
     "packages-dev": [
@@ -4898,76 +4810,26 @@
             "time": "2022-02-21T01:04:05+00:00"
         },
         {
-            "name": "php-ds/php-ds",
-            "version": "v1.8.0",
-            "source": {
-                "type": "git",
-                "url": "https://github.com/php-ds/polyfill.git",
-                "reference": "2e1c133b99aaa1a5fa2318257a6e2501b9082b55"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://api.github.com/repos/php-ds/polyfill/zipball/2e1c133b99aaa1a5fa2318257a6e2501b9082b55",
-                "reference": "2e1c133b99aaa1a5fa2318257a6e2501b9082b55",
-                "shasum": ""
-            },
-            "require": {
-                "php": ">=8.2"
-            },
-            "provide": {
-                "ext-ds": "1.5.0"
-            },
-            "require-dev": {
-                "php-ds/tests": "^1.8"
-            },
-            "suggest": {
-                "ext-ds": "to improve performance and reduce memory usage"
-            },
-            "type": "library",
-            "autoload": {
-                "psr-4": {
-                    "Ds\\": "src"
-                }
-            },
-            "notification-url": "https://packagist.org/downloads/",
-            "license": [
-                "MIT"
-            ],
-            "authors": [
-                {
-                    "name": "Rudi Theunissen",
-                    "email": "rudolf.theunissen@gmail.com"
-                }
-            ],
-            "description": "Specialized data structures as alternatives to the PHP array",
-            "keywords": [
-                "data structures",
-                "ds",
-                "php",
-                "polyfill"
-            ],
-            "support": {
-                "issues": "https://github.com/php-ds/polyfill/issues",
-                "source": "https://github.com/php-ds/polyfill/tree/v1.8.0"
-            },
-            "time": "2026-04-10T23:35:50+00:00"
-        },
-        {
             "name": "phpdocumentor/reflection-common",
-            "version": "2.2.0",
+            "version": "2.2.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/phpDocumentor/ReflectionCommon.git",
-                "reference": "1d01c49d4ed62f25aa84a747ad35d5a16924662b"
+                "reference": "ee15a5a2022c8383906b225055e9496a6a5e6e3b"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/phpDocumentor/ReflectionCommon/zipball/1d01c49d4ed62f25aa84a747ad35d5a16924662b",
-                "reference": "1d01c49d4ed62f25aa84a747ad35d5a16924662b",
+                "url": "https://api.github.com/repos/phpDocumentor/ReflectionCommon/zipball/ee15a5a2022c8383906b225055e9496a6a5e6e3b",
+                "reference": "ee15a5a2022c8383906b225055e9496a6a5e6e3b",
                 "shasum": ""
             },
             "require": {
-                "php": "^7.2 || ^8.0"
+                "php": "^7.4 || ^8.0"
+            },
+            "require-dev": {
+                "phpstan/phpstan": "^1.8",
+                "phpunit/phpunit": "^9.5",
+                "vimeo/psalm": "^4.25"
             },
             "type": "library",
             "extra": {
@@ -4991,7 +4853,7 @@
                 }
             ],
             "description": "Common reflection classes used by phpdocumentor to reflect the code structure",
-            "homepage": "http://www.phpdoc.org",
+            "homepage": "https://www.phpdoc.org",
             "keywords": [
                 "FQSEN",
                 "phpDocumentor",
@@ -5001,9 +4863,9 @@
             ],
             "support": {
                 "issues": "https://github.com/phpDocumentor/ReflectionCommon/issues",
-                "source": "https://github.com/phpDocumentor/ReflectionCommon/tree/2.x"
+                "source": "https://github.com/phpDocumentor/ReflectionCommon/tree/2.2.1"
             },
-            "time": "2020-06-27T09:03:43+00:00"
+            "time": "2025-11-10T21:21:55+00:00"
         },
         {
             "name": "phpdocumentor/reflection-docblock",
@@ -5260,11 +5122,11 @@
         },
         {
             "name": "phpstan/phpstan",
-            "version": "2.2.15",
+            "version": "2.2.16",
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/phpstan/phpstan/zipball/b158556ffd26825cf615a1c1f72fb5157a2301b7",
-                "reference": "b158556ffd26825cf615a1c1f72fb5157a2301b7",
+                "url": "https://api.github.com/repos/phpstan/phpstan/zipball/46a6d9060e5a7763adfcc21ebcb8b504ebdbcb92",
+                "reference": "46a6d9060e5a7763adfcc21ebcb8b504ebdbcb92",
                 "shasum": ""
             },
             "require": {
@@ -5320,7 +5182,7 @@
                     "type": "github"
                 }
             ],
-            "time": "2026-09-23T12:23:07+00:00"
+            "time": "2026-09-25T09:31:51+00:00"
         },
         {
             "name": "phpstan/phpstan-strict-rules",
@@ -5376,16 +5238,16 @@
         },
         {
             "name": "phpunit/php-code-coverage",
-            "version": "14.3.3",
+            "version": "14.3.5",
             "source": {
                 "type": "git",
                 "url": "https://github.com/sebastianbergmann/php-code-coverage.git",
-                "reference": "f8640c238e930b914d0098a1edbad6652e61a64a"
+                "reference": "96af7aaa1e15561a67b2fa5b98906b063ebec9c2"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/sebastianbergmann/php-code-coverage/zipball/f8640c238e930b914d0098a1edbad6652e61a64a",
-                "reference": "f8640c238e930b914d0098a1edbad6652e61a64a",
+                "url": "https://api.github.com/repos/sebastianbergmann/php-code-coverage/zipball/96af7aaa1e15561a67b2fa5b98906b063ebec9c2",
+                "reference": "96af7aaa1e15561a67b2fa5b98906b063ebec9c2",
                 "shasum": ""
             },
             "require": {
@@ -5393,7 +5255,7 @@
                 "ext-libxml": "*",
                 "ext-mbstring": "*",
                 "ext-xmlwriter": "*",
-                "nikic/php-parser": "^5.8.0",
+                "nikic/php-parser": "^5.9.0",
                 "php": ">=8.4",
                 "phpunit/php-text-template": "^6.0",
                 "sebastian/complexity": "^6.0",
@@ -5404,7 +5266,7 @@
                 "theseer/tokenizer": "^2.0.1"
             },
             "require-dev": {
-                "phpunit/phpunit": "^13.3.3"
+                "phpunit/phpunit": "^13.3.4"
             },
             "suggest": {
                 "ext-pcov": "PHP extension that provides line coverage",
@@ -5442,7 +5304,7 @@
             "support": {
                 "issues": "https://github.com/sebastianbergmann/php-code-coverage/issues",
                 "security": "https://github.com/sebastianbergmann/php-code-coverage/security/policy",
-                "source": "https://github.com/sebastianbergmann/php-code-coverage/tree/14.3.3"
+                "source": "https://github.com/sebastianbergmann/php-code-coverage/tree/14.3.5"
             },
             "funding": [
                 {
@@ -5462,7 +5324,7 @@
                     "type": "tidelift"
                 }
             ],
-            "time": "2026-09-10T13:08:32+00:00"
+            "time": "2026-09-25T08:28:49+00:00"
         },
         {
             "name": "phpunit/php-file-iterator",
@@ -5759,16 +5621,16 @@
         },
         {
             "name": "phpunit/phpunit",
-            "version": "13.3.4",
+            "version": "13.3.5",
             "source": {
                 "type": "git",
                 "url": "https://github.com/sebastianbergmann/phpunit.git",
-                "reference": "d19d90cf860efb7e4d96cee8243e06a248578085"
+                "reference": "1b482b9a77774705a5c4a47ab7d60819d2589e90"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/sebastianbergmann/phpunit/zipball/d19d90cf860efb7e4d96cee8243e06a248578085",
-                "reference": "d19d90cf860efb7e4d96cee8243e06a248578085",
+                "url": "https://api.github.com/repos/sebastianbergmann/phpunit/zipball/1b482b9a77774705a5c4a47ab7d60819d2589e90",
+                "reference": "1b482b9a77774705a5c4a47ab7d60819d2589e90",
                 "shasum": ""
             },
             "require": {
@@ -5782,7 +5644,7 @@
                 "phar-io/manifest": "^2.0.4",
                 "phar-io/version": "^3.2.1",
                 "php": ">=8.4.1",
-                "phpunit/php-code-coverage": "^14.3.3",
+                "phpunit/php-code-coverage": "^14.3.5",
                 "phpunit/php-file-iterator": "^7.0.2",
                 "phpunit/php-invoker": "^7.0.0",
                 "phpunit/php-text-template": "^6.0.0",
@@ -5839,7 +5701,7 @@
             "support": {
                 "issues": "https://github.com/sebastianbergmann/phpunit/issues",
                 "security": "https://github.com/sebastianbergmann/phpunit/security/policy",
-                "source": "https://github.com/sebastianbergmann/phpunit/tree/13.3.4"
+                "source": "https://github.com/sebastianbergmann/phpunit/tree/13.3.5"
             },
             "funding": [
                 {
@@ -5847,7 +5709,7 @@
                     "type": "other"
                 }
             ],
-            "time": "2026-09-15T07:37:05+00:00"
+            "time": "2026-09-25T08:41:20+00:00"
         },
         {
             "name": "psalm/plugin-phpunit",
@@ -8588,16 +8450,16 @@
         },
         {
             "name": "vimeo/psalm",
-            "version": "6.18.0",
+            "version": "6.18.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/vimeo/psalm.git",
-                "reference": "536dd6236b39a5115385b0307b42d6d1ad431a02"
+                "reference": "79465b8dc674127f442ae31ea114c11bc4dd7ed6"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/vimeo/psalm/zipball/536dd6236b39a5115385b0307b42d6d1ad431a02",
-                "reference": "536dd6236b39a5115385b0307b42d6d1ad431a02",
+                "url": "https://api.github.com/repos/vimeo/psalm/zipball/79465b8dc674127f442ae31ea114c11bc4dd7ed6",
+                "reference": "79465b8dc674127f442ae31ea114c11bc4dd7ed6",
                 "shasum": ""
             },
             "require": {
@@ -8702,7 +8564,7 @@
                 "issues": "https://github.com/vimeo/psalm/issues",
                 "source": "https://github.com/vimeo/psalm"
             },
-            "time": "2026-09-21T08:32:57+00:00"
+            "time": "2026-09-23T10:02:42+00:00"
         },
         {
             "name": "webmozart/assert",
