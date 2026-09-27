@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "70785801591c74772ac7f333ea4ba09c",
+    "content-hash": "31225f2ae070791e6fa8b3fc3ca8c99d",
     "packages": [
         {
             "name": "composer/ca-bundle",
@@ -624,16 +624,16 @@
         },
         {
             "name": "justinrainbow/json-schema",
-            "version": "6.12.0",
+            "version": "6.13.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/jsonrainbow/json-schema.git",
-                "reference": "8ef236a1a37df364b518b7411a4b5bb95b040d79"
+                "reference": "30de5e9b3fa04253af272a7d932a38cd026c311b"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/jsonrainbow/json-schema/zipball/8ef236a1a37df364b518b7411a4b5bb95b040d79",
-                "reference": "8ef236a1a37df364b518b7411a4b5bb95b040d79",
+                "url": "https://api.github.com/repos/jsonrainbow/json-schema/zipball/30de5e9b3fa04253af272a7d932a38cd026c311b",
+                "reference": "30de5e9b3fa04253af272a7d932a38cd026c311b",
                 "shasum": ""
             },
             "require": {
@@ -683,9 +683,9 @@
             ],
             "support": {
                 "issues": "https://github.com/jsonrainbow/json-schema/issues",
-                "source": "https://github.com/jsonrainbow/json-schema/tree/6.12.0"
+                "source": "https://github.com/jsonrainbow/json-schema/tree/6.13.0"
             },
-            "time": "2026-09-04T12:54:20+00:00"
+            "time": "2026-09-23T19:46:42+00:00"
         },
         {
             "name": "marc-mabe/php-enum",
@@ -867,11 +867,11 @@
         },
         {
             "name": "oglow/yacorapi",
-            "version": "9.999.999",
+            "version": "dev-develop",
             "dist": {
                 "type": "path",
                 "url": "../yacorapi",
-                "reference": "8963b51b6412569b50ba3e469c34f6d737a53cfc"
+                "reference": "d5e68116df622eead17b840cd6146f82745d112f"
             },
             "require": {
                 "ext-curl": "*",
@@ -1005,11 +1005,17 @@
         },
         {
             "name": "ollily/ezkoding",
-            "version": "8.999.999",
+            "version": "8.4.004",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/The-oGlow/ezkoding.git",
+                "reference": "cbe8072d30857d7aa1cd386a3ebe62ef83c9215e"
+            },
             "dist": {
-                "type": "path",
-                "url": "../ezkoding/target/staging/ollily-ezkoding",
-                "reference": "301d9d123709fec55fcd7bcb4e5255a7aaf932a0"
+                "type": "zip",
+                "url": "https://api.github.com/repos/The-oGlow/ezkoding/zipball/cbe8072d30857d7aa1cd386a3ebe62ef83c9215e",
+                "reference": "cbe8072d30857d7aa1cd386a3ebe62ef83c9215e",
+                "shasum": ""
             },
             "require": {
                 "composer/composer": "^2.0",
@@ -1033,9 +1039,9 @@
             "autoload": {
                 "psr-4": {
                     "Monolog\\": "src/Monolog",
-                    "ollily\\Common\\": "src/Common",
+                    "PHPUnit\\": "src/PHPUnit",
                     "ollily\\Tools\\": "src/Tools",
-                    "PHPUnit\\": "src/PHPUnit"
+                    "ollily\\Common\\": "src/Common"
                 }
             },
             "autoload-dev": {
@@ -1133,19 +1139,24 @@
                 "testcase"
             ],
             "support": {
-                "issues": "https://github.com/ollily/ezkoding/issues"
+                "issues": "https://github.com/ollily/ezkoding/issues",
+                "source": "https://github.com/The-oGlow/ezkoding/tree/8.4.004"
             },
-            "transport-options": {
-                "relative": true
-            }
+            "time": "2026-09-21T13:56:27+00:00"
         },
         {
             "name": "ollily/ezlogging",
-            "version": "8.999.999",
+            "version": "8.4.004",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/The-oGlow/ezlogging.git",
+                "reference": "7c8d0710ea3c926d36f04a5564ea55a528c18930"
+            },
             "dist": {
-                "type": "path",
-                "url": "../ezlogging/target/staging/ollily-ezlogging",
-                "reference": "b3976602cb771ceb8535293e238dab1498584a15"
+                "type": "zip",
+                "url": "https://api.github.com/repos/The-oGlow/ezlogging/zipball/7c8d0710ea3c926d36f04a5564ea55a528c18930",
+                "reference": "7c8d0710ea3c926d36f04a5564ea55a528c18930",
+                "shasum": ""
             },
             "require": {
                 "ext-ds": "^1.0",
@@ -1262,66 +1273,10 @@
                 "php"
             ],
             "support": {
-                "issues": "https://github.com/ollily/ezlogging/issues"
+                "issues": "https://github.com/ollily/ezlogging/issues",
+                "source": "https://github.com/The-oGlow/ezlogging/tree/8.4.004"
             },
-            "transport-options": {
-                "relative": true
-            }
-        },
-        {
-            "name": "php-ds/php-ds",
-            "version": "v1.8.0",
-            "source": {
-                "type": "git",
-                "url": "https://github.com/php-ds/polyfill.git",
-                "reference": "2e1c133b99aaa1a5fa2318257a6e2501b9082b55"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://api.github.com/repos/php-ds/polyfill/zipball/2e1c133b99aaa1a5fa2318257a6e2501b9082b55",
-                "reference": "2e1c133b99aaa1a5fa2318257a6e2501b9082b55",
-                "shasum": ""
-            },
-            "require": {
-                "php": ">=8.2"
-            },
-            "provide": {
-                "ext-ds": "1.5.0"
-            },
-            "require-dev": {
-                "php-ds/tests": "^1.8"
-            },
-            "suggest": {
-                "ext-ds": "to improve performance and reduce memory usage"
-            },
-            "type": "library",
-            "autoload": {
-                "psr-4": {
-                    "Ds\\": "src"
-                }
-            },
-            "notification-url": "https://packagist.org/downloads/",
-            "license": [
-                "MIT"
-            ],
-            "authors": [
-                {
-                    "name": "Rudi Theunissen",
-                    "email": "rudolf.theunissen@gmail.com"
-                }
-            ],
-            "description": "Specialized data structures as alternatives to the PHP array",
-            "keywords": [
-                "data structures",
-                "ds",
-                "php",
-                "polyfill"
-            ],
-            "support": {
-                "issues": "https://github.com/php-ds/polyfill/issues",
-                "source": "https://github.com/php-ds/polyfill/tree/v1.8.0"
-            },
-            "time": "2026-04-10T23:35:50+00:00"
+            "time": "2026-09-24T07:43:36+00:00"
         },
         {
             "name": "psr/container",
@@ -4251,16 +4206,16 @@
         },
         {
             "name": "friendsofphp/php-cs-fixer",
-            "version": "v3.95.26",
+            "version": "v3.95.27",
             "source": {
                 "type": "git",
                 "url": "https://github.com/PHP-CS-Fixer/PHP-CS-Fixer.git",
-                "reference": "11839dfaf25718e1617c522c3dde01ebf96c875f"
+                "reference": "1d0c68ee5f37446d8ad5970b82384cd1bb0a3317"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/PHP-CS-Fixer/PHP-CS-Fixer/zipball/11839dfaf25718e1617c522c3dde01ebf96c875f",
-                "reference": "11839dfaf25718e1617c522c3dde01ebf96c875f",
+                "url": "https://api.github.com/repos/PHP-CS-Fixer/PHP-CS-Fixer/zipball/1d0c68ee5f37446d8ad5970b82384cd1bb0a3317",
+                "reference": "1d0c68ee5f37446d8ad5970b82384cd1bb0a3317",
                 "shasum": ""
             },
             "require": {
@@ -4343,7 +4298,7 @@
             ],
             "support": {
                 "issues": "https://github.com/PHP-CS-Fixer/PHP-CS-Fixer/issues",
-                "source": "https://github.com/PHP-CS-Fixer/PHP-CS-Fixer/tree/v3.95.26"
+                "source": "https://github.com/PHP-CS-Fixer/PHP-CS-Fixer/tree/v3.95.27"
             },
             "funding": [
                 {
@@ -4351,7 +4306,7 @@
                     "type": "github"
                 }
             ],
-            "time": "2026-09-19T19:04:32+00:00"
+            "time": "2026-09-22T09:54:55+00:00"
         },
         {
             "name": "kelunik/certificate",
@@ -4943,6 +4898,61 @@
             "time": "2022-02-21T01:04:05+00:00"
         },
         {
+            "name": "php-ds/php-ds",
+            "version": "v1.8.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/php-ds/polyfill.git",
+                "reference": "2e1c133b99aaa1a5fa2318257a6e2501b9082b55"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/php-ds/polyfill/zipball/2e1c133b99aaa1a5fa2318257a6e2501b9082b55",
+                "reference": "2e1c133b99aaa1a5fa2318257a6e2501b9082b55",
+                "shasum": ""
+            },
+            "require": {
+                "php": ">=8.2"
+            },
+            "provide": {
+                "ext-ds": "1.5.0"
+            },
+            "require-dev": {
+                "php-ds/tests": "^1.8"
+            },
+            "suggest": {
+                "ext-ds": "to improve performance and reduce memory usage"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "Ds\\": "src"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Rudi Theunissen",
+                    "email": "rudolf.theunissen@gmail.com"
+                }
+            ],
+            "description": "Specialized data structures as alternatives to the PHP array",
+            "keywords": [
+                "data structures",
+                "ds",
+                "php",
+                "polyfill"
+            ],
+            "support": {
+                "issues": "https://github.com/php-ds/polyfill/issues",
+                "source": "https://github.com/php-ds/polyfill/tree/v1.8.0"
+            },
+            "time": "2026-04-10T23:35:50+00:00"
+        },
+        {
             "name": "phpdocumentor/reflection-common",
             "version": "2.2.0",
             "source": {
@@ -5250,11 +5260,11 @@
         },
         {
             "name": "phpstan/phpstan",
-            "version": "2.2.14",
+            "version": "2.2.15",
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/phpstan/phpstan/zipball/9c672e7a8e791dfc3d30e55f683e73fc0b63a3ac",
-                "reference": "9c672e7a8e791dfc3d30e55f683e73fc0b63a3ac",
+                "url": "https://api.github.com/repos/phpstan/phpstan/zipball/b158556ffd26825cf615a1c1f72fb5157a2301b7",
+                "reference": "b158556ffd26825cf615a1c1f72fb5157a2301b7",
                 "shasum": ""
             },
             "require": {
@@ -5310,7 +5320,7 @@
                     "type": "github"
                 }
             ],
-            "time": "2026-09-12T21:39:33+00:00"
+            "time": "2026-09-23T12:23:07+00:00"
         },
         {
             "name": "phpstan/phpstan-strict-rules",
@@ -8578,16 +8588,16 @@
         },
         {
             "name": "vimeo/psalm",
-            "version": "6.17.2",
+            "version": "6.18.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/vimeo/psalm.git",
-                "reference": "dd625545733d24633e5d386a26c13004dae80e19"
+                "reference": "536dd6236b39a5115385b0307b42d6d1ad431a02"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/vimeo/psalm/zipball/dd625545733d24633e5d386a26c13004dae80e19",
-                "reference": "dd625545733d24633e5d386a26c13004dae80e19",
+                "url": "https://api.github.com/repos/vimeo/psalm/zipball/536dd6236b39a5115385b0307b42d6d1ad431a02",
+                "reference": "536dd6236b39a5115385b0307b42d6d1ad431a02",
                 "shasum": ""
             },
             "require": {
@@ -8692,7 +8702,7 @@
                 "issues": "https://github.com/vimeo/psalm/issues",
                 "source": "https://github.com/vimeo/psalm"
             },
-            "time": "2026-09-15T12:34:23+00:00"
+            "time": "2026-09-21T08:32:57+00:00"
         },
         {
             "name": "webmozart/assert",
@@ -8762,7 +8772,7 @@
         }
     ],
     "aliases": [],
-    "minimum-stability": "stable",
+    "minimum-stability": "dev",
     "stability-flags": {},
     "prefer-stable": true,
     "prefer-lowest": false,

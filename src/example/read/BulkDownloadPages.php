@@ -13,6 +13,7 @@ declare(strict_types=1);
 
 namespace oglow\example\read;
 
+use ArrayAccess;
 use Ds\Vector;
 use Monolog\ConsoleLogger;
 use oglow\tools\Yacorapi\IResponse;
@@ -46,15 +47,15 @@ class BulkDownloadPages extends BulkCreateDownloadList
 
     public function bulkDownloadPages(string $fileName): void
     {
-        $results = CsvFileAdapter::readResultFile($fileName);
+        $results = CsvFileAdapter::readData($fileName, true);
 
-        if (count($results) > 0) {
-            $maxResults = count($results);
+        if ($results->count() > 0) {
+            $maxResults = $results->count();
             $currIdx = 0;
             foreach ($results as $currentResult) {
-                $this->logger->info('Result of All', [++$currIdx, $maxResults]);
-                if (array_key_exists('content', $currentResult)) {
-                    $this->exportItem($currentResult['content'], $currIdx);
+                $this->logger->info('Processing row', [++$currIdx, $maxResults]);
+                if (array_key_exists(RP::KEY_CONTENT, $currentResult)) {
+                    $this->exportItem($currentResult[RP::KEY_CONTENT], $currIdx);
                 } else {
                     $this->exportItem($currentResult, $currIdx);
                 }
@@ -65,18 +66,17 @@ class BulkDownloadPages extends BulkCreateDownloadList
     }
 
     /**
-     * @param mixed $currentResult
+     * @param ArrayAccess|array<mixed> $currentResult
      * @param int   $currIdx
      */
-    public function exportItem(mixed $currentResult, int $currIdx): void
+    public function exportItem(ArrayAccess|array $currentResult, int $currIdx): void
     {
-        if (is_array($currentResult)) {
-            $currentResult = new Response($currentResult);
-        }
 
-        if ($currentResult instanceof IResponse && $currentResult->checkStatus()) {
-            $bodyResponse = $this->apiClient->readPageByPageId($currentResult->getItemId());
+        if (count($currentResult) > 0) {
+            $bodyResponse = $this->apiClient->readPageByPageId($currentResult[RP::KEY_ID]);
+
             if ($bodyResponse->checkStatus()) {
+
                 $infoLine = sprintf(
                     "%03d-%s-%s-%s-%s, Body size: %d",
                     $currIdx,
@@ -86,7 +86,7 @@ class BulkDownloadPages extends BulkCreateDownloadList
                     $bodyResponse->getValue(RP::KEY_TYPE, 'unknown'),
                     strlen($bodyResponse->getBody())
                 );
-                $this->logger->info($infoLine);
+                $this->logger->debug($infoLine);
                 $exportColumns = new Vector(RP::EXPORT_PAGE_FULL);
                 $fileSuffix = sprintf(
                     '%03d-%s-%s',
@@ -97,6 +97,8 @@ class BulkDownloadPages extends BulkCreateDownloadList
                 $header = CsvFileAdapter::prepareExportLine($bodyResponse, exportColumns: $exportColumns, header:true);
                 $line = CsvFileAdapter::prepareExportLine($bodyResponse, exportColumns: $exportColumns);
                 $this->storeAsCsv(anyData: $line, dataHeader: $header, fileSuffix: $fileSuffix);
+            } else {
+                $this->logger->warning("Response is invalid", [$bodyResponse->getError()]);
             }
         } else {
             $this->logger->info("Nothing dumped");
@@ -112,7 +114,9 @@ function main2(): void
     /** Search/Filter Term */
     $searchTerm = 'REST';
 
-    $thisClazz = new BulkDownloadPages();
+    $listFileName = 'download';
+
+    $thisClazz = new BulkDownloadPages($listFileName);
 
     $fileName = $thisClazz->bulkCreateDownloadList($spaceKey, $searchTerm);
     $thisClazz->bulkDownloadPages($fileName);

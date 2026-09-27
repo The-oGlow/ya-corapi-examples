@@ -1,0 +1,30 @@
+        ,
+        "repositories": [
+        {
+        "type": "path",
+                "url": "../yacorapi",
+                "options": {
+                "versions": {
+                "ollily/ezkoding": "8.999.999"
+                }
+                }
+        },
+        {
+        "type": "path",
+                "url": "../ezkoding/target/staging/ollily-ezkoding",
+                "options": {
+                "versions": {
+                "ollily/ezkoding": "8.999.999"
+                }
+                }
+        },
+        {
+        "type": "path",
+                "url": "../ezlogging/target/staging/ollily-ezlogging",
+                "options": {
+                "versions": {
+                "ollily/ezlogging": "8.999.999"
+                }
+                }
+        }        
+        ]

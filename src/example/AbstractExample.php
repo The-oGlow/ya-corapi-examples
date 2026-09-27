@@ -16,11 +16,11 @@ namespace oglow\example;
 use Monolog\ConsoleLogger;
 use Monolog\PlainLogger;
 use oglow\tools\Yacorapi\IResponse;
-use oglow\tools\Yacorapi\Response\ResponseParameter;
+use oglow\tools\Yacorapi\Response\ResponseParameter as RP;
 use oglow\tools\Yacorapi\Store\CsvFileAdapter;
 use oglow\tools\Yacorapi\Store\FileAdapter;
 use oglow\tools\Yacorapi\Store\FileStoreStageEnum;
-use oglow\tools\Yacorapi\Store\StoreParameter;
+use oglow\tools\Yacorapi\Store\StoreParameter as SP;
 use ollily\Tools\String\ImplodeTrait;
 use Psr\Log\LoggerInterface;
 use Psr\Log\LogLevel;
@@ -104,10 +104,10 @@ class AbstractExample
             if ($response->getResults()->count() > 0) {
                 foreach ($response->getResults() as $singleResult) {
                     if ($singleResult instanceof IResponse) {
-                        $this->outputData($singleResult->getValue(ResponseParameter::KEY_ID), $idx++);
+                        $this->outputData($singleResult->getValue(RP::KEY_ID), $idx++);
                     } else {
-                        $this->outputData([$singleResult[ResponseParameter::KEY_ID],
-                            $singleResult[ResponseParameter::KEY_SPACE][ResponseParameter::KEY_KEY], $singleResult[ResponseParameter::KEY_TITLE]], $idx++);
+                        $this->outputData([$singleResult[RP::KEY_ID],
+                            $singleResult[RP::KEY_SPACE][RP::KEY_KEY], $singleResult[RP::KEY_TITLE]], $idx++);
                     }
                 }
             } else {
@@ -123,11 +123,11 @@ class AbstractExample
      *
      * @param mixed  $anyData       Everything you want to store
      * @param string $fileSuffix    Suffix of the output file (Default: {@link StoreParameter:DEFAULT_FILE_SUFFIX})
-     * @param string $fileExtension The file extension for the output file (Default: {@link StoreParameter::C_FILE_EXT_TEXT})
+     * @param string $fileExtension The file extension for the output file (Default: {@link SP::C_FILE_EXT_TEXT})
      *
      * @return string Filename
      */
-    protected function storeOrg(mixed $anyData, string $fileSuffix = StoreParameter::DEFAULT_FILE_SUFFIX, string $fileExtension = StoreParameter::C_FILE_EXT_TEXT): string
+    protected function storeOrg(mixed $anyData, string $fileSuffix = SP::DEFAULT_FILE_SUFFIX, string $fileExtension = SP::C_FILE_EXT_TEXT): string
     {
         $fileAdapter = new FileAdapter($this->outputFileName, fileSuffix:  $fileSuffix, fileExt: $fileExtension, staging: FileStoreStageEnum::ORIGINAL);
         $fileAdapter->storeData($anyData);
@@ -140,11 +140,11 @@ class AbstractExample
      *
      * @param mixed  $anyData       Everything you want to store
      * @param string $fileSuffix    Suffix of the output file (Default: {@link StoreParameter:DEFAULT_FILE_SUFFIX})
-     * @param string $fileExtension The file extension for the output file (Default: {@link StoreParameter::C_FILE_EXT_TEXT})
+     * @param string $fileExtension The file extension for the output file (Default: {@link SP::C_FILE_EXT_TEXT})
      *
      * @return string Filename
      */
-    protected function storeMod(mixed $anyData, string $fileSuffix = StoreParameter::DEFAULT_FILE_SUFFIX, string $fileExtension = StoreParameter::C_FILE_EXT_TEXT): string
+    protected function storeMod(mixed $anyData, string $fileSuffix = SP::DEFAULT_FILE_SUFFIX, string $fileExtension = SP::C_FILE_EXT_TEXT): string
     {
         $fileAdapter = new FileAdapter($this->outputFileName, fileSuffix: $fileSuffix, fileExt: $fileExtension, staging: FileStoreStageEnum::MODIFIED);
         $fileAdapter->storeData($anyData);
@@ -157,11 +157,11 @@ class AbstractExample
      *
      * @param mixed  $anyData       Everything you want to store
      * @param string $fileSuffix    Suffix of the output file (Default: {@link StoreParameter:DEFAULT_FILE_SUFFIX})
-     * @param string $fileExtension The file extension for the output file (Default: {@link StoreParameter::C_FILE_EXT_TEXT})
+     * @param string $fileExtension The file extension for the output file (Default: {@link SP::C_FILE_EXT_TEXT})
      *
      * @return string Filename
      */
-    protected function storeAsDump(mixed $anyData, string $fileSuffix = StoreParameter::DEFAULT_FILE_SUFFIX, string $fileExtension = StoreParameter::C_FILE_EXT_TEXT): string
+    protected function storeAsDump(mixed $anyData, string $fileSuffix = SP::DEFAULT_FILE_SUFFIX, string $fileExtension = SP::C_FILE_EXT_TEXT): string
     {
         $fileAdapter = new FileAdapter($this->outputFileName, fileSuffix: $fileSuffix, fileExt: $fileExtension);
         $fileAdapter->storeData(print_r($anyData, true));
@@ -173,13 +173,13 @@ class AbstractExample
      * Stores everything you give into a file with csv format.
      *
      * @param mixed               $anyData       Everything you want to store
-     * @param string              $fileSuffix    Suffix of the output file (Default: {@link StoreParameter:DEFAULT_FILE_SUFFIX})
-     * @param string              $fileExtension The file extension for the output file (Default: {@link StoreParameter::C_FILE_EXT_CSV})
+     * @param string              $fileSuffix    Suffix of the output file (Default: {@link SP::DEFAULT_FILE_SUFFIX})
+     * @param string              $fileExtension The file extension for the output file (Default: {@link SP::C_FILE_EXT_CSV})
      * @param array<mixed>|string $dataHeader    A header, which will be set at the top of the file (Default: [])
      *
      * @return string Filename
      */
-    protected function storeAsCsv(mixed $anyData, string $fileSuffix = StoreParameter::DEFAULT_FILE_SUFFIX, string $fileExtension = StoreParameter::C_FILE_EXT_CSV, string|array $dataHeader = []): string
+    protected function storeAsCsv(mixed $anyData, string $fileSuffix = SP::DEFAULT_FILE_SUFFIX, string $fileExtension = SP::C_FILE_EXT_CSV, string|array $dataHeader = []): string
     {
         $csvAdapter = new CsvFileAdapter($this->outputFileName, fileSuffix: $fileSuffix, fileExt: $fileExtension);
         $csvAdapter->storeDataHeader($dataHeader);

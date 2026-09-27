@@ -193,3 +193,4 @@ nbproject/private/
 phpstan.neon
 phpunit.xml
 psalm.xml
+composer.json.loc*
