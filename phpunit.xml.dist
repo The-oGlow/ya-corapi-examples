@@ -5,10 +5,11 @@
     bootstrap="tests/bootstrap.php"
     cacheDirectory=".phpunit.cache"
     colors="true"
-    executionOrder="depends,defects"
+    executionOrder="defects"
     beStrictAboutOutputDuringTests="false"
     displayDetailsOnTestsThatTriggerDeprecations="true"
     displayDetailsOnPhpunitDeprecations="true"
+    resolveDependencies="true"
 >
     <php>
         <ini name="display_errors" value="1"/>
