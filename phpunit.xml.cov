@@ -4,7 +4,7 @@
     xsi:noNamespaceSchemaLocation="vendor/phpunit/phpunit/phpunit.xsd"
     bootstrap="tests/bootstrap.php"
     cacheDirectory=".phpunit.cache"
-    colors="true"
+    colors="false"
     executionOrder="defects"
     beStrictAboutOutputDuringTests="false"
     displayDetailsOnTestsThatTriggerDeprecations="true"

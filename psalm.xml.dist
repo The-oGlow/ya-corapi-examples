@@ -11,6 +11,7 @@
     reportInfo="false"
     reportMixedIssues="true"
     allowStringToStandInForClass="true"
+    forceJit="true"
 >
     <projectFiles>
         <directory name="src"/>
@@ -27,17 +28,17 @@
         <!-- too strict -->
         <ClassMustBeFinal errorLevel="info"/>
         <InternalMethod errorLevel="info"/>
+        <LessSpecificImplementedReturnType errorLevel="info"/>
+        <MissingOverrideAttribute errorLevel="suppress"/>
         <MixedArgument errorLevel="info"/>
         <MixedReturnStatement errorLevel="info"/>
         <MixedArrayAccess errorLevel="info"/>
         <MixedAssignment errorLevel="info"/>
         <MixedArgumentTypeCoercion errorLevel="info"/>
         <MixedPropertyTypeCoercion errorLevel="info"/>
+        <MoreSpecificReturnType errorLevel="suppress"/>
         <PropertyNotSetInConstructor errorLevel="info"/>
         <UndefinedConstant errorLevel="info"/>
-        <LessSpecificImplementedReturnType errorLevel="suppress"/>
-        <MoreSpecificReturnType errorLevel="suppress"/>
-        <MissingOverrideAttribute errorLevel="suppress"/>
     </issueHandlers>
     <plugins>
         <pluginClass class="Psalm\PhpUnitPlugin\Plugin"/>

@@ -50,7 +50,7 @@ class ReadDocumentExample extends AbstractRestApiExample
                 }
             }
         } else {
-            var_dump($response);
+            $this->logger->debug('',$response);
         }
     }
 

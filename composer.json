@@ -12,6 +12,7 @@
         "examples"
     ],
     "homepage": "https://github.com/The-oGlow/yacorapi-examples",
+    "readme": "README.adoc",
     "license": "Apache-2.0",
     "authors": [
         {
@@ -34,6 +35,7 @@
         "ext-curl": "*",
         "ext-json": "*",
         "ext-ds": "^1.0",
+        "psr/log": "^2.0||^3.0",
         "ollily/ezkoding": "^8.4",
         "ollily/ezlogging": "^8.4",
         "oglow/yacorapi": "*"
@@ -54,7 +56,8 @@
         "phpmd/phpmd": "^2.0"
     },
     "config": {
-        "optimize-autoloader": false,
+        "optimize-autoloader": true,
+        "classmap-authoritative": true,
         "sort-packages": true,
         "allow-plugins": {
             "phpstan/extension-installer": true,
