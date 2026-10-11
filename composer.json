@@ -34,7 +34,7 @@
         "php": ">=8.4.1",
         "ext-curl": "*",
         "ext-json": "*",
-        "ext-ds": "^1.0",
+        "ext-ds": "^2.0",
         "psr/log": "^2.0||^3.0",
         "ollily/ezkoding": "^8.4",
         "ollily/ezlogging": "^8.4",
@@ -45,7 +45,7 @@
     "suggest": {
     },
     "require-dev": {
-        "php-ds/php-ds": "^1.0",
+        "php-ds/php-ds": "^2.0",
         "phpunit/phpunit": "^13.1",
         "phpstan/phpstan": "^2.1",
         "phpstan/phpstan-strict-rules": "^2.0",

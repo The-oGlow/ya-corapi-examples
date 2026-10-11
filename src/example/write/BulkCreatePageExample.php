@@ -13,7 +13,7 @@ declare(strict_types=1);
 
 namespace oglow\example\write;
 
-use Ds\Collection;
+use Ds\Map;
 use Ds\Map;
 use Monolog\ConsoleLogger;
 use oglow\example\AbstractRestApiExample;
@@ -170,11 +170,11 @@ class BulkCreatePageExample extends AbstractRestApiExample
      * @param string                  $spaceKey     The space for the new pages
      * @param int                     $parentPageId The parent pageId for this page (in this case the "level one" pageId)
      * @param string                  $dataName     The name of th "level one" page
-     * @param Collection<mixed,mixed> $dataItems    A collection of page names to create on "level two"
+     * @param Map<mixed,mixed> $dataItems    A collection of page names to create on "level two"
      *
      * @return int The pageId of the last create "level two" page or {@link ResponseParameter::VAL_PAGE_ID_NO}
      */
-    protected function createLevelTwo(string $spaceKey, int $parentPageId, string $dataName, Collection $dataItems): int
+    protected function createLevelTwo(string $spaceKey, int $parentPageId, string $dataName, Map $dataItems): int
     {
         $dataItemPageId = ResponseParameter::VAL_PAGE_ID_NO;
         $dataItemsMax = $dataItems->count();
@@ -205,9 +205,9 @@ class BulkCreatePageExample extends AbstractRestApiExample
      *
      * @param AddonTypeEnum $dataMode AddonMode, used for this example only
      *
-     * @return Collection<mixed,mixed> A collection of page names for the "level one", "level two" pages
+     * @return Map<mixed,mixed> A collection of page names for the "level one", "level two" pages
      */
-    protected function prepareAllDataLevel(AddonTypeEnum $dataMode): Collection
+    protected function prepareAllDataLevel(AddonTypeEnum $dataMode): Map
     {
         /** @var ResponseAddonMacro $dataSet */
         $dataSet = $this->apiClient->prepareAddonSet($dataMode);

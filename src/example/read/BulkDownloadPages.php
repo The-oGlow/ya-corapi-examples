@@ -14,7 +14,7 @@ declare(strict_types=1);
 namespace oglow\example\read;
 
 use ArrayAccess;
-use Ds\Vector;
+use Ds\Seq;
 use Monolog\ConsoleLogger;
 use oglow\tools\Yacorapi\IResponse;
 use oglow\tools\Yacorapi\Response\Response;
@@ -30,7 +30,7 @@ require_once __DIR__ . '/../../bootstrap.php'; // NOSONAR: php:S4833
  *
  * @author ollily
  */
-class BulkDownloadPages extends BulkCreateDownloadList
+class BulkDownloadPages extends BulkBuildDownloadList
 {
     private LoggerInterface $logger;
 
@@ -87,7 +87,7 @@ class BulkDownloadPages extends BulkCreateDownloadList
                     strlen($bodyResponse->getBody())
                 );
                 $this->logger->debug($infoLine);
-                $exportColumns = new Vector(RP::EXPORT_PAGE_FULL);
+                $exportColumns = new Seq(RP::EXPORT_PAGE_FULL);
                 $fileSuffix = sprintf(
                     '%03d-%s-%s',
                     $currIdx,

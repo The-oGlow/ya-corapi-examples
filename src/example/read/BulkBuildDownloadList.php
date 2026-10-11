@@ -13,7 +13,7 @@ declare(strict_types=1);
 
 namespace oglow\example\read;
 
-use Ds\Vector;
+use Ds\Seq;
 use Monolog\ConsoleLogger;
 use oglow\example\AbstractRestApiExample;
 use oglow\tools\Yacorapi\Client\IRapiClientBase;
@@ -26,11 +26,11 @@ use Psr\Log\LoggerInterface;
 require_once __DIR__ . '/../../bootstrap.php'; // NOSONAR: php:S4833
 
 /**
- * Example how to create a list of pages for downloading.
+ * Example how to build a list of pages for downloading.
  *
  * @author ollily
  */
-class BulkCreateDownloadList extends AbstractRestApiExample
+class BulkBuildDownloadList extends AbstractRestApiExample
 {
     private LoggerInterface $logger;
 
@@ -52,7 +52,7 @@ class BulkCreateDownloadList extends AbstractRestApiExample
 
         if ($response->checkStatus()) {
             if ($response->hasResults()) {
-                $exportColumns = new Vector(RP::EXPORT_PAGE_LIGHT);
+                $exportColumns = new Seq(RP::EXPORT_PAGE_LIGHT);
                 $header = CsvFileAdapter::prepareExportLine($response, exportColumns: $exportColumns, header: true);
                 $downloadList = $this->storeAsCsv(anyData: null, dataHeader: $header);
 
@@ -91,7 +91,7 @@ function main(): void
 
     $listFileName= 'download';
     
-    $thisClazz = new BulkCreateDownloadList($listFileName);
+    $thisClazz = new BulkBuildDownloadList($listFileName);
     $thisClazz->bulkCreateDownloadList($spaceKey, $searchTerm);
 }
 
