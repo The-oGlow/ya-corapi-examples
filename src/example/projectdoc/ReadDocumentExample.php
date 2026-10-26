@@ -15,6 +15,8 @@ namespace oglow\example\projectdoc;
 
 use Monolog\ConsoleLogger;
 use oglow\example\AbstractRestApiExample;
+use oglow\tools\Addon\Projectdoc\Traits\ProjectdocTrait;
+use oglow\tools\Yacorapi\Response\Response;
 use Psr\Log\LoggerInterface;
 
 require_once __DIR__ . '/../../bootstrap.php'; // NOSONAR: php:S4833
@@ -26,6 +28,8 @@ require_once __DIR__ . '/../../bootstrap.php'; // NOSONAR: php:S4833
  */
 class ReadDocumentExample extends AbstractRestApiExample
 {
+    use ProjectdocTrait;
+
     private LoggerInterface $logger;
 
     public function __construct(string $outputFileName = '')
@@ -40,35 +44,35 @@ class ReadDocumentExample extends AbstractRestApiExample
 
     public function readDocument(string $spaceKey, string $where): void
     {
-        $response = $this->apiClient->pdtReadDocument(\oglow\tools\Yacorapi\Projectdoc\PDT_PROP_ALL_DEFAULT, $spaceKey, $where);
+        $response = $this->pdtReadDocument(\oglow\tools\Yacorapi\Projectdoc\PDT_PROP_ALL_DEFAULT, $spaceKey, $where);
 
-        if ($this->apiClient->checkDataPdtDocument($response)) {
+        if ($this->checkDataPdtDocument($response)) {
             foreach ($response->getValue('document') as $document) {
                 $this->logger->debug($document['key']);
                 foreach ($document['property'] as $property) {
-                    $this->apiClient->showResultsPdt($property, '');
+                    $this->showResultsPdt($property, '');
                 }
             }
         } else {
-            $this->logger->debug('',$response);
+            $this->logger->debug('', [$response]);
         }
     }
 
-    public function readDefaultProperties($pageId): void
+    public function readDefaultProperties(int $pageId): void
     {
-        $this->prepareFilesystem();
-        $this->storeCsv(TARGET_DIR, TARGET_FILENAME, CSV_LINE_PDT_PROPERTY_HEADER . "\n");
-        $curlSession = prepareCurl();
+        //        $this->prepareFilesystem();
+        $this->storeAsCsv(TARGET_DIR, TARGET_FILENAME, CSV_LINE_PDT_PROPERTY_HEADER . "\n");
+        //        $curlSession = $this->apiClient->prepareCurl();
 
         foreach (PDT_PROP_ALL_DEFAULT as $property) {
-            $searchUrl = preparePdtPropertyReadUrl($pageId, $property);
+            $searchUrl = $this->preparePdtPropertyReadUrl($pageId, $property);
             echo $searchUrl;
-            $response = execCurl($curlSession, $searchUrl);
-
-            if (checkDataPdtProperty($response)) {
-                storeCsv(TARGET_DIR, TARGET_FILENAME, prepareCsvLinePdtProperty($response, $property));
+            //            $response = $this->execCurl($curlSession, $searchUrl);
+            $response = new Response();
+            if ($this->checkDataPdtProperty($response)) {
+                $this->storeAsCsv(TARGET_DIR, TARGET_FILENAME, $this->prepareCsvLinePdtProperty($response, $property));
             } else {
-                storeCsv(TARGET_DIR, TARGET_FILENAME, prepareCsvLinePdtProperty([], $property));
+                $this->storeAsCsv(TARGET_DIR, TARGET_FILENAME, $this->prepareCsvLinePdtProperty($response, $property));
             }
         }
     }

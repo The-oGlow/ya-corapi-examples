@@ -68,7 +68,7 @@ class BulkBuildDownloadList extends AbstractRestApiExample
                 $this->logger->info("Nothing found");
             }
         } else {
-            $this->logger->warning("Response is invalid",[$response->getError()]);
+            $this->logger->warning("Response is invalid", [$response->getError()]);
         }
         $this->logger->info("Written to", [$downloadList]);
 
@@ -89,8 +89,8 @@ function main(): void
     /** Search/Filter Term */
     $searchTerm = 'REST';
 
-    $listFileName= 'download';
-    
+    $listFileName = 'download';
+
     $thisClazz = new BulkBuildDownloadList($listFileName);
     $thisClazz->bulkCreateDownloadList($spaceKey, $searchTerm);
 }

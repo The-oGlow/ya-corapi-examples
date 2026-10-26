@@ -1,38 +1,34 @@
 <?php
 
+declare(strict_types=1);
+
 /*
- * Copyright 2026 postm.
+ * This file is part of yacorapi-examles
  *
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
+ * (c) 2024 Oliver Glowa, coding.glowa.com
  *
- *      http://www.apache.org/licenses/LICENSE-2.0
- *
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
+ * This source file is subject to the Apache-2.0 license that is bundled
+ * with this source code in the file LICENSE.
  */
 
 namespace oglow\example\write;
 
-use Ds\Map;
 use Monolog\ConsoleLogger;
+use oglow\example\AbstractRestApiExample;
+use oglow\tools\Yacorapi\Client\IRapiClientBase;
+use oglow\tools\Yacorapi\Data\ItemTypeEnum;
+use oglow\tools\Yacorapi\Response\ResponseParameter;
 use oglow\tools\Yacorapi\Store\CsvFileAdapter;
 use ollily\Tools\Batch\DataKeyEnum;
+use ollily\Tools\EnvironmentHelper;
 use ollily\Tools\Twig\TemplateFactory;
 use Psr\Log\LoggerInterface;
 
 /**
  * Creates a new page with the help of a twig template. The data is coming from a csv file.
- *
- * 
  */
-class CreatePageWithTemplateExample
+class CreatePageWithTemplateExample extends AbstractRestApiExample
 {
-
     private LoggerInterface $logger;
 
     public function __construct()
@@ -52,13 +48,12 @@ class CreatePageWithTemplateExample
         string $templateFile,
         string $dataFile,
         ItemTypeEnum $itemType = IRapiClientBase::REQ_VAL_ITEM_TYPE_PAGE
-    ): void
-    {
+    ): void {
         $this->logger->info(
             'START spaceKey,parentPageTitle,templateFile,dataFile,itemType',
-            [$spaceKey, $parentPageTitle, $templateFile, $dataFile, $itemType,]
-        );    
-        
+            [$spaceKey, $parentPageTitle, $templateFile, $dataFile, $itemType]
+        );
+
         // Find entryPoint
         $parentPageId = $this->apiClient->checkPageExists($spaceKey, $parentPageTitle);
 
@@ -69,8 +64,8 @@ class CreatePageWithTemplateExample
             // Load dataFile
             $loadedData = CsvFileAdapter::readData($dataFile, true);
 
-            foreach ($loadedData as $templateData ) {
-                $pageTitle= $templateData->get(DataKeyEnum::TITLE, $templateData->get(DataKeyEnum::NAME,''));
+            foreach ($loadedData as $templateData) {
+                $pageTitle = $templateData->get(DataKeyEnum::TITLE, $templateData->get(DataKeyEnum::NAME, ''));
                 $pageBody = $factory->renderTemplate(basename($templateFile), $templateData); // FIXME
 
                 // Create page
@@ -99,8 +94,10 @@ function main(): void
     /** Parent page title */
     $parentPageTitle = '98-Playground';
 
-    $templateFile = EnvironmentHelper::getProjectRoot() . self::DEMO_PATH . '';
-    $dataFile = EnvironmentHelper::getProjectRoot() . self::DEMO_PATH . 'person-one.csv';
+    $demoPath = '//input//oglow//poc//';
+
+    $templateFile = EnvironmentHelper::getProjectRoot() . $demoPath . '';
+    $dataFile = EnvironmentHelper::getProjectRoot() . $demoPath . 'person-one.csv';
 
     $thisClazz = new CreateNewPageExample();
     $thisClazz->createPage($spaceKey, $parentPageTitle, $templateFile, $dataFile);

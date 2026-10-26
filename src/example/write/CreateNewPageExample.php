@@ -82,8 +82,8 @@ function main(): void
     $macroStatusHtml = '<p><ac:structured-macro ac:name="status" ac:schema-version="1">" .
         "<ac:parameter ac:name="colour">Green</ac:parameter>" .
         "<ac:parameter ac:name="title">Low</ac:parameter></ac:structured-macro></p>';
-    $macroStatusGenerated = ContentHelper::prepareMacro('status', new Map(['title' => 'high', 'colour' => 'Red']), '');
-    $macroPanelGenerated = ContentHelper::prepareMacro(
+    $macroStatusGenerated = ContentHelper::i()->prepareMacro('status', new Map(['title' => 'high', 'colour' => 'Red']), '');
+    $macroPanelGenerated = ContentHelper::i()->prepareMacro(
         'panel',
         new Map(
             ['borderColor' => 'darkgrey', 'bgColor' => '#efefef', 'titleColor' => 'white', 'borderWidth' => '5',
@@ -91,10 +91,10 @@ function main(): void
         ),
         '<i>Panel Text</i>'
     );
-    $macroSectionGenerated = ContentHelper::prepareMacro(
+    $macroSectionGenerated = ContentHelper::i()->prepareMacro(
         'section',
         new Map(['border' => 'true']),
-        ContentHelper::prepareMacro('column', new Map(), '<u>left</u>') . ContentHelper::prepareMacro('column', new Map(['width' => '33%']), '<i>right</i>')
+        ContentHelper::i()->prepareMacro('column', new Map(), '<u>left</u>') . ContentHelper::i()->prepareMacro('column', new Map(['width' => '33%']), '<i>right</i>')
     );
     $title = sprintf('%s %s-%s', 'NEW PAGE', ConstData::getTsNow(), 0);
     $body = $parapgraph . $macroStatusHtml . $macroStatusGenerated . $macroPanelGenerated . $macroSectionGenerated;

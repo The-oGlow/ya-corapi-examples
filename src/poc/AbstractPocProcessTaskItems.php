@@ -13,11 +13,8 @@ declare(strict_types=1);
 
 namespace oglow\poc;
 
-use Ds\Map;
 use Monolog\ConsoleLogger;
 use oglow\example\ExampleErrorCodesEnum;
-use ollily\Tools\Batch\BatchConfig;
-use ollily\Tools\Batch\BatchTaskHelper;
 use ollily\Tools\Emergency;
 use ollily\Tools\EnvironmentHelper;
 use Psr\Log\LoggerInterface;
@@ -45,21 +42,13 @@ abstract class AbstractPocProcessTaskItems extends AbstractPoc
     {
         $this->logger->info('Starting Demo');
 
-        $batchConfig = new BatchConfig(new Map());
-
         if (count($args) >= self::EXPECTED_ARGS) { // @phpstan-ignore greaterOrEqual.alwaysTrue
             $fileName = EnvironmentHelper::getProjectRoot() . self::DEMO_PATH . $args[0];
             $listName = $args[1];
 
             $this->logger->info('Filename / ListKey', [$fileName, $listName]);
 
-            $tasklist = BatchTaskHelper::readTaskList($fileName, $batchConfig, $listName, true);
-
-            $this->logger->info('Found tasks', [$tasklist->count()]);
-
-            while (($task = $tasklist->nextTask()) !== null) {
-                $this->startProcess($task);
-            }
+            $this->startProcess([]);
         } else {
             Emergency::breakSystem(ExampleErrorCodesEnum::ERR_ARGS_MISSING->intValue(), ExampleErrorCodesEnum::ERR_ARGS_MISSING->text());
         }

@@ -166,9 +166,9 @@ class BulkCreatePageExample extends AbstractRestApiExample
     /**
      * Creates the page under the "level one" page.
      *
-     * @param string                  $spaceKey     The space for the new pages
-     * @param int                     $parentPageId The parent pageId for this page (in this case the "level one" pageId)
-     * @param string                  $dataName     The name of th "level one" page
+     * @param string           $spaceKey     The space for the new pages
+     * @param int              $parentPageId The parent pageId for this page (in this case the "level one" pageId)
+     * @param string           $dataName     The name of th "level one" page
      * @param Map<mixed,mixed> $dataItems    A collection of page names to create on "level two"
      *
      * @return int The pageId of the last create "level two" page or {@link ResponseParameter::VAL_PAGE_ID_NO}
@@ -224,7 +224,7 @@ class BulkCreatePageExample extends AbstractRestApiExample
     protected function prepareDataLevelOne(string $dataName): array
     {
         $dataNameTitle = $dataName . ' Extension';
-        $dataNameBody = ContentHelper::prepareHeading($dataName, 2) . $this->prepareToc(0);
+        $dataNameBody = ContentHelper::i()->prepareHeading($dataName, 2) . $this->prepareToc(0);
 
         return [$dataNameTitle, $dataNameBody];
     }
@@ -255,7 +255,7 @@ class BulkCreatePageExample extends AbstractRestApiExample
     {
         $macroParameter = new Map();
         $macroBody = 'Content of the macro body';
-        $dataItemBody = ContentHelper::prepareMacro($dataItem, $macroParameter, $macroBody);
+        $dataItemBody = ContentHelper::i()->prepareMacro($dataItem, $macroParameter, $macroBody);
 
         return [$dataItemBody];
     }
@@ -283,7 +283,7 @@ class BulkCreatePageExample extends AbstractRestApiExample
         }
         $parameters->put('sort', 'title');
 
-        return ContentHelper::prepareMacro('children', $parameters);
+        return ContentHelper::i()->prepareMacro('children', $parameters);
     }
 }
 

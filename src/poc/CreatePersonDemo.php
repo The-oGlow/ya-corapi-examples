@@ -15,8 +15,6 @@ namespace oglow\poc;
 
 use Monolog\ConsoleLogger;
 use oglow\example\ExampleErrorCodesEnum;
-use ollily\Tools\Batch\DataKeyEnum;
-use ollily\Tools\Batch\ITaskItem;
 use ollily\Tools\Emergency;
 use Psr\Log\LoggerInterface;
 
@@ -43,16 +41,7 @@ class CreatePersonDemo extends AbstractPocProcessTaskItems
     #[\Override]
     protected function startProcess(mixed $processData = null): void
     {
-        if ($processData instanceof ITaskItem) {
-            /** @var ITaskItem $task */
-            $task = $processData;
-            if (!$task->empty()) {
-                $title = $task->getDataValue(DataKeyEnum::NAME->value);
-                $this->logger->notice('Creating person for', [$title]);
-            }
-        } else {
-            Emergency::breakSystem(ExampleErrorCodesEnum::ERR_PROCESSDATA_WRONG->intValue(), ExampleErrorCodesEnum::ERR_PROCESSDATA_WRONG->text());
-        }
+        Emergency::breakSystem(ExampleErrorCodesEnum::ERR_PROCESSDATA_WRONG->intValue(), ExampleErrorCodesEnum::ERR_PROCESSDATA_WRONG->text());
     }
 }
 

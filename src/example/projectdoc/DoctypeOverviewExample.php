@@ -15,6 +15,7 @@ namespace oglow\example\projectdoc;
 
 use Monolog\ConsoleLogger;
 use oglow\example\AbstractRestApiExample;
+use oglow\tools\Addon\Projectdoc\Traits\ProjectdocTrait;
 use Psr\Log\LoggerInterface;
 
 require_once __DIR__ . '/../../bootstrap.php'; // NOSONAR: php:S4833
@@ -26,11 +27,13 @@ require_once __DIR__ . '/../../bootstrap.php'; // NOSONAR: php:S4833
  */
 class DoctypeOverviewExample extends AbstractRestApiExample
 {
-    public const IDX_STRICT = 'strict';
+    use ProjectdocTrait;
 
-    public const IDX_LAZY = 'ids';
+    public const string IDX_STRICT = 'strict';
 
-    public const IDX_SIZE = 'size';
+    public const string IDX_LAZY = 'ids';
+
+    public const string IDX_SIZE = 'size';
 
     private LoggerInterface $logger;
 
@@ -48,11 +51,11 @@ class DoctypeOverviewExample extends AbstractRestApiExample
     {
         $this->logger->debug("START");
 
-        $pdtResponse = $this->apiClient->pdtReadProperty($foundPageId, $propertyName);
+        $pdtResponse = $this->pdtReadProperty($foundPageId, $propertyName);
 
         $foundDoctype = '';
         // FIXME: That is an response method -> PDTDEcorate
-        if ($this->apiClient->checkDataPdtProperty($pdtResponse)) {
+        if ($this->checkDataPdtProperty($pdtResponse)) {
             $foundDoctype = $pdtResponse->getValue('value');
         } else {
             $this->logger->debug("No property found in page", [$propertyName, $foundPageId]);
@@ -71,15 +74,18 @@ class DoctypeOverviewExample extends AbstractRestApiExample
         $maxCount   = 6; // VAL_SEARCH_OVERALL_MAX * 0.1;
         $filterTerm = "type:page AND macroName:projectdoc-properties-marker";
 
+        $doctypes = [];
         $doctypes[$spaceKey]    = [];
+        $errDoctypes = [];
         $errDoctypes[$spaceKey] = [];
 
         $resultsCount = 0;
         $bLoop        = true;
+        /** @psalm-suppress RedundantCondition */
         while ($bLoop) {
             $response = $this->apiClient->searchPagesWithFilter($filterTerm, $spaceKey, $start, $limit);
 
-            if ($response->isAvailable()) {
+            if ($response->hasResults()) {
                 $propertyName = 'Doctype';
 
                 foreach ($response->getResults() as $result) {

@@ -42,9 +42,9 @@ class UpdatePageExample extends AbstractRestApiExample
     public function startUpdate(string $spaceKey, string $pageTitle, string $pageBody): void
     {
         $newPageTitle = sprintf('%s-%s', $pageTitle, 1);
-        $newPageBody = ContentHelper::prepareMacro('projectdoc-iteration', new Map(['value' => 'finished']));
+        $newPageBody = ContentHelper::i()->prepareMacro('projectdoc-iteration', new Map(['value' => 'finished']));
         $finalPageTitle = sprintf('%s-%s', $newPageTitle, 2);
-        $finalPageBody = ContentHelper::prepareMacro('projectdoc-iteration', new Map(['value' => 'production']));
+        $finalPageBody = ContentHelper::i()->prepareMacro('projectdoc-iteration', new Map(['value' => 'production']));
 
         $pageId = $this->createExamplePage($spaceKey, $pageTitle, $pageBody);
 
@@ -99,7 +99,7 @@ function main(): void
 
     $pageTitle = sprintf('%s %s-%s', 'NEW PAGE TO UPDATE', ConstData::getTsNow(), 0);
 
-    $pageBody = ContentHelper::prepareMacro('projectdoc-iteration', new Map(['value' => 'facade']));
+    $pageBody = ContentHelper::i()->prepareMacro('projectdoc-iteration', new Map(['value' => 'facade']));
 
     $thisClazz = new UpdatePageExample();
 

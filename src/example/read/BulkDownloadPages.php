@@ -13,11 +13,8 @@ declare(strict_types=1);
 
 namespace oglow\example\read;
 
-use ArrayAccess;
 use Ds\Seq;
 use Monolog\ConsoleLogger;
-use oglow\tools\Yacorapi\IResponse;
-use oglow\tools\Yacorapi\Response\Response;
 use oglow\tools\Yacorapi\Response\ResponseParameter as RP;
 use oglow\tools\Yacorapi\Store\CsvFileAdapter;
 use oglow\tools\Yacorapi\Store\StoreParameter;
@@ -66,17 +63,15 @@ class BulkDownloadPages extends BulkBuildDownloadList
     }
 
     /**
-     * @param ArrayAccess|array<mixed> $currentResult
-     * @param int   $currIdx
+     * @param array<mixed,mixed> $currentResult
+     * @param int                $currIdx
      */
-    public function exportItem(ArrayAccess|array $currentResult, int $currIdx): void
+    public function exportItem(array $currentResult, int $currIdx): void
     {
-
         if (count($currentResult) > 0) {
             $bodyResponse = $this->apiClient->readPageByPageId($currentResult[RP::KEY_ID]);
 
             if ($bodyResponse->checkStatus()) {
-
                 $infoLine = sprintf(
                     "%03d-%s-%s-%s-%s, Body size: %d",
                     $currIdx,
