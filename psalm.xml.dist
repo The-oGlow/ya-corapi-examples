@@ -19,13 +19,12 @@
         <ignoreFiles>
             <directory name="vendor"/>
             <!-- Temp ignore -->
-            <file name="src/example/projectdoc/ReadDocumentExample.php"/>
-            <file name="src/example/projectdoc/DoctypeOverviewExample.php"/>
         </ignoreFiles>
     </projectFiles>
     <issueHandlers>
         <UnusedPsalmSuppress errorLevel="error"/>
         <!-- too strict -->
+        <AmbiguousConstantInheritance errorLevel="info"/>  
         <ClassMustBeFinal errorLevel="info"/>
         <InternalMethod errorLevel="info"/>
         <LessSpecificImplementedReturnType errorLevel="info"/>
@@ -38,7 +37,9 @@
         <MixedPropertyTypeCoercion errorLevel="info"/>
         <MoreSpecificReturnType errorLevel="suppress"/>
         <PropertyNotSetInConstructor errorLevel="info"/>
+        <RedundantPropertyInitializationCheck errorLevel="info"/>
         <UndefinedConstant errorLevel="info"/>
+        <!-- Custom suppression -->
     </issueHandlers>
     <plugins>
         <pluginClass class="Psalm\PhpUnitPlugin\Plugin"/>

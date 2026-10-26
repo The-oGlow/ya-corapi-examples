@@ -182,6 +182,7 @@ vendor/
 .phpdoc/
 
 ### Custom
+.scannerwork/
 target/
 wpcs/*
 nbproject/private/

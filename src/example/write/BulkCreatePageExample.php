@@ -14,7 +14,6 @@ declare(strict_types=1);
 namespace oglow\example\write;
 
 use Ds\Map;
-use Ds\Map;
 use Monolog\ConsoleLogger;
 use oglow\example\AbstractRestApiExample;
 use oglow\tools\Yacorapi\Helper\ContentHelper;

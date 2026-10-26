@@ -165,4 +165,11 @@ $projRules = [
 
 $finder = PhpCsFixer\Finder::create()->in(__DIR__ . '/src')->in(__DIR__ . '/tests');
 
-return (new PhpCsFixer\Config())->setParallelConfig(PhpCsFixer\Runner\Parallel\ParallelConfigFactory::detect())->setRules($projRules)->setFinder($finder);
+$phpfixer = (new PhpCsFixer\Config())
+    ->setCacheFile(__DIR__ . '/target/.php-cs-fixer.cache')
+    ->setParallelConfig(PhpCsFixer\Runner\Parallel\ParallelConfigFactory::detect())
+    ->setRules($projRules)
+    ->setFinder($finder);
+
+return $phpfixer;
+

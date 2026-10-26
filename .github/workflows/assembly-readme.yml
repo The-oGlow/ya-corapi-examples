@@ -6,7 +6,7 @@ on:
     branches:
       - develop
     paths:
-      - 'site/resources/*.adoc'
+      - 'resources/**'
 
 env:
   # PHP Configuration
@@ -15,9 +15,10 @@ env:
   PHPUNIT_LOG: ${{ github.workspace }}/target/analysis/phpunit/phpunit-test.log
 
   # User Configuration
-  AUTH_DIR: "${HOME}/.yacorapi"
+  AUTH_DIR: "${HOME}"
 
-  DOCU_SRC_DIR: "site/resources"
+  DOCU_SRC_DIR: "resources"
+  DOCU_DEST_DIR: "site"
 
 jobs:
   assembly-readme:
@@ -40,7 +41,7 @@ jobs:
         run: echo ${TS_NOW} - ${{ env.TS_NOW }} - ${{ steps.TS_NOW.outputs.TS_NOW }}
 
       - name: create target dir
-        run: mkdir -p ${{ env.PHPUNIT_DIR }}
+        run: mkdir -p ${{ env.DOCU_DEST_DIR }}
 
       - name: checkout
         uses: actions/checkout@v7
@@ -54,27 +55,24 @@ jobs:
         run: asciidoctor-reducer --preserve-conditionals -o README.adoc ${{ env.DOCU_SRC_DIR }}/pj-readme.adoc
 
       - name: assembly config.adoc
-        run: asciidoctor-reducer --preserve-conditionals -o docu-config.adoc ${{ env.DOCU_SRC_DIR }}/pj-config.adoc
+        run: asciidoctor-reducer --preserve-conditionals -o ${{ env.DOCU_DEST_DIR }}/docu-config.adoc ${{ env.DOCU_SRC_DIR }}/${{ env.DOCU_DEST_DIR }}/pj-config.adoc
 
       - name: assembly analysis.adoc
-        run: asciidoctor-reducer --preserve-conditionals -o docu-analysis.adoc ${{ env.DOCU_SRC_DIR }}/pj-analysis.adoc
+        run: asciidoctor-reducer --preserve-conditionals -o ${{ env.DOCU_DEST_DIR }}/docu-analysis.adoc ${{ env.DOCU_SRC_DIR }}/${{ env.DOCU_DEST_DIR }}/pj-analysis.adoc
 
       - name: assembly commmands.adoc
-        run: asciidoctor-reducer --preserve-conditionals -o docu-commands.adoc ${{ env.DOCU_SRC_DIR }}/pj-commands.adoc
+        run: asciidoctor-reducer --preserve-conditionals -o ${{ env.DOCU_DEST_DIR }}/docu-commands.adoc ${{ env.DOCU_SRC_DIR }}/${{ env.DOCU_DEST_DIR }}/pj-commands.adoc
 
       - name: assembly examples.adoc
-        run: asciidoctor-reducer --preserve-conditionals -o docu-examples.adoc ${{ env.DOCU_SRC_DIR }}/pj-examples.adoc
+        run: asciidoctor-reducer --preserve-conditionals -o ${{ env.DOCU_DEST_DIR }}/docu-examples.adoc ${{ env.DOCU_SRC_DIR }}/${{ env.DOCU_DEST_DIR }}/pj-examples.adoc
 
       - name: assembly usage.adoc
-        run: asciidoctor-reducer --preserve-conditionals -o docu-usage.adoc ${{ env.DOCU_SRC_DIR }}/pj-usage.adoc
+        run: asciidoctor-reducer --preserve-conditionals -o ${{ env.DOCU_DEST_DIR }}/docu-usage.adoc ${{ env.DOCU_SRC_DIR }}/${{ env.DOCU_DEST_DIR }}/pj-usage.adoc
 
       - name: commit and push documents
+        if: ${{ always() }}
         uses: EndBug/add-and-commit@v11
         with:
           add: |
             - README.adoc
-            - docu-config.adoc
-            - docu-analysis.adoc
-            - docu-commands.adoc
-            - docu-examples.adoc
-            - docu-usage.adoc
+            - ${{ env.DOCU_DEST_DIR }}

@@ -3,7 +3,7 @@
                xsi:noNamespaceSchemaLocation="https://raw.githubusercontent.com/phpDocumentor/phpDocumentor/master/data/xsd/phpdoc.xsd">
     <title>Yet Another COnfluence REST-API</title>
     <paths>
-        <output>target/docs</output>
+        <output>site/docs</output>
         <cache>target/build/cache</cache>
     </paths>
     <version number="latest">
@@ -12,11 +12,7 @@
             <source dsn=".">
                 <path>src</path>
             </source>
-            <ignore hidden="true" symlinks="true">
-                <path>src/foo/**/*</path>
-                <path>src/example/projectdoc/**/*</path>
-            </ignore>
-            <output>./target/docs/api</output>
+            <output>./site/api</output>
             <default-package-name>oglow</default-package-name>
             <extensions>
                 <extension>php</extension>
@@ -26,10 +22,10 @@
             </markers>
         </api>
         <!--<guide>-->
-            <!--<source dsn=".">-->
-                <!--<path>site</path>-->
-            <!--</source>-->
-            <!--<output>./target/docs/guide</output>-->
+        <!--<source dsn=".">-->
+        <!--<path>site</path>-->
+        <!--</source>-->
+        <!--<output>./site/guide</output>-->
         <!--</guide>-->
     </version>
     <setting name="guides.enabled" value="true"/>
