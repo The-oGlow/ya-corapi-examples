@@ -1,0 +1,106 @@
+<?php
+
+declare(strict_types=1);
+
+/*
+ * This file is part of yacorapi-examles
+ *
+ * (c) 2024 Oliver Glowa, coding.glowa.com
+ *
+ * This source file is subject to the Apache-2.0 license that is bundled
+ * with this source code in the file LICENSE.
+ */
+
+namespace oglow\example\read;
+
+use Monolog\ConsoleLogger;
+use oglow\example\AbstractRestApiExample;
+use oglow\tools\Yacorapi\Response\ResponseSpace;
+use oglow\tools\Yacorapi\Space\SpaceData;
+use oglow\tools\Yacorapi\Space\SpaceTypeEnum;
+use oglow\tools\Yacorapi\Store\FileAdapter;
+use Psr\Log\LoggerInterface;
+
+require_once __DIR__ . '/../../bootstrap.php'; // NOSONAR: php:S4833
+
+class SearchSpacesExample extends AbstractRestApiExample
+{
+    private LoggerInterface $logger;
+
+    public function __construct(string $outputFileName = '')
+    {
+        $this->logger = new ConsoleLogger(get_class($this));
+
+        $this->logger->debug('START');
+        parent::__construct($outputFileName);
+
+        $this->logger->debug('END');
+    }
+
+    public function spacesGlobal(): void
+    {
+        $this->logger->debug('START');
+
+        /** @var ResponseSpace $response */
+        $response = $this->apiClient->listSpaces(SpaceTypeEnum::SPACE_TYPE_GLOBAL);
+
+        $spaces = $response->getSpaces();
+        $this->logger->info('Found global spaces', [count($spaces)]);
+
+        if (!empty($spaces)) {
+            $header = array_keys($spaces[array_key_first($spaces)]);
+            $this->storeAsCsv($spaces, fileSuffix: SpaceTypeEnum::SPACE_TYPE_GLOBAL->value, dataHeader: $header);
+        };
+
+        $this->prepareMySpaces($spaces);
+
+        $this->logger->debug('END');
+    }
+
+    public function spacesPersonal(): void
+    {
+        $this->logger->debug('START');
+
+        /** @var ResponseSpace $response */
+        $response = $this->apiClient->listSpaces(SpaceTypeEnum::SPACE_TYPE_PERSONAL);
+
+        $spaces = $response->getSpaces();
+        $this->logger->info('Found personal spaces', [count($spaces)]);
+
+        if (!empty($spaces)) {
+            $header = array_keys($spaces[array_key_first($spaces)]);
+            $this->storeAsCsv($response->getSpaces(), fileSuffix: SpaceTypeEnum::SPACE_TYPE_PERSONAL->value, dataHeader: $header);
+        }
+        $this->logger->debug('END');
+    }
+
+    /**
+     * @param array<mixed> $spaces
+     */
+    public function prepareMySpaces(array $spaces): void
+    {
+        $this->logger->debug('START');
+
+        $fileContent = SpaceData::prepareMySpacesContent($spaces);
+        $fileName = SpaceData::prepareMySpacesFileName();
+
+        $storeAdapter = new FileAdapter(pathinfo($fileName, PATHINFO_FILENAME), pathinfo($fileName, PATHINFO_EXTENSION));
+        $this->logger->info('Writing file', [$storeAdapter->getFileName()]);
+        $storeAdapter->storeData($fileContent);
+
+        $this->logger->debug('END');
+    }
+}
+
+function main(): void
+{
+    $thisClazz = new SearchSpacesExample();
+
+    // Search site spaces and write to file
+    $thisClazz->spacesGlobal();
+
+    // Search personal spaces
+    $thisClazz->spacesPersonal();
+}
+
+main();

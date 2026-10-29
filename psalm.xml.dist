@@ -1,29 +1,45 @@
 <?xml version="1.0"?>
 <psalm
-        errorLevel="1"
-        resolveFromConfigFile="true"
-        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-        xmlns="https://getpsalm.org/schema/config"
-        xsi:schemaLocation="https://getpsalm.org/schema/config vendor/vimeo/psalm/config.xsd"
-        findUnusedBaselineEntry="true"
-        findUnusedCode="false"
+    errorLevel="2"
+    resolveFromConfigFile="true"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xmlns="https://getpsalm.org/schema/config"
+    xsi:schemaLocation="https://getpsalm.org/schema/config vendor/vimeo/psalm/config.xsd"
+    findUnusedBaselineEntry="true"
+    findUnusedCode="false"
+    findUnusedPsalmSuppress="true"
+    reportInfo="false"
+    reportMixedIssues="true"
+    allowStringToStandInForClass="true"
+    forceJit="true"
 >
     <projectFiles>
         <directory name="src"/>
         <directory name="tests"/>
         <ignoreFiles>
             <directory name="vendor"/>
+            <!-- Temp ignore -->
         </ignoreFiles>
     </projectFiles>
     <issueHandlers>
+        <UnusedPsalmSuppress errorLevel="error"/>
         <!-- too strict -->
-        <LessSpecificImplementedReturnType errorLevel="suppress"/>
+        <AmbiguousConstantInheritance errorLevel="info"/>  
+        <ClassMustBeFinal errorLevel="info"/>
+        <InternalMethod errorLevel="info"/>
+        <LessSpecificImplementedReturnType errorLevel="info"/>
+        <MissingOverrideAttribute errorLevel="suppress"/>
         <MixedArgument errorLevel="info"/>
         <MixedReturnStatement errorLevel="info"/>
         <MixedArrayAccess errorLevel="info"/>
         <MixedAssignment errorLevel="info"/>
         <MixedArgumentTypeCoercion errorLevel="info"/>
-        <MixedInferredReturnType errorLevel="info"/>
+        <MixedPropertyTypeCoercion errorLevel="info"/>
+        <MoreSpecificReturnType errorLevel="suppress"/>
+        <PropertyNotSetInConstructor errorLevel="info"/>
+        <RedundantPropertyInitializationCheck errorLevel="info"/>
+        <UndefinedConstant errorLevel="info"/>
+        <!-- Custom suppression -->
     </issueHandlers>
     <plugins>
         <pluginClass class="Psalm\PhpUnitPlugin\Plugin"/>

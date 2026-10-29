@@ -1,0 +1,77 @@
+name: assembly-readme
+
+on:
+  workflow_dispatch:
+  push:
+    branches:
+      - develop
+    paths:
+      - 'resources/**'
+
+env:
+  # PHP Configuration
+  PHP_MODULES: none,bcmath,bz2,calendar,Core,ctype,curl,date,dom,ds,exif,fileinfo,filter,gd,hash,iconv,intl,json,libxml,mbstring,openssl,pcre,PDO,Phar,readline,Reflection,session,SimpleXML,soap,sockets,SPL,standard,tokenizer,xml,xmlreader,xmlwriter,xsl,zip,zlib
+
+  # User Configuration
+  AUTH_DIR: "${HOME}"
+
+  # Doc
+  DOCU_SRC_DIR: "resources"
+  DOCU_DEST_DIR: "site"
+
+jobs:
+  assembly-readme:
+    strategy:
+      matrix:
+        os: [ ubuntu-latest ]
+        version: [ 24 ]
+        php: ["8.4"]
+    runs-on: ${{ matrix.os }}
+    permissions:
+        contents: write
+        actions: write
+
+    steps:
+      - name: set current timestamp
+        id: TS_NOW
+        run: echo "TS_NOW=$(date +'%Y-%m-%dT%H-%M-%S')" >> $GITHUB_OUTPUT
+
+      - name: echo current timestamp
+        run: echo ${TS_NOW} - ${{ env.TS_NOW }} - ${{ steps.TS_NOW.outputs.TS_NOW }}
+
+      - name: create target dir
+        run: mkdir -p ${{ env.DOCU_DEST_DIR }}
+
+      - name: checkout
+        uses: actions/checkout@v7
+        with:
+          fetch-depth: 0
+
+      - name: install asciidoctor-reducer
+        run: sudo gem install asciidoctor-reducer
+
+      - name: assembly README.adoc
+        run: asciidoctor-reducer --preserve-conditionals -o README.adoc ${{ env.DOCU_SRC_DIR }}/pj-readme.adoc
+
+      - name: assembly config.adoc
+        run: asciidoctor-reducer --preserve-conditionals -o ${{ env.DOCU_DEST_DIR }}/docu-config.adoc ${{ env.DOCU_SRC_DIR }}/${{ env.DOCU_DEST_DIR }}/pj-config.adoc
+
+      - name: assembly analysis.adoc
+        run: asciidoctor-reducer --preserve-conditionals -o ${{ env.DOCU_DEST_DIR }}/docu-analysis.adoc ${{ env.DOCU_SRC_DIR }}/${{ env.DOCU_DEST_DIR }}/pj-analysis.adoc
+
+      - name: assembly commmands.adoc
+        run: asciidoctor-reducer --preserve-conditionals -o ${{ env.DOCU_DEST_DIR }}/docu-commands.adoc ${{ env.DOCU_SRC_DIR }}/${{ env.DOCU_DEST_DIR }}/pj-commands.adoc
+
+      - name: assembly examples.adoc
+        run: asciidoctor-reducer --preserve-conditionals -o ${{ env.DOCU_DEST_DIR }}/docu-examples.adoc ${{ env.DOCU_SRC_DIR }}/${{ env.DOCU_DEST_DIR }}/pj-examples.adoc
+
+      - name: assembly usage.adoc
+        run: asciidoctor-reducer --preserve-conditionals -o ${{ env.DOCU_DEST_DIR }}/docu-usage.adoc ${{ env.DOCU_SRC_DIR }}/${{ env.DOCU_DEST_DIR }}/pj-usage.adoc
+
+      - name: commit and push documents
+        if: ${{ always() }}
+        uses: EndBug/add-and-commit@v11
+        with:
+          add: |
+            - README.adoc
+            - ${{ env.DOCU_DEST_DIR }}

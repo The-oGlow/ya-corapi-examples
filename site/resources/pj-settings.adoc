@@ -40,7 +40,7 @@
 // Github User or Organisation (acc_user or orga_user)
 :pj_gh_account: {orga_user}
 // Github repo name
-:pj_gh_repo: ya-corapi-examples
+:pj_gh_repo: yacorapi-examples
 // Github projectid or -1
 :pj_gh_vcsid: {pj_gh_account}/{pj_gh_repo}
 

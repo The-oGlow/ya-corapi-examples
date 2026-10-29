@@ -1,16 +1,30 @@
 parameters:
     level: 8
 
+    parallel:
+        jobSize: 10
+        maximumNumberOfProcesses: 32
+        minimumNumberOfJobsPerProcess: 4
+
     paths:
         - src/
         - tests/
 
+    checkStrictPrintfPlaceholderTypes: false
+
     strictRules:
-        # too strict
+        # Too strict -> disabled
         disallowedEmpty: false
         disallowedLooseComparison: false
 
+    ignoreErrors:
+        # Too strict -> disabled
+
+        # Custom
+
     excludePaths:
+        - src\example\projectdoc\ReadDocumentExample.php
+        - src\example\projectdoc\DoctypeOverviewExample.php
 
 includes:
     - vendor/phpstan/phpstan-strict-rules/rules.neon

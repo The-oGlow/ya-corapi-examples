@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<phpunit
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:noNamespaceSchemaLocation="vendor/phpunit/phpunit/phpunit.xsd"
+    bootstrap="tests/bootstrap.php"
+    cacheDirectory="target/.phpunit.cache"
+    colors="false"
+    executionOrder="defects"
+    beStrictAboutOutputDuringTests="false"
+    displayDetailsOnTestsThatTriggerDeprecations="true"
+    displayDetailsOnPhpunitDeprecations="true"
+    stopOnDefect="false"
+    stopOnError="false"
+    stopOnFailure="false"
+    stopOnIncomplete="false"
+    stopOnNotice="false"
+    stopOnRisky="false"
+    stopOnSkipped="false"
+    stopOnWarning="false"
+    failOnAllIssues="false"
+    resolveDependencies="true"
+>
+    <php>
+        <ini name="display_errors" value="1"/>
+        <ini name="error_reporting" value="-1"/>
+        <ini name="date.timezone" value="Europe/Berlin"/>
+    </php>
+
+    <testsuites>
+        <testsuite name="main">
+            <directory>./tests</directory>
+        </testsuite>
+    </testsuites>
+
+    <source ignoreIndirectDeprecations="true" restrictNotices="true" restrictWarnings="true">
+        <include>
+            <directory>./src</directory>
+        </include>
+    </source>
+
+    <logging>
+        <junit outputFile="target/analysis/phpunit/junit.xml"/>
+    </logging>
+
+    <coverage
+        includeUncoveredFiles="true"
+        ignoreDeprecatedCodeUnits="false"
+        pathCoverage="true"
+        disableCodeCoverageIgnore="false">
+        <report>
+            <text outputFile="target/analysis/text/coverage.txt" showUncoveredFiles="true" showOnlySummary="false"/>
+            <clover outputFile="target/analysis/clover/coverage.xml"/>
+            <!--<html outputDirectory="target/analysis/html" />-->
+        </report>
+    </coverage>
+</phpunit>
