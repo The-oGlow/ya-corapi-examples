@@ -8,19 +8,11 @@ on:
       - develop
     paths-ignore:
       - '.github/workflows/**'
-      - '.run/**'
       - '.idea/**'
+      - 'nbproject/**'
       - 'site/**'
 
 env:
-  # PHP Configuration
-  PHP_MODULES: none,bcmath,bz2,calendar,Core,ctype,curl,date,dom,exif,fileinfo,filter,gd,hash,iconv,intl,json,libxml,mbstring,openssl,pcre,PDO,Phar,readline,Reflection,session,SimpleXML,soap,sockets,SPL,standard,tokenizer,xml,xmlreader,xmlwriter,xsl,zip,zlib
-  PHPUNIT_DIR: ${{ github.workspace }}/target/analysis/phpunit
-  PHPUNIT_LOG: ${{ github.workspace }}/target/analysis/phpunit/phpunit-test.log
-
-  # User Configuration
-  AUTH_DIR: "${HOME}/.yacorapi"
-
   # Github Additional Configuration
   GITHUB_REPO_NAME: ${{ github.event.repository.name }}
   GITHUB_ACTOR: ${{ github.actor }}
@@ -31,22 +23,18 @@ env:
   GITHUB_UPLOAD_NAME: ${{ github.event.repository.name }}.zip
   GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
-  # Sonarcloud Configuration
-  SONAR_TOKEN: ${{ secrets.SONAR_TOKEN_GH}}
-  SONAR_CACHE_DIR: "${HOME}/.sonar/cache"
-  SONAR_HOST_URL: "https://sonarcloud.io"
-  SONAR_BRANCH: ${{ github.ref_name }}
+  # User Configuration
+  AUTH_DIR: "${HOME}"
+
+  # PHP Configuration
+  PHP_MODULES: none,bcmath,bz2,calendar,Core,ctype,curl,date,dom,ds,exif,fileinfo,filter,gd,hash,iconv,intl,json,libxml,mbstring,openssl,pcre,PDO,Phar,readline,Reflection,session,SimpleXML,soap,sockets,SPL,standard,tokenizer,xml,xmlreader,xmlwriter,xsl,zip,zlib
 
   # Composer Configuration
   COMPOSER_VENDOR_DIR: ${{ github.workspace }}/vendor
 
-  # Codacy Configuration
-  CODACY_API_TOKEN: ${{ secrets.CODACY_TOKEN_GH }}
-  CODACY_COVERAGE_FILE: ${{ github.workspace }}/target/analysis/clover/coverage.xml
-
-  # Coveralls Configuration
-  COVERALLS_REPO_TOKEN: ${{ secrets.COVERALLS_REPO_TOKEN }}
-  COVERALLS_COVERAGE_FILE: ${{ github.workspace }}/target/analysis/clover/coverage.xml
+  # PHPUnit
+  PHPUNIT_DIR: ${{ github.workspace }}/target/analysis/phpunit
+  PHPUNIT_LOG: ${{ github.workspace }}/target/analysis/phpunit/phpunit-test.log
 
 jobs:
   build:

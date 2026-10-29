@@ -10,13 +10,12 @@ on:
 
 env:
   # PHP Configuration
-  PHP_MODULES: none,bcmath,bz2,calendar,Core,ctype,curl,date,dom,exif,fileinfo,filter,gd,hash,iconv,intl,json,libxml,mbstring,openssl,pcre,PDO,Phar,readline,Reflection,session,SimpleXML,soap,sockets,SPL,standard,tokenizer,xml,xmlreader,xmlwriter,xsl,zip,zlib
-  PHPUNIT_DIR: ${{ github.workspace }}/target/analysis/phpunit
-  PHPUNIT_LOG: ${{ github.workspace }}/target/analysis/phpunit/phpunit-test.log
+  PHP_MODULES: none,bcmath,bz2,calendar,Core,ctype,curl,date,dom,ds,exif,fileinfo,filter,gd,hash,iconv,intl,json,libxml,mbstring,openssl,pcre,PDO,Phar,readline,Reflection,session,SimpleXML,soap,sockets,SPL,standard,tokenizer,xml,xmlreader,xmlwriter,xsl,zip,zlib
 
   # User Configuration
   AUTH_DIR: "${HOME}"
 
+  # Doc
   DOCU_SRC_DIR: "resources"
   DOCU_DEST_DIR: "site"
 
